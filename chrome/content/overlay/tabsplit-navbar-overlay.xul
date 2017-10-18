@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+
+<?xml-stylesheet href="chrome://tabsplit/content/css/tabsplit.css" type="text/css"?>
+
+<overlay id="tabsplit-navbar-overlay" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+  <hbox id="nav-bar-customization-target">
+    <toolbarbutton id="tabsplit-button" label="tabsplit-button" tooltiptext="tabsplit-button" class="toolbarbutton-1 chromeclass-toolbar-additional" onclick="console.log('TMP> MozTabSplit - Clicked tabsplit-button')"></toolbarbutton>
+  </hbox>
+</overlay>
