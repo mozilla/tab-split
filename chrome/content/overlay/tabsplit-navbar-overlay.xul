@@ -3,6 +3,11 @@
 <?xml-stylesheet href="chrome://tabsplit/content/css/tabsplit.css" type="text/css"?>
 
 <overlay id="tabsplit-navbar-overlay" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+  <script src="chrome://tabsplit/content/module/tabsplit.js" type="text/javascript"/>
+
+  <!-- <window id="main-window">
+  </window> -->
+
   <hbox id="nav-bar-customization-target">
     <toolbarbutton id="tabsplit-button" label="tabsplit-button" tooltiptext="tabsplit-button" class="toolbarbutton-1 chromeclass-toolbar-additional" onclick="console.log('TMP> MozTabSplit - Clicked tabsplit-button')"></toolbarbutton>
   </hbox>
