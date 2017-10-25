@@ -9,11 +9,8 @@ Cu.import("resource://gre/modules/XPCOMUtils.jsm");
 XPCOMUtils.defineLazyModuleGetter(this, "Services", "resource://gre/modules/Services.jsm");
 
 const ID_TABSPLIT_BUTTON = "tabsplit-button";
-const URL_BASE = "chrome://tabsplit/content";
 
-// XPCOMUtils.defineLazyModuleGetter(this, "TabSplit", `${URL_BASE}/module/TabSplit.jsm`);
-
-const startupObserver = { // "browser-delayed-startup-finished"
+const startupObserver = {
   register() {
     Services.obs.addObserver(this, "sessionstore-windows-restored", false);
     Services.obs.addObserver(this, "browser-delayed-startup-finished", false);
@@ -21,68 +18,73 @@ const startupObserver = { // "browser-delayed-startup-finished"
 
   unregister() {
     Services.obs.removeObserver(this, "sessionstore-windows-restored", false);
+    Services.obs.removeObserver(this, "browser-delayed-startup-finished", false);
   },
 
   observe(subj, topic, data) {
-    // this.unregister();
-    console.log("TMP > MozTabSplit observe", topic);
-    TabSplit.init();
+    console.log("TMP > TabSplit - startupObserver - observe", topic);
+    TabSplit.onNewBrowserCreated();
   }
 };
 
 const TabSplit = {
-  _inited: false,
 
-  init() {
-    if (this._inited) {
-      return;
-    }
-    this._inited = true;
-    console.log("TMP > MozTabSplit init");
+  _browserCount: 0,
+
+  onNewBrowserCreated() {
+    console.log("TMP > TabSplit - bootstrap - onNewBrowserCreated");
 
     let WM = Cc['@mozilla.org/appshell/window-mediator;1'].getService(Ci.nsIWindowMediator);
-    this._chromeWindow = WM.getMostRecentWindow("navigator:browser"); 
-    // this._chromeWindow.document.loadOverlay(URL_BASE + "/overlay/tabsplit-navbar-overlay.xul",
-    //   (subj, topic, data) => {
-    //     console.log("TMP > MozTabSplit loadOverlay topic =", topic);
-    //     if (!this._chromeWindow.CustomizableUI.getPlacementOfWidget(ID_TABSPLIT_BUTTON)) {
-    //       this._chromeWindow.CustomizableUI.addWidgetToArea(ID_TABSPLIT_BUTTON, "nav-bar", null);
-    //     }
-    //   });
-    // console.log("TMP > MozTabSplit _chromeWindow.document.loadOverlay tabsplit-navbar-overlay.xul");
-  },
-
-  uninit() {
-    if (!this._inited) {
+    let chromeWindow = WM.getMostRecentWindow("navigator:browser");
+    let tabbrowser = chromeWindow.document.getElementById("content");
+    if (tabbrowser.getAttribute("data-tabsplit-browser-id")) {
       return;
     }
-    this._chromeWindow.CustomizableUI.removeWidgetFromArea(ID_TABSPLIT_BUTTON);
-    let button = this._chromeWindow.document.getElementById(ID_TABSPLIT_BUTTON);
-    button && button.remove();
-    this._chromeWindow = button = null;
-    this._inited = false
+
+    tabbrowser.setAttribute("data-tabsplit-browser-id", ++this._browserCount);
+    console.log("TMP > TabSplit - bootstrap - onNewBrowserCreated - browserCount", this._browserCount);
+
+    chromeWindow.document.loadOverlay("chrome://tabsplit/content/overlay/tabsplit-navbar-overlay.xul",
+      (subj, topic, data) => {
+        // console.log("TMP > TabSplit - bootstrap - onNewBrowserCreated - load overlay topic", topic);
+        // if (!chromeWindow.CustomizableUI.getPlacementOfWidget(ID_TABSPLIT_BUTTON)) {
+        //   chromeWindow.CustomizableUI.addWidgetToArea(ID_TABSPLIT_BUTTON, "nav-bar", null);
+        // }
+      });
+    console.log("TMP > TabSplit - bootstrap - onNewBrowserCreated - load overlay tabsplit-navbar-overlay.xul");
+  },
+
+  destroy() {
+    let WM = Cc['@mozilla.org/appshell/window-mediator;1'].getService(Ci.nsIWindowMediator);
+    let chromeWindows = WM.getEnumerator("navigator:browser");
+    while (chromeWindows.hasMoreElements()) {
+      let win = chromeWindows.getNext();
+      win.CustomizableUI.removeWidgetFromArea(ID_TABSPLIT_BUTTON);
+      let button = win.document.getElementById(ID_TABSPLIT_BUTTON);
+      button && button.remove();
+    }
   }
 };
 
+
 function startup(data, reason) {
-  console.log("TMP> MozTabSplit startup with reason =", reason);
-  // if (reason === APP_STARTUP) {
-  //   startupObserver.register();
-  //   return;
-  // }
+  console.log("TMP> TabSplit startup with reason =", reason);
   startupObserver.register();
-  TabSplit.init();
+  TabSplit.onNewBrowserCreated();
 }
 
 function shutdown(data, reason) {
-  console.log("TMP> MozTabSplit shutdown with reason =", reason);
+  console.log("TMP> TabSplit shutdown with reason =", reason);
+  startupObserver.unregister();
+  TabSplit.destroy();
 }
 
 function install(data, reason) {
-  console.log("TMP> MozTabSplit install with reason =", reason);
+  console.log("TMP> TabSplit install with reason =", reason);
 }
 
 function uninstall(data, reason) {
-  console.log("TMP> MozTabSplit uninstall with reason =", reason);
-  TabSplit.uninit();
+  console.log("TMP> TabSplit uninstall with reason =", reason);
+  startupObserver.unregister();
+  TabSplit.destroy();
 }

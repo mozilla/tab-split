@@ -4,6 +4,8 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 "use strict";
 
+var EXPORTED_SYMBOLS = ["TabSplit"];
+
 const { classes: Cc, interfaces: Ci, utils: Cu } = Components;
 Cu.import("resource://gre/modules/XPCOMUtils.jsm");
 
@@ -14,7 +16,9 @@ XPCOMUtils.defineLazyModuleGetters(this, {
   console: "resource://gre/modules/Console.jsm",
 });
 
-const TabSplit = {
+var TabSplit = {
+
+  windows: [],
 
   init() {
     console.log("TMP > MozTabSplit init");
@@ -41,4 +45,3 @@ const TabSplit = {
   }
 };
 
-this.EXPORTED_SYMBOLS = ["TabSplit"];
