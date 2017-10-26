@@ -17,8 +17,8 @@ const startupObserver = {
   },
 
   unregister() {
-    Services.obs.removeObserver(this, "sessionstore-windows-restored", false);
-    Services.obs.removeObserver(this, "browser-delayed-startup-finished", false);
+    Services.obs.removeObserver(this, "sessionstore-windows-restored");
+    Services.obs.removeObserver(this, "browser-delayed-startup-finished");
   },
 
   observe(subj, topic, data) {
@@ -44,24 +44,23 @@ const TabSplit = {
     tabbrowser.setAttribute("data-tabsplit-browser-id", ++this._browserCount);
     console.log("TMP > TabSplit - bootstrap - onNewBrowserCreated - browserCount", this._browserCount);
 
-    chromeWindow.document.loadOverlay("chrome://tabsplit/content/overlay/tabsplit-navbar-overlay.xul",
-      (subj, topic, data) => {
-        // console.log("TMP > TabSplit - bootstrap - onNewBrowserCreated - load overlay topic", topic);
-        // if (!chromeWindow.CustomizableUI.getPlacementOfWidget(ID_TABSPLIT_BUTTON)) {
-        //   chromeWindow.CustomizableUI.addWidgetToArea(ID_TABSPLIT_BUTTON, "nav-bar", null);
-        // }
-      });
     console.log("TMP > TabSplit - bootstrap - onNewBrowserCreated - load overlay tabsplit-navbar-overlay.xul");
+    chromeWindow.document.loadOverlay("chrome://tabsplit/content/overlay/tabsplit-navbar-overlay.xul",
+      (subj, topic, data) => console.log("TMP > TabSplit - bootstrap - onNewBrowserCreated - load overlay topic", topic));
   },
 
   destroy() {
+    console.log("TMP > TabSplit - bootstrap - destroy");
     let WM = Cc['@mozilla.org/appshell/window-mediator;1'].getService(Ci.nsIWindowMediator);
     let chromeWindows = WM.getEnumerator("navigator:browser");
     while (chromeWindows.hasMoreElements()) {
       let win = chromeWindows.getNext();
       win.CustomizableUI.removeWidgetFromArea(ID_TABSPLIT_BUTTON);
-      let button = win.document.getElementById(ID_TABSPLIT_BUTTON);
-      button && button.remove();
+      win.CustomizableUI.destroyWidget(ID_TABSPLIT_BUTTON);
+      let tabbrowser = win.document.getElementById("content");
+      console.log("TMP > TabSplit - bootstrap - destroy data-tabsplit-browser-id =", tabbrowser.getAttribute("data-tabsplit-browser-id"));
+      tabbrowser.removeAttribute("data-tabsplit-browser-id");
+      this._browserCount--;
     }
   }
 };
