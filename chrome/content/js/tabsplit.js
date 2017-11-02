@@ -28,6 +28,11 @@ if (!win.TabSplit) {
 // 7. S notifies V new states
 // 8. V updates itself
 // 9. Back to (2)
-win.TabSplit.control.init(TabSplit.view, TabSplit.store, win.gBrowser);
+win.TabSplit.control.init({ 
+  view: TabSplit.view, 
+  store: TabSplit.store, 
+  utils: TabSplit.utils, 
+  gBrowser: win.gBrowser
+});
 
 })(this);

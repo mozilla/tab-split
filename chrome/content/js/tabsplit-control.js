@@ -15,20 +15,33 @@ let TabSplit = win.TabSplit;
 
 TabSplit.control = {
 
-  init(view, store, gBrowser) {
+  /**
+   * @params params {Object}
+   *    - view {Objec} TabSplit.view
+   *    - store {Objec} TabSplit.store
+   *    - utils {Object} TabSplit.utils
+   *    - gBrowser {XULELement} <tabbrowser>
+   */
+  init(params) {
+    let { view, store, utils, gBrowser } = params;
     this._view = view;
     this._store = store;
+    this._utils = utils;
     this._gBrowser = gBrowser;
 
     this._view.init({
-      state: this._store,
+      store: this._store,
+      utils: this._utils,
       gBrowser: this._gBrowser,
       onTabSplitButtonCommand: () => console.log("TMP> Clicked onTabSplitButtonCommand")
     });
+    this._store.init({
+      utils: this._utils,
+      gBrowser: this._gBrowser
+    });
 
-    // Getting `innerWidth` is sync reflow operation plus 
-    // we don't wanna get on the way of the browser startup
-    // so do `requestIdleCallback`.
+    // Getting `innerWidth` is a sync reflow operation plus 
+    // we don't wanna block the browser startup so do `requestIdleCallback`.
     win.requestIdleCallback(() => {
       this._store.update({
         type: "update_window_width",

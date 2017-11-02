@@ -18,17 +18,23 @@ TabSplit.view = {
 
   /**
    * @params params {Object}
-   *    - store {Objec} TabSplit.store.
+   *    - store {Objec} TabSplit.store
+   *    - utils {Object} TabSplit.utils
    *    - gBrowser {XULELement} <tabbrowser>
    *    - onTabSplitButtonCommand {Function}
    */
   init(params) {
-    let { onTabSplitButtonCommand, store, gBrowser } = params;
-
+    let { store, utils, gBrowser, onTabSplitButtonCommand } = params;
+    this._utils = utils;
     this._gBrowser = gBrowser;
+    this._store = store;
+    this._addButtonToNavBar(onTabSplitButtonCommand);
+    this._store.subscribe(this.onStateChange);
+  },
 
+  _addButtonToNavBar(onClick) {
     if (!CustomizableUI.getPlacementOfWidget(this.ID_TABSPLIT_BUTTON)) {
-      console.log('TMP> TabSplit - tabsplit-view.js - Creating customizable wisget');
+      console.log('TMP> TabSplit - tabsplit-view - Creating customizable wisget');
       CustomizableUI.createWidget({
         id: this.ID_TABSPLIT_BUTTON,
         type: "button",
@@ -36,27 +42,22 @@ TabSplit.view = {
         defaultArea: "nav-bar",
         localized: false,
         onCommand: e => {
-          console.log('TMP> TabSplit - tabsplit-view.js - Clicked tabsplit-button');
-          onTabSplitButtonCommand && onTabSplitButtonCommand(e);
+          console.log('TMP> TabSplit - tabsplit-view - Clicked tabsplit-button');
+          onClick && onClick(e);
         },
       });
       // Need to explicitly put the button on the nav bar
       CustomizableUI.addWidgetToArea("tabsplit-button", "nav-bar")
     }
-
-    this._store = store;
-    this._store.subscribe(this.onStateChange);
   },
 
   update(state, tabGroupsDiff) {
-    
+    console.log("TMP> TabSplit - tabsplit-view - state updated", state, tabGroupsDiff);
   },
 
   onStateChange(store, tabGroupsDiff) {
     win.requestAnimationFrame(() => TabSplit.view.update(store.getState(), tabGroupsDiff));
   }
 };
-
-win.TabSplit = null;
 
 })(this);
