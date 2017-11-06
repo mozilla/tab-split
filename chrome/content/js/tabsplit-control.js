@@ -29,15 +29,20 @@ TabSplit.control = {
     this._utils = utils;
     this._gBrowser = gBrowser;
 
+    this._utils.init({
+      gBrowser
+    });
     this._view.init({
-      store: this._store,
-      utils: this._utils,
-      gBrowser: this._gBrowser,
-      onTabSplitButtonCommand: () => console.log("TMP> Clicked onTabSplitButtonCommand")
+      store,
+      utils,
+      gBrowser,
+      onTabSplitButtonClick: () => {
+        console.log("TMP> tabsplit-control - Clicked onTabSplitButtonClick");
+        this.splitTabs();
+      }
     });
     this._store.init({
-      utils: this._utils,
-      gBrowser: this._gBrowser
+      utils,
     });
 
     // Getting `innerWidth` is a sync reflow operation plus 
@@ -51,6 +56,41 @@ TabSplit.control = {
         value: this._gBrowser.selectedTab.linkedPanel
       });
     });
+  },
+
+  _currentTabColorIndex: -1,
+
+  _tabColors: [
+    "#e07f76", "#e0ba76", "#9ed87f", "#7fd8d3", "#7bc2e5", "#7b7ee5", "#ce7be5", "#d8707b"
+  ],
+
+  splitTabs() {
+    let leftTab = this._gBrowser.selectedTab;
+    let rightTab = this._gBrowser.addTab("about:newtab");
+    this._gBrowser.addEventListener("TabSwitchDone", () => {
+      let newGroup = {};
+      // TODO: A temp way to pick out a color
+      this._currentTabColorIndex = (this._currentTabColorIndex + 1) % this._tabColors.length;
+      newGroup.color = this._tabColors[this._currentTabColorIndex];
+      newGroup.layout = "vertical";
+      newGroup.tabs = [
+        {
+          linkedPanel: leftTab.linkedPanel,
+          position: "left",
+          distribution: 0.5
+        },
+        {
+          linkedPanel: rightTab.linkedPanel,
+          position: "right",
+          distribution: 0.5
+        }
+      ];
+      this._store.update({
+        type: "add_tab_group",
+        value: newGroup
+      });
+    }, { once: true });
+    this._gBrowser.selectedTab = rightTab;
   },
 };
 

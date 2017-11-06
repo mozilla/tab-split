@@ -13,18 +13,56 @@ if (!win.TabSplit) {
 }
 const TabSplit = win.TabSplit;
 
+  /**
+   * @params params {Object}
+   *    - gBrowser {XULELement} <tabbrowser>
+   */
 TabSplit.utils = {
-  getTabByLinkedPanel(linkedPanel, gBrowser) {
-    return gBrowser.visibleTabs.find(tab => tab.linkedPanel == linkedPanel);
+  init(params) {
+    this._gBrowser = params.gBrowser;
   },
 
-  getTabGroupIdByLinkedPanel(linkedPanel, tabGroups) {
-    let target = tabGroups.find(group => {
-      let [ t0, t1 ] = group.tabs;
-      return t0.linkedPanel == linkedPanel || t1.linkedPanel == linkedPanel;
+  getLastPinnedTabIndex() {
+    // `i` is the 1st not pinned tab.
+    let i = this._gBrowser.visibleTabs.findIndex(tab => {
+      return !tab.pinned || tab.hasAttribute("data-tabsplit-tab-group-id");
     });
-    return target ? target.id : null;
+    return i - 1;
   },
+
+  getTabByLinkedPanel(linkedPanel) {
+    return this._gBrowser.visibleTabs.find(tab => tab.linkedPanel == linkedPanel);
+  },
+
+  getTabGroupByLinkedPanel(linkedPanel, state) {
+    let id = state.tabGroupIds.find(id => {
+      return !!state.tabGroups[id].tabs.find(t => t.linkedPanel == linkedPanel);
+    });
+    return id ? state.tabGroups[id] : null;
+  },
+
+  getNotificationboxByLinkedPanel(linkedPanel) {
+    return document.getAnonymousElementByAttribute(this._gBrowser, "id", linkedPanel);
+  },
+
+  getNotificationboxes() {
+    if (!this._panelContainer) {
+      this._panelContainer = document.getAnonymousElementByAttribute(this._gBrowser, "anonid", "panelcontainer");
+    }
+    let length = this._panelContainer.children.length;
+    let boxes = [];
+    for (let i = 0; i < length; i++) {
+      let child = this._panelContainer.children[i];
+      if (child && (child.tagName == "notificationbox" || child.tagName == "xul:notificationbox")) {
+        boxes.push(child);
+      }
+    }
+    return boxes;
+  },
+
+  getBrowserByNotificationbox(box) {
+    return box.getElementsByTagName("browser")[0] || box.getElementsByTagName("xul:browser")[0];
+  }
 };
 
 })(this);

@@ -37,11 +37,11 @@ const TabSplit = {
     let WM = Cc['@mozilla.org/appshell/window-mediator;1'].getService(Ci.nsIWindowMediator);
     let chromeWindow = WM.getMostRecentWindow("navigator:browser");
     let tabbrowser = chromeWindow.document.getElementById("content");
-    if (tabbrowser.getAttribute("data-tabsplit-browser-id")) {
+    if (tabbrowser.getAttribute("data-tabsplit-tabbrowser-id")) {
       return;
     }
 
-    tabbrowser.setAttribute("data-tabsplit-browser-id", ++this._browserCount);
+    tabbrowser.setAttribute("data-tabsplit-tabbrowser-id", ++this._browserCount);
     console.log("TMP > TabSplit - bootstrap - onNewBrowserCreated - browserCount", this._browserCount);
 
     console.log("TMP > TabSplit - bootstrap - onNewBrowserCreated - load overlay tabsplit-navbar-overlay.xul");
@@ -58,8 +58,8 @@ const TabSplit = {
       win.CustomizableUI.removeWidgetFromArea(ID_TABSPLIT_BUTTON);
       win.CustomizableUI.destroyWidget(ID_TABSPLIT_BUTTON);
       let tabbrowser = win.document.getElementById("content");
-      console.log("TMP > TabSplit - bootstrap - destroy data-tabsplit-browser-id =", tabbrowser.getAttribute("data-tabsplit-browser-id"));
-      tabbrowser.removeAttribute("data-tabsplit-browser-id");
+      console.log("TMP > TabSplit - bootstrap - destroy data-tabsplit-tabbrowser-id =", tabbrowser.getAttribute("data-tabsplit-tabbrowser-id"));
+      tabbrowser.removeAttribute("data-tabsplit-tabbrowser-id");
       this._browserCount--;
     }
   }

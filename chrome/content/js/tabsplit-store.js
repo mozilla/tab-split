@@ -15,17 +15,21 @@ const TabSplit = win.TabSplit;
 
 TabSplit.store = {
 
-  TAB_GROUP_ID_PREFIX: "tabsplit-tagGroup-id-",
+  // TODO: Maybe could remove this
+  TAB_GROUP_ID_PREFIX: "tabsplit-tab-group-id-",
+
+  // We do incremental id
+  _tabGroupIdCount: 0,
   
   // Listeners for the state change.
   // One listener is a function with the signature below:
   //   - store {object} TabSplit.store
-  //   - tabGroupsDiff {Object} the tabGroups state diff after changing state.
+  //   - tabGroupsDiff {Object} the tabGroups state diff after the state changes.
   //        This is to let ouside quickly know what changes on tabGroups.
   //        Holds 3 properties:
   //        - added {Array} the newly added tabGroups' id
   //        - removed {Array} the removed tabGroups' id
-  //        - updated {Array} the updated tabGroups' id
+  //        - updated {Array} the updated tabGroups'  // TODO: Maybe this is useless
   _listeners: new Set(),
 
   // This object stores the current state, which includes
@@ -38,11 +42,10 @@ TabSplit.store = {
     tabGroupIds: [],
     // tabGroups {Object} holds instances of TabGroup, see below for TabGroup. Key is tab group id.
     // 
-    // TabGroup is one object holding info of one group of tabs split
-    // - id {Number} this tabGroup id, any update action to it will be ignored.
-    //                                 (this is a bit inconsistent?)
+    // TabGroup is one object holding info of one group of tabs being split
+    // - id {Number} this tabGroup id (Should never allow any update on the id).
     // - color {String} #xxxxx used for visually grouping tabs
-    // - splitDirection {String} currently only support "horizonal"
+    // - layout {String} currently only support "vertical"
     // - tabs {Array} instances of Tab, see below for Tab details.
     //                The order represents tabs' order.
     // 
@@ -50,21 +53,16 @@ TabSplit.store = {
     // - linkedPanel {String} the tab's linkedPanel attribute value
     // - position {String} currently only "left" or "right"
     // - distribution {Number} 0 ~ 1. The percentage of window width this tab occupies
-    tabGroups: [],
+    tabGroups: {},
   },
-
-  // We do incremental id
-  _tabGroupIdCount: 0,
 
   /**
    * @params params {Object}
    *    - utils {Object} TabSplit.utils
-   *    - gBrowser {XULELement} <tabbrowser>
    */
   init(params) {
-    let { utils, gBrowser } = params;
+    let { utils } = params;
     this._utils = utils;
-    this._gBrowser = gBrowser;
   },
 
   getState() {
@@ -74,8 +72,7 @@ TabSplit.store = {
   /**
    * Should call this to udpate states.
    * 
-   * @params actions {Object} state update action. For the batch update, pass multiple actions.
-   *                          See Action below for details
+   * @params actions {Object} state update actions. See Action below for details
    *
    * Action is an object describing the state update action, holding:
    *  - type {String} the action type
@@ -85,9 +82,9 @@ TabSplit.store = {
    *  - value: {Number} the crruent window width
    *
    *  - type: "update_selected_linkedPanel"
-   *    value: {String} see selectedLinkedPanel in `_state`
+   *    value: {String} see `selectedLinkedPanel` in `_state`
    *
-   *  - type: "add_tab_group". This will add to the end
+   *  - type: "add_tab_group". This will add to the end.
    *    value: {Object} see TabGroup in `_state`
    *
    *  - type: "remove_tab_group"
@@ -118,7 +115,7 @@ TabSplit.store = {
             break;
 
           case "update_selected_linkedPanel":
-            if (!this._utils.getTabByLinkedPanel(v, this._gBrowser)) {
+            if (!this._utils.getTabByLinkedPanel(v)) {
               throw `Unknown selected linkedPanel of ${v}`;
             }
             this._state.selectedLinkedPanel = v;
@@ -155,7 +152,7 @@ TabSplit.store = {
 
     dirty && this._listeners.forEach(listener => {
       // TODO: Should we pass a copy of `{ added, removed, updated }`
-      // in case taht outside modifies these important variables?
+      // in case that outside modifies these important variables?
       listener(this, { added, removed, updated });
     });
   },
@@ -164,10 +161,10 @@ TabSplit.store = {
    * @return the new tabGroup id
    */
   _addTabGroup(newTabGroup) {
-    let { tabs, color, splitDirection } = newTabGroup;
+    let { tabs, color, layout } = newTabGroup;
 
-    if (splitDirection != "vertical") {
-      throw `Invalid split direction: ${splitDirection}`;
+    if (layout != "vertical") {
+      throw `Invalid split layout: ${layout}`;
     }
 
     if (color == "") {
@@ -195,19 +192,19 @@ TabSplit.store = {
     if (!this._isValidTab(tab1)) {
       throw "The 2nd tab being added is invalid";
     }
-
-    if (this._utils.getTabGroupIdByLinkedPanel(tab0.linkedPanel, this._state.tabGroups)) {
+    
+    if (this._utils.getTabGroupByLinkedPanel(tab0.linkedPanel, this._state)) {
       throw `Adding already existed tab with linkedPanel of ${tab0.linkedPanel}`;
     }
 
-    if (this._utils.getTabGroupIdByLinkedPanel(tab1.linkedPanel, this._state.tabGroups)) {
+    if (this._utils.getTabGroupByLinkedPanel(tab1.linkedPanel, this._state)) {
       throw `Adding already existed tab with linkedPanel of ${tab1.linkedPanel}`;
     }
 
     // NOTE: What if redundant props passed with newTabGroup
     let newGroup = this._copy(newTabGroup);
     newGroup.id = this.TAB_GROUP_ID_PREFIX + this._tabGroupIdCount++;
-    this._state.tabGroups.push(newGroup);
+    this._state.tabGroups[newGroup.id] = newGroup;
     this._state.tabGroupIds.push(newGroup.id);
     return newGroup.id;
   },
@@ -221,11 +218,11 @@ TabSplit.store = {
   },
 
   _copy(obj) {
-    // We don't wanna give outside any chance to mutaute our states
+    // We don't wanna give outside any chance to mutaute our state
     // so make a copy when returning/receiving states.
     // NOTE:
-    // The states only contain Number/String and are simple so we can do this copy trick.
-    // Maybe we should borrow from immutable.js when the states get complex.
+    // The state only contains Number/String and is simple so we can do this copy trick.
+    // Maybe we should borrow from immutable.js when the state gets complex.
     return JSON.parse(JSON.stringify(obj));
   },
 
@@ -241,7 +238,7 @@ TabSplit.store = {
     let { position, distribution, linkedPanel } = tab;
     if ((distribution <= 0 || distribution >= 1) ||
         (position != "left" && position != "right") ||
-        !this._utils.getTabByLinkedPanel(tab.linkedPanel, this._gBrowser)) {
+        !this._utils.getTabByLinkedPanel(tab.linkedPanel)) {
       return false;
     }
     return true;
@@ -255,12 +252,6 @@ TabSplit.store = {
       this._listeners.add(listener);
     }
   },
-
-  unsubscribe(listener) {
-    if (this._listeners.has(listener)) {
-      this._listeners.delete(listener);
-    }
-  }
 };
 
 })(this);
