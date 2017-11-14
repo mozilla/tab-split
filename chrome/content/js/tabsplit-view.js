@@ -16,13 +16,13 @@ const TabSplit = win.TabSplit;
 TabSplit.view = {
   ID_TABSPLIT_BUTTON: "tabsplit-button",
 
-  PX_VERTICAL_SPLITTER_WIDTH: 8,
+  PX_COLUMN_SPLITTER_WIDTH: 8,
 
   // Hold the state got from the store
   _state: {},
 
-  // The vertical splitter
-  _vSplitter: null,
+  // The column splitter
+  _cSplitter: null,
 
   // <xul:tabpanels anonid="panelcontainer">
   _panelContainer: null,
@@ -84,11 +84,11 @@ TabSplit.view = {
 
     // Append the splitter
     let appContent = this._gBrowser.parentNode;
-    this._vSplitter = document.createElement("vbox");
-    this._vSplitter.classList.add("tabsplit-vertical-splitter");
-    this._vSplitter.style.width = this.PX_VERTICAL_SPLITTER_WIDTH + "px";
+    this._cSplitter = document.createElement("vbox");
+    this._cSplitter.classList.add("tabsplit-column-splitter");
+    this._cSplitter.style.width = this.PX_COLUMN_SPLITTER_WIDTH + "px";
     appContent.classList.add("tabsplit-spliter-container");
-    appContent.appendChild(this._vSplitter);
+    appContent.appendChild(this._cSplitter);
   },
 
   _refreshPanelStack() {
@@ -166,30 +166,25 @@ TabSplit.view = {
     let selectedGroup = this._utils.getTabGroupByLinkedPanel(selectedPanel, this._state);
     if (selectedGroup) {
       let areas = selectedGroup.tabs.map(tabState => {
-        let { linkedPanel, position, distribution } = tabState;
+        let { linkedPanel, distribution } = tabState;
         return {
-          position,
           distribution,
           box: this._utils.getNotificationboxByLinkedPanel(linkedPanel),
         };
       });
-      if (areas[0].position != "left") {
-        areas = [ areas[1], areas[0] ]; // Always make the left area go first
-      }
       let [ left, right ] = areas;
-
       // Resize the notificationboxs
-      let availableWidth = this._state.windowWidth - this.PX_VERTICAL_SPLITTER_WIDTH;
+      let availableWidth = this._state.windowWidth - this.PX_COLUMN_SPLITTER_WIDTH;
       left.width = availableWidth * left.distribution;
       right.width = availableWidth - left.width;
       left.box.style.marginRight = (this._state.windowWidth - left.width) + "px";
       right.box.style.marginLeft = (this._state.windowWidth - right.width) + "px";
       // Position the splitter
-      this._vSplitter.style.left = left.width + "px";
-      this._vSplitter.style.display = "block";
+      this._cSplitter.style.left = left.width + "px";
+      this._cSplitter.style.display = "block";
     } else {
       // No tab being split is selceted so no splitter either.
-      this._vSplitter.style.display = "none";
+      this._cSplitter.style.display = "none";
     }
   },
 
@@ -209,13 +204,8 @@ TabSplit.view = {
     let expectations = [];
     tabGroupIds.forEach(id => {
       let [ t0, t1 ] = this._state.tabGroups[id].tabs;
-      if (t0.position == "left") {
-        expectations.push([ t0.linkedPanel, ++expIndex ]);
-        expectations.push([ t1.linkedPanel, ++expIndex ]);
-      } else {
-        expectations.push([ t1.linkedPanel, ++expIndex ]);
-        expectations.push([ t0.linkedPanel, ++expIndex ]);
-      }
+      expectations.push([ t0.linkedPanel, ++expIndex ]);
+      expectations.push([ t1.linkedPanel, ++expIndex ]);
     });
 
     // Second, move tabs to right positions if not as expected

@@ -72,16 +72,16 @@ TabSplit.control = {
       // TODO: A temp way to pick out a color
       this._currentTabColorIndex = (this._currentTabColorIndex + 1) % this._tabColors.length;
       newGroup.color = this._tabColors[this._currentTabColorIndex];
-      newGroup.layout = "vertical";
+      newGroup.layout = "column_split";
       newGroup.tabs = [
         {
           linkedPanel: leftTab.linkedPanel,
-          position: "left",
+          col: 0,
           distribution: 0.5
         },
         {
           linkedPanel: rightTab.linkedPanel,
-          position: "right",
+          col: 1,
           distribution: 0.5
         }
       ];

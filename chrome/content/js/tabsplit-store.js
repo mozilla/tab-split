@@ -45,16 +45,18 @@ TabSplit.store = {
     // TabGroup is one object holding info of one group of tabs being split
     // - id {Number} this tabGroup id (Should never allow any update on the id).
     // - color {String} #xxxxx used for visually grouping tabs
-    // - layout {String} currently only support "vertical"
+    // - layout {String} see `VALID_LAYOUTS` for the valid values
     // - tabs {Array} instances of Tab, see below for Tab details.
-    //                The order represents tabs' order.
+    //                The order represents tabs' order: The smaller col comes first.
     // 
     // Tab is one object holding info of one split tab in one tab group
     // - linkedPanel {String} the tab's linkedPanel attribute value
-    // - position {String} currently only "left" or "right"
+    // - col: {Number} the column index where the tab locate. 0 is the left most column.
     // - distribution {Number} 0 ~ 1. The percentage of window width this tab occupies
     tabGroups: {},
   },
+
+  VALID_LAYOUTS: [ "column_split" ],
 
   /**
    * @params params {Object}
@@ -163,7 +165,7 @@ TabSplit.store = {
   _addTabGroup(newTabGroup) {
     let { tabs, color, layout } = newTabGroup;
 
-    if (layout != "vertical") {
+    if (!this.VALID_LAYOUTS.includes(layout)) {
       throw `Invalid split layout: ${layout}`;
     }
 
@@ -227,7 +229,7 @@ TabSplit.store = {
   },
 
   _tabsEqual(tab0, tab1) {
-    if (tab0.position == tab1.position ||
+    if (tab0.col == tab1.col ||
         tab0.linkedPanel == tab1.linkedPanel) {
       return true;
     }
@@ -235,9 +237,9 @@ TabSplit.store = {
   },
 
   _isValidTab(tab) {
-    let { position, distribution, linkedPanel } = tab;
-    if ((distribution <= 0 || distribution >= 1) ||
-        (position != "left" && position != "right") ||
+    let { col, distribution, linkedPanel } = tab;
+    if ((col < 0 || col > 1 ) ||
+        (distribution <= 0 || distribution >= 1) ||
         !this._utils.getTabByLinkedPanel(tab.linkedPanel)) {
       return false;
     }

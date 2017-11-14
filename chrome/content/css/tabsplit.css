@@ -14,7 +14,7 @@ tab[data-tabsplit-tab-group-id] .tab-line {
   position: relative;
 }
 
-.tabsplit-vertical-splitter {
+.tabsplit-column-splitter {
   /* `width` will be set in the view */
   height: 100%;
   background: #e7e8e9;
