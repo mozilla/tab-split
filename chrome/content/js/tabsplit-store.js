@@ -177,30 +177,29 @@ TabSplit.store = {
       throw `Unexpected tabs length of ${tabs.length}`;
     }
 
-    let [ tab0, tab1 ] = tabs;
-    if (this._tabsEqual(tab0, tab1)) {
-      throw "Cannot adding 2 equal tabs in one tab group";
+    let seenPanels = [];
+    let distributionSum = 0;
+    for (let i = 0; i < tabs.length; i++) {
+      let t = tabs[i];
+      if (t.col != i) {
+        // Maybe we should relax this check and do sorting if needed.
+        throw `The tab with linkedPanel of ${t.linkedPanel} has array position ${i} different from column position ${t.col}`;
+      }
+      if (!this._isValidTab(t)) {
+        throw `The tab with linkedPanel of ${t.linkedPanel} being added is invalid`;
+      }
+      if (this._utils.getTabGroupByLinkedPanel(t.linkedPanel, this._state)) {
+        throw `The tab with linkedPanel of ${t.linkedPanel} being added is already split`;
+      }
+      if (seenPanels.includes(t.linkedPanel)) {
+        throw `Cannot add the tab with linkedPanel of ${t.linkedPanel} twice in one tab group`;
+      }
+      seenPanels.push(t.linkedPanel);
+      distributionSum += t.distribution;
     }
-
-    if (tab0.distribution + tab1.distribution != 1) {
-      throw "Expect the sum of tabs' distributions to be 1, " +
-            `but get the distributions as [${tab0.distribution}, ${tab1.distribution}]`;
-    }
-
-    if (!this._isValidTab(tab0)) {
-      throw "The 1st tab being added is invalid";
-    }
-
-    if (!this._isValidTab(tab1)) {
-      throw "The 2nd tab being added is invalid";
-    }
-    
-    if (this._utils.getTabGroupByLinkedPanel(tab0.linkedPanel, this._state)) {
-      throw `Adding already existed tab with linkedPanel of ${tab0.linkedPanel}`;
-    }
-
-    if (this._utils.getTabGroupByLinkedPanel(tab1.linkedPanel, this._state)) {
-      throw `Adding already existed tab with linkedPanel of ${tab1.linkedPanel}`;
+    if (distributionSum != 1) {
+      let panels = tabs.map(t => t.linkedPanel);
+      throw `Expect the sum of tabs' distributions to be 1 but get ${distributionSum} from ${panels.join(', ')}`;
     }
 
     // NOTE: What if redundant props passed with newTabGroup
@@ -228,9 +227,9 @@ TabSplit.store = {
     return JSON.parse(JSON.stringify(obj));
   },
 
-  _tabsEqual(tab0, tab1) {
-    if (tab0.col == tab1.col ||
-        tab0.linkedPanel == tab1.linkedPanel) {
+  _tabsEqual(a, b) {
+    if (a.col == b.col ||
+        a.linkedPanel == b.linkedPanel) {
       return true;
     }
     return false;
