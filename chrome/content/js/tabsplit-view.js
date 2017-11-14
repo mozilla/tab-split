@@ -142,22 +142,20 @@ TabSplit.view = {
   },
 
   _setTabGroupStyle(id) {
-    let group = this._state.tabGroups[id];
-    group && group.tabs.forEach(tabState => {
-      let tab = this._utils.getTabByLinkedPanel(tabState.linkedPanel);
-
-      // TODO: Could remove!!
-      // let line = this._getTabLine(tab);
-      // line.style.display = "none";
-
-      tab.setAttribute("data-tabsplit-tab-group-id", group.id);
-      tab.style.borderTop = `2px solid ${group.color}`;
-    });
-  },
-
-  _getTabLine(tab) { // TODO: Could remove!!
-    let tabStack = document.getAnonymousNodes(tab)[0];
-    return tabStack.querySelector(".tab-line");
+    let color = this._state.tabGroups[id].color;
+    let tabStates = this._state.tabGroups[id].tabs;
+    let len = tabStates.length;
+    for (let i = 0; i < len; i++) {
+      let tab = this._utils.getTabByLinkedPanel(tabStates[i].linkedPanel);
+      tab.setAttribute("data-tabsplit-tab-group-id", id);
+      tab.classList.add("tabsplit-tab");
+      if (i == 0) {
+        tab.classList.add("tabsplit-tab-first");
+      } else if (i == len - 1) {
+        tab.classList.add("tabsplit-tab-last");
+      }
+      tab.style.borderColor = color;
+    }
   },
 
   _refreshTabDistributions() {

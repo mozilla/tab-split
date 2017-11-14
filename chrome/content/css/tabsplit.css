@@ -2,7 +2,22 @@
   list-style-image: url("chrome://tabsplit/content/img/tabsplit-fox.png");
 }
 
-tab[data-tabsplit-tab-group-id] .tab-line {
+.tabsplit-tab > .tab-stack {
+  border-width: 2px;
+  border-top-style: solid;
+  /* We dynamically set the color at .tabsplit-tab so inherit the color here. */
+  border-color: inherit;
+}
+
+.tabsplit-tab-first > .tab-stack {
+  border-left-style: solid;
+}
+
+.tabsplit-tab-last > .tab-stack {
+  border-right-style: solid; 
+}
+
+.tabsplit-tab .tab-line {
   display: none;
 }
 
