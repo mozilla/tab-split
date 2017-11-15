@@ -19,7 +19,7 @@ TabSplit.view = {
   PX_COLUMN_SPLITTER_WIDTH: 8,
 
   // Hold the state got from the store
-  _state: {},
+  _state: null,
 
   // The column splitter
   _cSplitter: null,
@@ -32,18 +32,20 @@ TabSplit.view = {
    *    - store {Objec} TabSplit.store
    *    - utils {Object} TabSplit.utils
    *    - gBrowser {XULELement} <tabbrowser>
-   *    - onTabSplitButtonClick {Function}
+   *    - listener {Object} a object with event handling functions
    */
   init(params) {
-    let { store, utils, gBrowser, onTabSplitButtonClick } = params;
+    let { store, utils, gBrowser, listener } = params;
     this._utils = utils;
     this._gBrowser = gBrowser;
     this._store = store;
-    this._addButtonToNavBar(onTabSplitButtonClick);
-    this._store.subscribe(this.onStateChange);
+    this._listener = listener;
+    this._state = this._store.getState();
+    this._store.subscribe(this);
+    this._addTabSplitButton();
   },
 
-  _addButtonToNavBar(onClick) {
+  _addTabSplitButton(onClick) {
     if (!CustomizableUI.getPlacementOfWidget(this.ID_TABSPLIT_BUTTON)) {
       console.log('TMP> tabsplit-view - Creating customizable wisget');
       CustomizableUI.createWidget({
@@ -52,21 +54,18 @@ TabSplit.view = {
         tooltiptext: "Let's split tabs!!!",
         defaultArea: "nav-bar",
         localized: false,
-        onCommand: e => {
-          this._initTabbrowser(); // Lazy init.
-          onClick(e);
-        }
+        onCommand: e => this._listener.onTabSplitButtonClick()
       });
       // Explicitly put the button on the nav bar
       CustomizableUI.addWidgetToArea("tabsplit-button", "nav-bar")
     }
   },
 
+  _removeTabSplitButton() {
+    // TODO
+  },
+
   _initTabbrowser() {
-    if (this._gBrowser.getAttribute("data-tabsplit-tabbrowser-init") == "true") {
-      return;
-    }
-    this._gBrowser.setAttribute("data-tabsplit-tabbrowser-init", "true");
     console.log("TMP> tabsplit-view - _initTabbrowser");
 
     // The `-moz-stack` display enables rendering multiple web pages at the same time.
@@ -89,10 +88,12 @@ TabSplit.view = {
     this._cSplitter.style.width = this.PX_COLUMN_SPLITTER_WIDTH + "px";
     appContent.classList.add("tabsplit-spliter-container");
     appContent.appendChild(this._cSplitter);
+    
+    this._gBrowser.setAttribute("data-tabsplit-tabbrowser-init", "true");
   },
 
-  _refreshPanelStack() {
-    console.log("TMP> tabsplit-view - _refreshPanelStack");
+  _refreshTabbrowser() {
+    console.log("TMP> tabsplit-view - _refreshTabbrowser");
 
     let selectedPanel = this._state.selectedLinkedPanel;
     let selectedGroup = this._utils.getTabGroupByLinkedPanel(selectedPanel, this._state);
@@ -109,11 +110,11 @@ TabSplit.view = {
       let isActive = browser.docShellIsActive;
       // Below only set the docShell state when finding the inconsistency,
       // because that operation is expensive.
-      console.log("TMP> tabsplit-view - _refreshPanelStack - box.id, isActive =", box.id, isActive);
+      console.log("TMP> tabsplit-view - _refreshTabbrowser - box.id, isActive =", box.id, isActive);
       if (activePanels.includes(box.id)) {
         box.style.visibility = "visible";
         if (isActive == false) {
-          console.log("TMP> tabsplit-view - _refreshPanelStack - set docShellIsActive to true for ", box.id);
+          console.log("TMP> tabsplit-view - _refreshTabbrowser - set docShellIsActive to true for ", box.id);
           browser.docShellIsActive = true;
         }
       } else {
@@ -123,6 +124,10 @@ TabSplit.view = {
         }
       }
     });
+  },
+
+  _uninitTabbrowser() {
+    // TODO
   },
 
   _setTabGroupFocus() {
@@ -141,6 +146,10 @@ TabSplit.view = {
     }
   },
 
+  _clearTabGroupFocus() {
+    // TODO
+  },
+
   _setTabGroupStyle(id) {
     let color = this._state.tabGroups[id].color;
     let tabStates = this._state.tabGroups[id].tabs;
@@ -156,6 +165,10 @@ TabSplit.view = {
       }
       tab.style.borderColor = color;
     }
+  },
+
+  _clearTabGroupStyle() {
+    // TODO
   },
 
   _refreshTabDistributions() {
@@ -184,6 +197,10 @@ TabSplit.view = {
       // No tab being split is selceted so no splitter either.
       this._cSplitter.style.display = "none";
     }
+  },
+
+  _clearTabDistributions() {
+    // TODO
   },
 
   async _orderTabPositions() {
@@ -221,21 +238,51 @@ TabSplit.view = {
     }
   },
 
+  _clearTabPositions() {
+    // TODO
+  },
+
   update(newState, tabGroupsDiff) {
     console.log("TMP> tabsplit-view - new state comes", newState, tabGroupsDiff);
+
+    if (this._state.status == "status_destroyed") {
+      throw "The current status is destroyed, please init again before updating any view";
+    }
+
     let oldState = this._state;
+    console.log("TMP> tabsplit-view - old state", oldState);
     this._state = newState;
-    
-    if (this._gBrowser.getAttribute("data-tabsplit-tabbrowser-init") != "true") {
-      console.log("TMP> tabsplit-view - Not yet init the tabbrowser");
-      return; // Not yet init the tabbrowser
+    let { status, windowWidth, selectedLinkedPanel } = this._state;
+    if (status != oldState.status) {
+      switch (status) {
+        case "status_inactive":
+          // TODO: deactivate
+          return;
+
+        case "status_destroyed":
+          // TODO: Destroy
+          return;
+
+        case "status_active":
+          this._initTabbrowser();
+          break;
+      }
+    } else if (status == "status_inactive") {
+      // The current status is inactive
+      // so return after saving the new state
+      // but we still leave a message in case of debugging.
+      console.warn(
+        "Updating view under the inactive status has no effect. " +
+        "If you really want to update view, please activate the status first."
+      );
+      return;
     }
 
     let changes = new Set();
-    if (this._state.windowWidth !== oldState.windowWidth) {
+    if (windowWidth !== oldState.windowWidth) {
       changes.add("windowWidth");
     }
-    if (this._state.selectedLinkedPanel !== oldState.selectedLinkedPanel) {
+    if (selectedLinkedPanel !== oldState.selectedLinkedPanel) {
       changes.add("selectedLinkedPanel");
     }
 
@@ -252,9 +299,8 @@ TabSplit.view = {
 
     // TODO: When clicking another visible browser,
     // the selceted browser should change accordingly <= the control's duty
-    this._refreshPanelStack();
+    this._refreshTabbrowser();
     this._setTabGroupFocus();
-
 
     if (changes.add("windowWidth")) {
       // TODO: Maybe this is useless
@@ -265,7 +311,8 @@ TabSplit.view = {
   },
 
   onStateChange(store, tabGroupsDiff) {
-    win.requestAnimationFrame(() => TabSplit.view.update(store.getState(), tabGroupsDiff));
+    console.log("TMP> tabsplit-view - onStateChange");
+    win.requestAnimationFrame(() => this.update(store.getState(), tabGroupsDiff));
   }
 };
 

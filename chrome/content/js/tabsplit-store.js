@@ -18,11 +18,13 @@ TabSplit.store = {
   // TODO: Maybe could remove this
   TAB_GROUP_ID_PREFIX: "tabsplit-tab-group-id-",
 
+  VALID_LAYOUTS: [ "column_split" ],
+
   // We do incremental id
   _tabGroupIdCount: 0,
   
   // Listeners for the state change.
-  // One listener is a function with the signature below:
+  // One listener is a object having `onStateChange` function with the signature below:
   //   - store {object} TabSplit.store
   //   - tabGroupsDiff {Object} the tabGroups state diff after the state changes.
   //        This is to let ouside quickly know what changes on tabGroups.
@@ -30,33 +32,44 @@ TabSplit.store = {
   //        - added {Array} the newly added tabGroups' id
   //        - removed {Array} the removed tabGroups' id
   //        - updated {Array} the updated tabGroups'  // TODO: Maybe this is useless
-  _listeners: new Set(),
+  _listeners: null,
 
   // This object stores the current state, which includes
-  _state: {
-    // windowWidth {Number} the current window width
-    windowWidth: -1,
-    // selectedLinkedPanel {String} the selected tab's linkedPanel attribute value
-    selectedLinkedPanel: "",
-    // tabGroupIds {Array} The array of tab group ids. The order represents tab groups' order.
-    tabGroupIds: [],
-    // tabGroups {Object} holds instances of TabGroup, see below for TabGroup. Key is tab group id.
-    // 
-    // TabGroup is one object holding info of one group of tabs being split
-    // - id {Number} this tabGroup id (Should never allow any update on the id).
-    // - color {String} #xxxxx used for visually grouping tabs
-    // - layout {String} see `VALID_LAYOUTS` for the valid values
-    // - tabs {Array} instances of Tab, see below for Tab details.
-    //                The order represents tabs' order: The smaller col comes first.
-    // 
-    // Tab is one object holding info of one split tab in one tab group
-    // - linkedPanel {String} the tab's linkedPanel attribute value
-    // - col: {Number} the column index where the tab locate. 0 is the left most column.
-    // - distribution {Number} 0 ~ 1. The percentage of window width this tab occupies
-    tabGroups: {},
-  },
+  //
+  // status {String} the status of TabSplit function, could be "status_active", "status_inactive", "status_destroyed".
+  //                 All other states will be reset if the status is "status_inactive".
+  //                 All other states and listeners will be cleared if the status is "status_destroyed".
+  //
+  // windowWidth {Number} the current window width
+  //
+  // selectedLinkedPanel {String} the selected tab's linkedPanel attribute value
+  //
+  // tabGroupIds {Array} The array of tab group ids. The order represents tab groups' order.
+  //
+  // tabGroups {Object} holds instances of TabGroup, see below for TabGroup. Key is tab group id.
+  // 
+  // TabGroup is one object holding info of one group of tabs being split
+  // - id {Number} this tabGroup id (Should never allow any update on the id).
+  // - color {String} #xxxxx used for visually grouping tabs
+  // - layout {String} see `VALID_LAYOUTS` for the valid values
+  // - tabs {Array} instances of Tab, see below for Tab details.
+  //                The order represents tabs' order: The smaller col comes first.
+  // 
+  // Tab is one object holding info of one split tab in one tab group
+  // - linkedPanel {String} the tab's linkedPanel attribute value
+  // - col: {Number} the column index where the tab locate. 0 is the left most column.
+  // - distribution {Number} 0 ~ 1. The percentage of window width this tab occupies
+  _state: null,
 
-  VALID_LAYOUTS: [ "column_split" ],
+  _resetState() {
+    this._state = {
+      status: "status_inactive",
+      windowWidth: -1,
+      selectedLinkedPanel: "",
+      tabGroupIds: [],
+      tabGroups: {},
+    };
+  },
 
   /**
    * @params params {Object}
@@ -65,6 +78,9 @@ TabSplit.store = {
   init(params) {
     let { utils } = params;
     this._utils = utils;
+    this._resetState();
+    this._tabGroupIdCount = 0;
+    this._listeners = new Set();
   },
 
   getState() {
@@ -80,6 +96,15 @@ TabSplit.store = {
    *  - type {String} the action type
    *  - value {*} the new state value. The format depends on the `type` property. 
    * The valid actions are:
+   *  - type: "set_active"
+   *  - value: null, not required
+   *
+   *  - type: "set_inactive"
+   *  - value: null, not required
+   *
+   *  - type: "set_destroyed"
+   *  - value: null, not required
+   *
    *  - type: "update_window_width"
    *  - value: {Number} the crruent window width
    *
@@ -104,8 +129,35 @@ TabSplit.store = {
     let dirty = false;
     for (let action of actions) {
       try {
+        if (this._state.status == "status_destroyed") {
+          throw "The current status is destroyed, please init again before updating any state";
+        }
+
         let v = action.value;
         switch (action.type) {
+          case "set_active":
+            if (this._state.status != "status_active") {
+              this._state.status = "status_active";
+              dirty = true;
+            } else {
+              throw "Set active on the status that is already active";
+            }
+            break;
+
+          case "set_inactive":
+            if (this._state.status == "status_active") {
+              this._state.status = "status_inactive";
+              dirty = true;
+            } else {
+              throw "Set inactive on the status that is not active";
+            }
+            break;
+
+          case "set_destroyed":
+            this._state.status = "status_destroyed";
+            dirty = true;
+            break;
+
           case "update_window_width":
             if (v <= 0) {
               throw `Invalid window width of ${v}`;
@@ -152,11 +204,25 @@ TabSplit.store = {
       }
     }
 
-    dirty && this._listeners.forEach(listener => {
-      // TODO: Should we pass a copy of `{ added, removed, updated }`
-      // in case that outside modifies these important variables?
-      listener(this, { added, removed, updated });
-    });
+    if (dirty) {
+      if (this._state.status == "status_inactive") {
+        this._resetState();
+      } else if (this._state.status == "status_destroyed") {
+        // A simple way to clear all other states except for the status state
+        this._state = { status: "status_destroyed" };
+      }
+
+      this._listeners.forEach(listener => {
+        // TODO: Should we pass a copy of `{ added, removed, updated }`
+        // in case that outside modifies these important variables?
+        listener.onStateChange(this, { added, removed, updated });
+      });
+
+      if (this._state.status == "status_destroyed") {
+        this._listeners.clear();
+        this._listeners = null;
+      }
+    }
   },
 
   /**
@@ -227,14 +293,6 @@ TabSplit.store = {
     return JSON.parse(JSON.stringify(obj));
   },
 
-  _tabsEqual(a, b) {
-    if (a.col == b.col ||
-        a.linkedPanel == b.linkedPanel) {
-      return true;
-    }
-    return false;
-  },
-
   _isValidTab(tab) {
     let { col, distribution, linkedPanel } = tab;
     if ((col < 0 || col > 1 ) ||
@@ -251,6 +309,15 @@ TabSplit.store = {
   subscribe(listener) {
     if (!this._listeners.has(listener)) {
       this._listeners.add(listener);
+    }
+  },
+
+  /**
+   * @param listener {Function} See `_listeners`
+   */
+  unsubscribe(listener) {
+    if (this._listeners.has(listener)) {
+      this._listeners.delete(listener);
     }
   },
 };
