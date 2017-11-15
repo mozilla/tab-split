@@ -148,7 +148,7 @@ TabSplit.store = {
       } catch(e) {
         console.error(`Fail at the update action of ${action.type}`);
         console.error(e);
-        break;
+        return;
       }
     }
 
