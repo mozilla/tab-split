@@ -122,7 +122,8 @@ TabSplit.store = {
    *  - type: "update_tab_distibutions".
    *  - args:
    *      - id {Number} the id of the group to update.
-   *      - distributions {Array} the new tabs' distributions
+   *      - distributions {Array} the new tabs' distributions,
+   *          the order should correspond to tabs' order in tab group
    */
   update(...actions) {
     let added = [];
@@ -283,7 +284,23 @@ TabSplit.store = {
   },
 
   _updateTabDistributions(id, distributions) {
+    let group = this._state.tabGroups[id];
+    if (!group) {
+      throw `Update tabs' distributions on unknown tab group with the id = ${id}`;
+    }
 
+    if (distributions.length != group.tabs.length) {
+      throw `Expect ${group.tabs.length} tabs' distributions to update but get ${distributions.length}`;
+    }
+
+    let sum = distributions.reduce((sum, percentage) => sum += percentage, 0);
+    if (sum != 1) {
+      throw `Expect the total tabs' distributions to be 1 but get ${distributions}`;
+    }
+
+    for (let i = group.tabs.length - 1; i >= 0; --i) {
+      group.tabs[i].distribution = distributions[i];
+    }
   },
 
   _copy(obj) {

@@ -127,6 +127,55 @@ TabSplit.control = {
     this._gBrowser.selectedTab = rightTab;
   },
 
+  _startDraggingColumnSplitter() {
+    if (this.onDraggingColumnSplitter) {
+      return;
+    } 
+    console.log("TMP> tabsplit-control - _startDraggingColumnSplitter");
+    this.onDraggingColumnSplitter = e => {
+      let mousePosX = e.clientX;
+      win.requestAnimationFrame(() => {
+        // Cannot drag the splitter and the window at the same time
+        // so safe to assume the window width is unchanged here and
+        // don't have to make a sync flow call of window.innerWidth.
+        let availableWidth = this._state.windowWidth - this._view.PX_COLUMN_SPLITTER_WIDTH;
+        // Make sure no distribution is smaller than the min distribution
+        let minDistribution = this._view.MIN_TAB_SPLIT_DISTRIBUTION;
+        let leftDistribution = mousePosX / availableWidth;
+        let rightDistribution = 1 - leftDistribution;
+        if (leftDistribution < minDistribution) {
+          leftDistribution = minDistribution;
+          rightDistribution = 1 - leftDistribution;
+        } else if (rightDistribution < minDistribution) {
+          rightDistribution = minDistribution;
+          leftDistribution = 1 - rightDistribution;
+        }
+
+        let currentGroup = this._utils.getTabGroupByLinkedPanel(this._state.selectedLinkedPanel, this._state);
+        if (currentGroup.tabs[0].distribution == leftDistribution) {
+          return; // ok, no distribution changed
+        }
+        this._store.update({
+          type: "update_tab_distibutions",
+          args: {
+            id: currentGroup.id,
+            distributions: [ leftDistribution, rightDistribution ]
+          }
+        });
+      });
+    };
+    win.addEventListener("mousemove", this.onDraggingColumnSplitter);
+  },
+
+  _stopDraggingColumnSplitter() {
+    if (!this.onDraggingColumnSplitter) {
+      return;
+    }
+    console.log("TMP> tabsplit-control - _stopDraggingColumnSplitter");
+    win.removeEventListener("mousemove", this.onDraggingColumnSplitter);
+    this.onDraggingColumnSplitter = null;
+  },
+
   /* The store listeners */
 
   onStateChange(store, tabGroupsDiff) {
@@ -160,6 +209,16 @@ TabSplit.control = {
       console.log("TMP> tabsplit-control - activate done");
     }
     this.splitTabs();
+  },
+
+  onMouseDownOnSplitter() {
+    console.log("TMP> tabsplit-control - onMouseDownOnSplitter");
+    this._startDraggingColumnSplitter();
+  },
+
+  onMouseUpOnSplitter() {
+    console.log("TMP> tabsplit-control - onMouseUpOnSplitter");
+    this._stopDraggingColumnSplitter();
   },
 
   /* The view listeners end */
@@ -197,7 +256,7 @@ TabSplit.control = {
     if (currentPanel != this._state.selectedLinkedPanel) {
       this._store.update({
         type: "update_selected_linkedPanel",
-        args: { selectedLinkedPanel: this._gBrowser.selectedTab.linkedPanel }
+        args: { selectedLinkedPanel: currentPanel }
       });
     }
   },

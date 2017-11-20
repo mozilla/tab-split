@@ -18,6 +18,8 @@ TabSplit.view = {
 
   PX_COLUMN_SPLITTER_WIDTH: 8,
 
+  MIN_TAB_SPLIT_DISTRIBUTION: 0.1,
+
   // Hold the state got from the store
   _state: null,
 
@@ -90,6 +92,10 @@ TabSplit.view = {
     this._cSplitter.classList.add("tabsplit-column-splitter");
     this._cSplitter.style.width = this.PX_COLUMN_SPLITTER_WIDTH + "px";
     appContent.appendChild(this._cSplitter);
+    this._cSplitter.addEventListener("mousedown", e => {
+      this._listener.onMouseDownOnSplitter(e);
+      win.addEventListener("mouseup", e => this._listener.onMouseUpOnSplitter(e), { once: true });
+    });
     
     this._gBrowser.setAttribute("data-tabsplit-tabbrowser-init", "true");
   },
