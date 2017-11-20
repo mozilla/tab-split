@@ -166,35 +166,40 @@ TabSplit.control = {
 
   /* The global listeners */
 
-  _tabbrowserEvents: [ "TabSwitchDone" ],
+  _chromeEvents: null,
 
   _registerChromeEvents() {
-    for (let event of this._tabbrowserEvents) {
-      this._gBrowser.addEventListener(event, this);
+    if (this._chromeEvents) {
+      return;
+    }
+    this._chromeEvents = [
+      [ this._gBrowser, "TabSwitchDone", () => this.onTabSwitchDone() ]
+    ];
+    for (let [ target, event, handler ] of this._chromeEvents) {
+      target.addEventListener(event, handler);
     }
   },
 
   _unregisterChromeEvents() {
-    for (let event of this._tabbrowserEvents) {
-      this._gBrowser.removeEventListener(event, this);
+    if (!this._chromeEvents) {
+      return;
     }
+    for (let [ target, event, handler ] of this._chromeEvents) {
+      target.removeEventListener(event, handler);
+    }
+    this._chromeEvents = null;
   },
 
-  // This only handles the tabbrowser events  
-  handleEvent(e) {
-    console.log("TMP> tabsplit-control - handleEvent - chrome event of", e.type);
-    switch (e.type) {
-      case "TabSwitchDone":
-        let currentPanel = this._gBrowser.selectedTab.linkedPanel;
-        if (currentPanel != this._state.selectedLinkedPanel) {
-          this._store.update({
-            type: "update_selected_linkedPanel",
-            args: { selectedLinkedPanel: this._gBrowser.selectedTab.linkedPanel }
-          });
-        }
-        break;
+  onTabSwitchDone() {
+    console.log("TMP> tabsplit-control - onTabSwitchDone");
+    let currentPanel = this._gBrowser.selectedTab.linkedPanel;
+    if (currentPanel != this._state.selectedLinkedPanel) {
+      this._store.update({
+        type: "update_selected_linkedPanel",
+        args: { selectedLinkedPanel: this._gBrowser.selectedTab.linkedPanel }
+      });
     }
-  }, 
+  },
 
   /* The global listeners end */
 };
