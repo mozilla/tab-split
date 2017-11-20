@@ -71,10 +71,10 @@ TabSplit.control = {
         type: "set_active"
       },{
         type: "update_window_width",
-        value: win.innerWidth
+        args: { windowWidth: win.innerWidth }
       }, {
         type: "update_selected_linkedPanel",
-        value: this._gBrowser.selectedTab.linkedPanel
+        args: { selectedLinkedPanel: this._gBrowser.selectedTab.linkedPanel }
       });
     });
   },
@@ -90,12 +90,12 @@ TabSplit.control = {
     let leftTab = this._gBrowser.selectedTab;
     let rightTab = this._gBrowser.addTab("about:newtab");
     this._gBrowser.addEventListener("TabSwitchDone", () => {
-      let newGroup = {};
+      let newTabGroup = {};
       // TODO: A temp way to pick out a color
       this._currentTabColorIndex = (this._currentTabColorIndex + 1) % this._tabColors.length;
-      newGroup.color = this._tabColors[this._currentTabColorIndex];
-      newGroup.layout = "column_split";
-      newGroup.tabs = [
+      newTabGroup.color = this._tabColors[this._currentTabColorIndex];
+      newTabGroup.layout = "column_split";
+      newTabGroup.tabs = [
         {
           linkedPanel: leftTab.linkedPanel,
           col: 0,
@@ -108,7 +108,7 @@ TabSplit.control = {
       ];
       this._store.update({
         type: "add_tab_group",
-        value: newGroup
+        args: { newTabGroup }
       });
     }, { once: true });
     this._gBrowser.selectedTab = rightTab;
@@ -160,7 +160,7 @@ TabSplit.control = {
         if (currentPanel != this._state.selectedLinkedPanel) {
           this._store.update({
             type: "update_selected_linkedPanel",
-            value: currentPanel
+            args: { selectedLinkedPanel: this._gBrowser.selectedTab.linkedPanel }
           });
         }
         break;

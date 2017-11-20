@@ -37,8 +37,6 @@ TabSplit.store = {
   // This object stores the current state, which includes
   //
   // status {String} the status of TabSplit function, could be "status_active", "status_inactive", "status_destroyed".
-  //                 All other states will be reset if the status is "status_inactive".
-  //                 All other states and listeners will be cleared if the status is "status_destroyed".
   //
   // windowWidth {Number} the current window width
   //
@@ -94,31 +92,35 @@ TabSplit.store = {
    *
    * Action is an object describing the state update action, holding:
    *  - type {String} the action type
-   *  - value {*} the new state value. The format depends on the `type` property. 
+   *  - args {Object} holding args for this action. The content depends on the `type` property. 
    * The valid actions are:
    *  - type: "set_active"
-   *  - value: null, not required
+   *  - args: null, not required
    *
-   *  - type: "set_inactive"
-   *  - value: null, not required
+   *  - type: "set_inactive"; this will reset all other states
+   *  - args: null, not required
    *
-   *  - type: "set_destroyed"
-   *  - value: null, not required
+   *  - type: "set_destroyed"; this will clear all other states and listeners
+   *  - args: null, not required
    *
    *  - type: "update_window_width"
-   *  - value: {Number} the crruent window width
+   *  - args:
+   *      - windowWidth {Number} the crruent window width
    *
    *  - type: "update_selected_linkedPanel"
-   *    value: {String} see `selectedLinkedPanel` in `_state`
+   *  - args: 
+   *      - selectedLinkedPanel {String} see `selectedLinkedPanel` in `_state`
    *
    *  - type: "add_tab_group". This will add to the end.
-   *    value: {Object} see TabGroup in `_state`
+   *  - args:
+   *      - newTabGroup {Object} see TabGroup in `_state`
    *
    *  - type: "remove_tab_group"
-   *    value: {Number} the id of tabGroup in `_state`
+   *  - args:
+   *      - id {Number} the id of tabGroup in `_state`
    *
    *  - type: "update_tab_distibutions".
-   *    value:
+   *  - args:
    *      - id {Number} the id of the group to update.
    *      - distributions {Array} the new tabs' distributions
    */
@@ -133,7 +135,7 @@ TabSplit.store = {
           throw "The current status is destroyed, please init again before updating any state";
         }
 
-        let v = action.value;
+        let args = action.args;
         switch (action.type) {
           case "set_active":
             if (this._state.status != "status_active") {
@@ -159,38 +161,38 @@ TabSplit.store = {
             break;
 
           case "update_window_width":
-            if (v <= 0) {
+            if (args.windowWidth <= 0) {
               throw `Invalid window width of ${v}`;
             }
-            if (v !== this._state.windowWidth) {
-              this._state.windowWidth = v;
+            if (args.windowWidth !== this._state.windowWidth) {
+              this._state.windowWidth = args.windowWidth;
               dirty = true;
             }
             break;
 
           case "update_selected_linkedPanel":
-            if (!this._utils.getTabByLinkedPanel(v)) {
-              throw `Unknown selected linkedPanel of ${v}`;
+            if (!this._utils.getTabByLinkedPanel(args.selectedLinkedPanel)) {
+              throw `Unknown selected linkedPanel of ${args.selectedLinkedPanel}`;
             }
-            this._state.selectedLinkedPanel = v;
+            this._state.selectedLinkedPanel = args.selectedLinkedPanel;
             dirty = true;
             break;
 
           case "add_tab_group":
-            let newId = this._addTabGroup(v);
+            let newId = this._addTabGroup(args.newTabGroup);
             added.push(newId);
             dirty = true;
             break;
 
           case "remove_tab_group":
-            this._removeTabGroup(v);
+            this._removeTabGroup(args.id);
             removed.push(v);
             dirty = true;
             break;
 
           case "update_tab_distibutions":
-            this._updateTabDistributions(v.id, v.distributions);
-            updated.push(v.id);
+            this._updateTabDistributions(args.id, args.distributions);
+            updated.push(args.id);
             dirty = true;
             break;
 
