@@ -340,7 +340,8 @@ TabSplit.view = {
 
   onStateChange(store, tabGroupsDiff) {
     console.log("TMP> tabsplit-view - onStateChange");
-    win.requestAnimationFrame(() => this.update(store.getState(), tabGroupsDiff));
+    let state = store.getState();
+    win.requestAnimationFrame(() => this.update(state, tabGroupsDiff));
   }
 };
 
