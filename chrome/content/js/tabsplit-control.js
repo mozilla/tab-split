@@ -173,7 +173,8 @@ TabSplit.control = {
       return;
     }
     this._chromeEvents = [
-      [ this._gBrowser, "TabSwitchDone", () => this.onTabSwitchDone() ]
+      [ this._gBrowser, "TabSwitchDone", () => this.onTabSwitchDone() ],
+      [ win, "resize", () => this.onWindowResize() ]
     ];
     for (let [ target, event, handler ] of this._chromeEvents) {
       target.addEventListener(event, handler);
@@ -199,6 +200,15 @@ TabSplit.control = {
         args: { selectedLinkedPanel: this._gBrowser.selectedTab.linkedPanel }
       });
     }
+  },
+
+  onWindowResize() {
+    win.requestAnimationFrame(() => {
+      this._store.update({
+        type: "update_window_width",
+        args: { windowWidth: win.innerWidth }
+      });
+    });
   },
 
   /* The global listeners end */
