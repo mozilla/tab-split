@@ -47,7 +47,7 @@ TabSplit.view = {
 
   _addTabSplitButton(onClick) {
     if (!CustomizableUI.getPlacementOfWidget(this.ID_TABSPLIT_BUTTON)) {
-      console.log('TMP> tabsplit-view - Creating customizable wisget');
+      console.log('TMP> tabsplit-view - _addTabSplitButton');
       CustomizableUI.createWidget({
         id: this.ID_TABSPLIT_BUTTON,
         type: "button",
@@ -62,7 +62,9 @@ TabSplit.view = {
   },
 
   _removeTabSplitButton() {
-    // TODO
+    console.log('TMP> tabsplit-view - _removeTabSplitButton');
+    CustomizableUI.removeWidgetFromArea(this.ID_TABSPLIT_BUTTON);
+    CustomizableUI.destroyWidget(this.ID_TABSPLIT_BUTTON);
   },
 
   _initTabbrowser() {
@@ -71,7 +73,7 @@ TabSplit.view = {
     // The `-moz-stack` display enables rendering multiple web pages at the same time.
     // Howevre, the active web page may be covered by inactive pages on top of the stack
     // so have to hide inactive pages to reveal the active page.
-    let selectedPanel = this._gBrowser.selectedTab.linkedPanel;
+    let selectedPanel = this._state.selectedLinkedPanel;
     let boxes = this._utils.getNotificationboxes();
     boxes.forEach(box => {
       if (box.id != selectedPanel) {
@@ -83,10 +85,10 @@ TabSplit.view = {
 
     // Append the splitter
     let appContent = this._gBrowser.parentNode;
+    appContent.classList.add("tabsplit-spliter-container");
     this._cSplitter = document.createElement("vbox");
     this._cSplitter.classList.add("tabsplit-column-splitter");
     this._cSplitter.style.width = this.PX_COLUMN_SPLITTER_WIDTH + "px";
-    appContent.classList.add("tabsplit-spliter-container");
     appContent.appendChild(this._cSplitter);
     
     this._gBrowser.setAttribute("data-tabsplit-tabbrowser-init", "true");
@@ -127,7 +129,25 @@ TabSplit.view = {
   },
 
   _uninitTabbrowser() {
-    // TODO
+    console.log("TMP> tabsplit-view - _uninitTabbrowser");
+    // Clear the display stack
+    this._panelContainer.style.display = "";
+    this._panelContainer = null;
+    let selectedPanel = this._gBrowser.selectedTab.linkedPanel;
+    let boxes = this._utils.getNotificationboxes();
+    boxes.forEach(box => {
+      let browser = this._utils.getBrowserByNotificationbox(box);
+      browser.docShellIsActive = box.id == selectedPanel;
+      box.style.visibility = "";
+    });
+
+    this._cSplitter.remove();
+    this._cSplitter = null;
+
+    let appContent = this._gBrowser.parentNode;
+    appContent.classList.remove("tabsplit-spliter-container");
+
+    this._gBrowser.removeAttribute("data-tabsplit-tabbrowser-init");
   },
 
   _setTabGroupFocus() {
@@ -147,7 +167,9 @@ TabSplit.view = {
   },
 
   _clearTabGroupFocus() {
-    // TODO
+    console.log("TMP> tabsplit-view - _clearTabGroupFocus");
+    let boxes = this._utils.getNotificationboxes();
+    boxes.forEach(box => box.classList.remove("tabsplit-focus"));
   },
 
   _setTabGroupStyle(id) {
@@ -168,7 +190,12 @@ TabSplit.view = {
   },
 
   _clearTabGroupStyle() {
-    // TODO
+    console.log("TMP> tabsplit-view - _clearTabGroupStyle");
+    this._gBrowser.visibleTabs.forEach(tab => {
+      tab.removeAttribute("data-tabsplit-tab-group-id");
+      tab.classList.remove("tabsplit-tab", "tabsplit-tab-first", "tabsplit-tab-last");
+      tab.style.borderColor = "";
+    });
   },
 
   _refreshTabDistributions() {
@@ -200,7 +227,9 @@ TabSplit.view = {
   },
 
   _clearTabDistributions() {
-    // TODO
+    console.log("TMP> tabsplit-view - _clearTabDistributions");
+    let boxes = this._utils.getNotificationboxes();
+    boxes.forEach(box => box.style.marginLeft = box.style.marginRight = "");
   },
 
   async _orderTabPositions() {
@@ -238,10 +267,6 @@ TabSplit.view = {
     }
   },
 
-  _clearTabPositions() {
-    // TODO
-  },
-
   update(newState, tabGroupsDiff) {
     console.log("TMP> tabsplit-view - new state comes", newState, tabGroupsDiff);
 
@@ -256,7 +281,10 @@ TabSplit.view = {
     if (status != oldState.status) {
       switch (status) {
         case "status_inactive":
-          // TODO: deactivate
+          this._uninitTabbrowser();
+          this._clearTabGroupFocus();
+          this._clearTabGroupStyle();
+          this._clearTabDistributions();
           return;
 
         case "status_destroyed":

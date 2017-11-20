@@ -15,6 +15,10 @@ let TabSplit = win.TabSplit;
 
 TabSplit.control = {
 
+  MS_MAX_IDLE_DURATION: 1000 * 60 * 10, // 10 mins
+
+  _lastTimeBeingActive: -1,
+
   /**
    * @params params {Object}
    *    - view {Objec} TabSplit.view
@@ -53,6 +57,7 @@ TabSplit.control = {
         resolve();
         return;
       }
+      this._lastTimeBeingActive = Date.now();
       
       // Make sure seeing the view successfully inits the tabbrowser
       let obs = new MutationObserver(mutations => {
@@ -76,6 +81,14 @@ TabSplit.control = {
         type: "update_selected_linkedPanel",
         args: { selectedLinkedPanel: this._gBrowser.selectedTab.linkedPanel }
       });
+    });
+  },
+
+  deactivate() {
+    this._lastTimeBeingActive = -1;
+    this._unregisterChromeEvents();
+    this._store.update({
+      type: "set_inactive"
     });
   },
 
@@ -118,6 +131,21 @@ TabSplit.control = {
 
   onStateChange(store, tabGroupsDiff) {
     this._state = store.getState();
+    let { status, tabGroupIds } = this._state;
+    if (tabGroupIds && tabGroupIds.length > 0) {
+      this._lastTimeBeingActive = Date.now();
+    } else {
+      // Consider users used our tabsplit feature happily for 1 hr,
+      // then users didn't use in the next 3 hrs.
+      // In this case we should put ourselves into the inactive state 
+      // so no redundant burden and risk to manipulate with tab browsing behavior.
+      if (status == "status_active" &&
+          Date.now() - this._lastTimeBeingActive > this.MS_MAX_IDLE_DURATION) {
+        console.log("TMP> tabsplit-control - onStateChange - put into inactive");
+        this.deactivate();
+        return;
+      }
+    }
   },
 
   /* The store listeners end */
@@ -138,20 +166,21 @@ TabSplit.control = {
 
   /* The global listeners */
 
-  _chromeEvents: [ "TabSwitchDone" ],
+  _tabbrowserEvents: [ "TabSwitchDone" ],
 
   _registerChromeEvents() {
-    for (let event of this._chromeEvents) {
+    for (let event of this._tabbrowserEvents) {
       this._gBrowser.addEventListener(event, this);
     }
   },
 
   _unregisterChromeEvents() {
-    for (let event of this._chromeEvents) {
+    for (let event of this._tabbrowserEvents) {
       this._gBrowser.removeEventListener(event, this);
     }
   },
 
+  // This only handles the tabbrowser events  
   handleEvent(e) {
     console.log("TMP> tabsplit-control - handleEvent - chrome event of", e.type);
     switch (e.type) {
