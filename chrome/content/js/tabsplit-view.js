@@ -156,6 +156,34 @@ TabSplit.view = {
     this._gBrowser.removeAttribute("data-tabsplit-tabbrowser-init");
   },
 
+  _observeClickOnWebPageSplit() {
+    this._unobserveClickOnWebPageSplit();
+    this._NotificationboxClickHandlers = [];
+    let group = this._utils.getTabGroupByLinkedPanel(this._state.selectedLinkedPanel, this._state);
+    if (group) {
+      group.tabs.forEach(tabState => {
+        let linkedPanel = tabState.linkedPanel;
+        let handler = () => this._listener.onClickWebPageSplit(linkedPanel);
+        let box = this._utils.getNotificationboxByLinkedPanel(linkedPanel);
+        box.addEventListener("click", handler);
+        this._NotificationboxClickHandlers.push([ linkedPanel, handler ]);
+      });
+    }
+  },
+
+  _unobserveClickOnWebPageSplit() {
+    if (!this._NotificationboxClickHandlers) {
+      return;
+    }
+    for (let [ linkedPanel, handler ] of this._NotificationboxClickHandlers) {
+      let box = this._utils.getNotificationboxByLinkedPanel(linkedPanel);
+      if (box) {
+        box.removeEventListener("click", handler);
+      }
+    }
+    this._NotificationboxClickHandlers = null;
+  },
+
   _setTabGroupFocus() {
     let selectedPanel = this._state.selectedLinkedPanel;
     let selectedGroup = this._utils.getTabGroupByLinkedPanel(selectedPanel, this._state);
@@ -291,6 +319,7 @@ TabSplit.view = {
           this._clearTabGroupFocus();
           this._clearTabGroupStyle();
           this._clearTabDistributions();
+          this._unobserveClickOnWebPageSplit();
           return;
 
         case "status_destroyed":
@@ -342,6 +371,7 @@ TabSplit.view = {
 
     this._refreshTabDistributions();
     this._orderTabPositions();
+    this._observeClickOnWebPageSplit();
   },
 
   onStateChange(store, tabGroupsDiff) {

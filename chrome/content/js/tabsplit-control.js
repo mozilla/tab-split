@@ -221,6 +221,12 @@ TabSplit.control = {
     this._stopDraggingColumnSplitter();
   },
 
+  onClickWebPageSplit(linkedPanel) {
+    if (linkedPanel != this._state.selectedLinkedPanel) {
+      gBrowser.selectedTab = this._utils.getTabByLinkedPanel(linkedPanel);
+    }
+  },
+
   /* The view listeners end */
 
   /* The global listeners */
