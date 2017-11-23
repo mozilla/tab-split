@@ -206,12 +206,19 @@ TabSplit.view = {
     boxes.forEach(box => box.classList.remove("tabsplit-focus"));
   },
 
-  _setTabGroupStyle(id) {
+  _initTab(id) {
+    if (!this._tabListeners) {
+      this._tabListeners = {};
+    }
     let color = this._state.tabGroups[id].color;
     let tabStates = this._state.tabGroups[id].tabs;
     let len = tabStates.length;
     for (let i = 0; i < len; i++) {
       let tab = this._utils.getTabByLinkedPanel(tabStates[i].linkedPanel);
+      if (tab.hasAttribute("data-tabsplit-tab-group-id")) {
+        // ok, we are facing re-init tab request, uninit fisrt.
+        this._uninitTab(tab);
+      }
       tab.setAttribute("data-tabsplit-tab-group-id", id);
       tab.classList.add("tabsplit-tab");
       if (i == 0) {
@@ -220,16 +227,27 @@ TabSplit.view = {
         tab.classList.add("tabsplit-tab-last");
       }
       tab.style.borderColor = color;
+      this._tabListeners[tab.linkedPanel] = e => this._listener.onCloseTabBeingSplit(e);
+      tab.addEventListener("TabClose", this._tabListeners[tab.linkedPanel]);
     }
   },
 
-  _clearTabGroupStyle() {
-    console.log("TMP> tabsplit-view - _clearTabGroupStyle");
-    this._gBrowser.visibleTabs.forEach(tab => {
-      tab.removeAttribute("data-tabsplit-tab-group-id");
-      tab.classList.remove("tabsplit-tab", "tabsplit-tab-first", "tabsplit-tab-last");
-      tab.style.borderColor = "";
-    });
+  _uninitTab(tab) {
+    if (!tab.hasAttribute("data-tabsplit-tab-group-id")) {
+      return;
+    }
+    console.log("TMP> tabsplit-view - _uninitTab");
+    tab.removeAttribute("data-tabsplit-tab-group-id");
+    tab.classList.remove("tabsplit-tab", "tabsplit-tab-first", "tabsplit-tab-last");
+    tab.style.borderColor = "";
+    tab.removeEventListener("TabClose", this._tabListeners[tab.linkedPanel]);
+    delete this._tabListeners[tab.linkedPanel];
+  },
+
+  _uninitTabsAll() {
+    console.log("TMP> tabsplit-view - _uninitTabsAll");
+    this._gBrowser.visibleTabs.forEach(tab => this._uninitTab(tab));
+    this._tabListeners = null;
   },
 
   _refreshTabDistributions() {
@@ -316,8 +334,8 @@ TabSplit.view = {
       switch (status) {
         case "status_inactive":
           this._uninitTabbrowser();
+          this._uninitTabsAll();
           this._clearTabGroupFocus();
-          this._clearTabGroupStyle();
           this._clearTabDistributions();
           this._unobserveClickOnWebPageSplit();
           return;
@@ -350,11 +368,23 @@ TabSplit.view = {
     }
 
     let { added, removed, updated } = tabGroupsDiff;
-    if (removed.length > 0) {
-      // TODO: Recover tabs
+
+    if (removed.length) {
+      removed.forEach(id => {
+        let group = oldState.tabGroups[id];
+        group.tabs.forEach(tabState => {
+          let tab = this._utils.getTabByLinkedPanel(tabState.linkedPanel);
+          // It's possible to find no tab because the tab was closed
+          if (tab) {
+            this._uninitTab(tab);
+          }
+        });
+      });
+      this._clearTabGroupFocus();
+      this._clearTabDistributions();
     }
 
-    added.forEach(id => this._setTabGroupStyle(id));
+    added.forEach(id => this._initTab(id));
 
     if (updated.length > 0) {
       // TODO: Maybe this is useless

@@ -127,6 +127,17 @@ TabSplit.control = {
     this._gBrowser.selectedTab = rightTab;
   },
 
+  unsplitTab(tabGroupId) {
+    let group = this._state.tabGroups[tabGroupId];
+    if (group) {
+      console.log("TMP> tabsplit-control - unsplitTab");
+      this._store.update({
+        type: "remove_tab_group",
+        args: { id: group.id }
+      });
+    }
+  },
+
   _startDraggingColumnSplitter() {
     if (this.onDraggingColumnSplitter) {
       return;
@@ -225,6 +236,24 @@ TabSplit.control = {
     if (linkedPanel != this._state.selectedLinkedPanel) {
       gBrowser.selectedTab = this._utils.getTabByLinkedPanel(linkedPanel);
     }
+  },
+
+  async onCloseTabBeingSplit(e) {
+    let closedPanel = e.target.linkedPanel;
+    let groupId = e.target.getAttribute("data-tabsplit-tab-group-id");
+    if (this._state.selectedLinkedPanel ==  closedPanel) {
+      // For a whole tab closing operation, we will see 2 chrome events:
+      // 1. the "TabClose" event for the tab being closed, which the view tells through this event
+      // 2. the "TabSwitchDone" event, which is fired for when switching to another tab
+      // We cannot guarantee which event comes first so if see the selected tab is still the tab closed,
+      // we should wait until seeing the tab switching done, then proceed.
+      // This is to ensure when updating the store and the view, the selceted tab state is finalized.
+      console.log("TMP> tabsplit-control - onCloseTabBeingSplit - waiting TabSwitchDone");
+      await new Promise(resolve => {
+        this._gBrowser.addEventListener("TabSwitchDone", resolve, { once: true });
+      });
+    }
+    this.unsplitTab(groupId);
   },
 
   /* The view listeners end */

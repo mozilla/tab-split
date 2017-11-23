@@ -187,7 +187,7 @@ TabSplit.store = {
 
           case "remove_tab_group":
             this._removeTabGroup(args.id);
-            removed.push(v);
+            removed.push(args.id);
             dirty = true;
             break;
 
@@ -280,7 +280,12 @@ TabSplit.store = {
   },
 
   _removeTabGroup(id) {
-
+    let i = this._state.tabGroupIds.indexOf(id);
+    if (i < 0) {
+      throw `Remove unknow tab group with id = ${id}`;
+    }
+    this._state.tabGroupIds.splice(i, 1);
+    delete this._state.tabGroups[id];
   },
 
   _updateTabDistributions(id, distributions) {
