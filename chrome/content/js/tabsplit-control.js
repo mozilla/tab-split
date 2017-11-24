@@ -219,6 +219,13 @@ TabSplit.control = {
       await this.activate(); // Lazy active
       console.log("TMP> tabsplit-control - activate done");
     }
+    // TMP: Toggle split mode
+    let group = this._utils.getTabGroupByLinkedPanel(this._state.selectedLinkedPanel, this._state);
+    if (group) {
+      this.unsplitTab(group.id);
+      return;
+    }
+    // TMP end
     this.splitTabs();
   },
 
