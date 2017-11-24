@@ -32,6 +32,7 @@ TabSplit.control = {
     this._store = store;
     this._utils = utils;
     this._gBrowser = gBrowser;
+    this._isClosingTab = false;
 
     this._utils.init({
       gBrowser
@@ -87,6 +88,7 @@ TabSplit.control = {
   deactivate() {
     this._lastTimeBeingActive = -1;
     this._unregisterChromeEvents();
+    this._restoreChromeBehaviors();
     this._store.update({
       type: "set_inactive"
     });
@@ -239,36 +241,54 @@ TabSplit.control = {
     this._stopDraggingColumnSplitter();
   },
 
-  onClickWebPageSplit(linkedPanel) {
+  onClickPageSplit(linkedPanel) {
     if (linkedPanel != this._state.selectedLinkedPanel) {
       gBrowser.selectedTab = this._utils.getTabByLinkedPanel(linkedPanel);
     }
   },
 
-  async onCloseTabBeingSplit(e) {
-    let closedPanel = e.target.linkedPanel;
-    let groupId = e.target.getAttribute("data-tabsplit-tab-group-id");
-    if (this._state.selectedLinkedPanel == closedPanel) {
-      // For a whole tab closing operation, we will see 2 chrome events:
-      // 1. the "TabClose" event for the tab being closed, which the view tells through this event
-      // 2. the "TabSwitchDone" event, which is fired for when switching to another tab
-      // We cannot guarantee which event comes first so if see the selected tab is still the tab closed,
-      // we should wait until seeing the tab switching done, then proceed.
-      // This is to ensure when updating the store and the view, the selceted tab state is finalized.
-      console.log("TMP> tabsplit-control - onCloseTabBeingSplit - waiting TabSwitchDone");
-      await new Promise(resolve => {
-        let listener = {
-          onStateChange(store) {
-            if (store.getState().selectedLinkedPanel != closedPanel) {
-              store.unsubscribe(listener);
+  async onClosingTabBeingSplit(e) {
+    this._isClosingTab = true;
+
+    let promises = [];
+    let tabClosing = e.target;
+    let groupId = tabClosing.getAttribute("data-tabsplit-tab-group-id");
+
+    // For a whole tab closing job, we will see 2 operations:
+    // 1. Switch to another tab if it is the current selected tab being closed
+    // 2. Remove the tab from the DOM tree
+    // We must wait these operations done then proceed to make sure the state correct.
+    if (this._state.selectedLinkedPanel == tabClosing.linkedPanel) {
+      promises.push(new Promise(resolve => {
+        this._gBrowser.addEventListener("TabSwitchDone", resolve, { once: true });
+      }));
+    }
+    if (this._gBrowser.tabContainer.querySelector(`tab[linkedpanel=${tabClosing.linkedPanel}]`)) {
+      promises.push(new Promise(resolve => {
+        let obs = new MutationObserver(mutations => {
+          for (let m of mutations) {
+            let nodes = Array.from(m.removedNodes);
+            let found = !!nodes.find(node => node.linkedPanel == tabClosing.linkedPanel);
+            if (found) {
+              obs.disconnect();
               resolve();
+              break;
             }
           }
-        };
-        this._store.subscribe(listener);
-      });
+        });
+        obs.observe(this._gBrowser.tabContainer, { childList: true, subtree: true });
+      }));
     }
-    this.unsplitTab(groupId);
+    await Promise.all(promises);
+
+    this._store.update({
+      type: "update_selected_linkedPanel",
+      args: { selectedLinkedPanel: this._gBrowser.selectedTab.linkedPanel }
+    }, {
+      type: "remove_tab_group",
+      args: { id: groupId }
+    });
+    this._isClosingTab = false;
   },
 
   /* The view listeners end */
@@ -303,7 +323,8 @@ TabSplit.control = {
   onTabSwitchDone() {
     console.log("TMP> tabsplit-control - onTabSwitchDone");
     let currentPanel = this._gBrowser.selectedTab.linkedPanel;
-    if (currentPanel != this._state.selectedLinkedPanel) {
+    // While closing tab, the tab closing event will handle the TabSwitch event.
+    if (!this._isClosingTab && currentPanel != this._state.selectedLinkedPanel) {
       this._store.update({
         type: "update_selected_linkedPanel",
         args: { selectedLinkedPanel: currentPanel }

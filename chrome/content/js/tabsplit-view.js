@@ -156,31 +156,33 @@ TabSplit.view = {
     this._gBrowser.removeAttribute("data-tabsplit-tabbrowser-init");
   },
 
-  _observeClickOnWebPageSplit() {
-    this._unobserveClickOnWebPageSplit();
-    this._NotificationboxClickHandlers = [];
-    let group = this._utils.getTabGroupByLinkedPanel(this._state.selectedLinkedPanel, this._state);
-    if (group) {
-      group.tabs.forEach(tabState => {
-        let linkedPanel = tabState.linkedPanel;
-        let handler = () => this._listener.onClickWebPageSplit(linkedPanel);
-        let box = this._utils.getNotificationboxByLinkedPanel(linkedPanel);
-        box.addEventListener("click", handler);
-        this._NotificationboxClickHandlers.push([ linkedPanel, handler ]);
-      });
+  _addSplitPageClickListener(linkedPanel) {
+    if (!this._NotificationboxClickHandlers) {
+      this._NotificationboxClickHandlers = {};
+    }
+    if (this._NotificationboxClickHandlers[linkedPanel]) {
+      return;
+    }
+    let box = this._utils.getNotificationboxByLinkedPanel(linkedPanel);
+    if (box) {
+      this._NotificationboxClickHandlers[linkedPanel] = 
+        () => this._listener.onClickPageSplit(linkedPanel);
+      box.addEventListener("click", this._NotificationboxClickHandlers[linkedPanel]);
     }
   },
 
-  _unobserveClickOnWebPageSplit() {
-    if (!this._NotificationboxClickHandlers) {
+  _removeSplitPageClickListener(linkedPanel) {
+    if (!this._NotificationboxClickHandlers || !this._NotificationboxClickHandlers[linkedPanel]) {
       return;
     }
-    for (let [ linkedPanel, handler ] of this._NotificationboxClickHandlers) {
-      let box = this._utils.getNotificationboxByLinkedPanel(linkedPanel);
-      if (box) {
-        box.removeEventListener("click", handler);
-      }
+    let box = this._utils.getNotificationboxByLinkedPanel(linkedPanel);
+    if (box) {
+      box.removeEventListener("click", this._NotificationboxClickHandlers[linkedPanel]);
     }
+  },
+
+  _clearSplitPageClickListeners() {
+    this._gBrowser.visibleTabs.forEach(tab => this._removeSplitPageClickListener(tab.linkedPanel));
     this._NotificationboxClickHandlers = null;
   },
 
@@ -188,7 +190,7 @@ TabSplit.view = {
     let selectedPanel = this._state.selectedLinkedPanel;
     let selectedGroup = this._utils.getTabGroupByLinkedPanel(selectedPanel, this._state);
     if (selectedGroup) {
-      console.log("TMP> tabsplit-view - _switchFocus");
+      console.log("TMP> tabsplit-view - _setTabGroupFocus");
       selectedGroup.tabs.forEach(tabState => {
         let box = this._utils.getNotificationboxByLinkedPanel(tabState.linkedPanel);
         if (tabState.linkedPanel == selectedPanel) {
@@ -227,7 +229,7 @@ TabSplit.view = {
         tab.classList.add("tabsplit-tab-last");
       }
       tab.style.borderColor = color;
-      this._tabListeners[tab.linkedPanel] = e => this._listener.onCloseTabBeingSplit(e);
+      this._tabListeners[tab.linkedPanel] = e => this._listener.onClosingTabBeingSplit(e);
       tab.addEventListener("TabClose", this._tabListeners[tab.linkedPanel]);
     }
   },
@@ -308,18 +310,19 @@ TabSplit.view = {
     for (let i = 0; i < expectations.length; i++) {
       await new Promise(resolve => {
         let [ linkedPanel, pos ] = expectations[i];
-        if (this._gBrowser.visibleTabs[pos].linkedPanel == linkedPanel) {
+        let actualTab = this._gBrowser.visibleTabs[pos];
+        let expectedTab = this._utils.getTabByLinkedPanel(linkedPanel);
+        if (!expectedTab || (actualTab && expectedTab.linkedPanel == actualTab.linkedPanel)) {
           resolve();
           return;
         }
-        let tab = this._utils.getTabByLinkedPanel(linkedPanel);
-        tab.addEventListener("TabMove", resolve, { once: true });
-        this._gBrowser.moveTabTo(tab, pos);
+        expectedTab.addEventListener("TabMove", resolve, { once: true });
+        this._gBrowser.moveTabTo(expectedTab, pos);
       });
     }
   },
 
-  update(newState, tabGroupsDiff) {
+  async update(newState, tabGroupsDiff) {
     console.log("TMP> tabsplit-view - new state comes", newState, tabGroupsDiff);
 
     if (this._state.status == "status_destroyed") {
@@ -327,7 +330,6 @@ TabSplit.view = {
     }
 
     let oldState = this._state;
-    console.log("TMP> tabsplit-view - old state", oldState);
     this._state = newState;
     let { status, windowWidth, selectedLinkedPanel } = this._state;
     if (status != oldState.status) {
@@ -337,7 +339,7 @@ TabSplit.view = {
           this._uninitTabsAll();
           this._clearTabGroupFocus();
           this._clearTabDistributions();
-          this._unobserveClickOnWebPageSplit();
+          this._clearSplitPageClickListeners();
           return;
 
         case "status_destroyed":
@@ -377,6 +379,7 @@ TabSplit.view = {
           // It's possible to find no tab because the tab was closed
           if (tab) {
             this._uninitTab(tab);
+            this._removeSplitPageClickListener(tabState.linkedPanel)
           }
         });
       });
@@ -384,7 +387,11 @@ TabSplit.view = {
       this._clearTabDistributions();
     }
 
-    added.forEach(id => this._initTab(id));
+    added.forEach(id => { 
+      this._initTab(id);
+      let group = this._state.tabGroups[id];
+      group.tabs.forEach(tabState => this._addSplitPageClickListener(tabState.linkedPanel));
+    });
 
     if (updated.length > 0) {
       // TODO: Maybe this is useless
@@ -401,7 +408,6 @@ TabSplit.view = {
 
     this._refreshTabDistributions();
     this._orderTabPositions();
-    this._observeClickOnWebPageSplit();
   },
 
   onStateChange(store, tabGroupsDiff) {
