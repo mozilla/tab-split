@@ -35,9 +35,13 @@ TabSplit.utils = {
   },
 
   getTabGroupByLinkedPanel(linkedPanel, state) {
-    let id = state.tabGroupIds.find(id => {
-      return !!state.tabGroups[id].tabs.find(t => t.linkedPanel == linkedPanel);
-    });
+    let id = null;
+    let visibleTabs = this._gBrowser.visibleTabs;
+    for (let i = visibleTabs.length - 1; i >= 0; i--) {
+      if (visibleTabs[i].linkedPanel == linkedPanel) {
+        id = visibleTabs[i].getAttribute("data-tabsplit-tab-group-id");
+      }
+    }
     return id ? state.tabGroups[id] : null;
   },
 
