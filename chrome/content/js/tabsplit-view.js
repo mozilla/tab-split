@@ -26,9 +26,6 @@ TabSplit.view = {
   // The column splitter
   _cSplitter: null,
 
-  // <xul:tabpanels anonid="panelcontainer">
-  _panelContainer: null,
-
   /**
    * @params params {Object}
    *    - store {Objec} TabSplit.store
@@ -82,8 +79,7 @@ TabSplit.view = {
         box.style.visibility = "hidden";
       }
     });
-    this._panelContainer = document.getAnonymousElementByAttribute(this._gBrowser, "anonid", "panelcontainer");
-    this._panelContainer.style.display = "-moz-stack";
+    gBrowser.mPanelContainer.style.display = "-moz-stack"; // <xul:tabpanels anonid="panelcontainer">
 
     // Append the splitter
     let appContent = this._gBrowser.parentNode;
@@ -100,16 +96,15 @@ TabSplit.view = {
     this._gBrowser.setAttribute("data-tabsplit-tabbrowser-init", "true");
   },
 
-  _refreshTabbrowser() {
+  _refreshTabbrowser(selectedTabGroup) {
     console.log("TMP> tabsplit-view - _refreshTabbrowser");
 
     let selectedPanel = this._state.selectedLinkedPanel;
-    let selectedGroup = this._utils.getTabGroupByLinkedPanel(selectedPanel, this._state);
     let activePanels = [ selectedPanel ];
-    if (selectedGroup) {
+    if (selectedTabGroup) {
       // Now the selected tab is in one tab-split group,
       // so there are multiple active panels.
-      activePanels = selectedGroup.tabs.map(tab => tab.linkedPanel);
+      activePanels = selectedTabGroup.tabs.map(tab => tab.linkedPanel);
     }
 
     let boxes = this._utils.getNotificationboxes();
@@ -137,8 +132,7 @@ TabSplit.view = {
   _uninitTabbrowser() {
     console.log("TMP> tabsplit-view - _uninitTabbrowser");
     // Clear the display stack
-    this._panelContainer.style.display = "";
-    this._panelContainer = null;
+    gBrowser.mPanelContainer.style.display = "";
     let selectedPanel = this._gBrowser.selectedTab.linkedPanel;
     let boxes = this._utils.getNotificationboxes();
     boxes.forEach(box => {
@@ -186,12 +180,11 @@ TabSplit.view = {
     this._NotificationboxClickHandlers = null;
   },
 
-  _setTabGroupFocus() {
+  _setTabGroupFocus(selectedTabGroup) {
     let selectedPanel = this._state.selectedLinkedPanel;
-    let selectedGroup = this._utils.getTabGroupByLinkedPanel(selectedPanel, this._state);
-    if (selectedGroup) {
+    if (selectedTabGroup) {
       console.log("TMP> tabsplit-view - _setTabGroupFocus");
-      selectedGroup.tabs.forEach(tabState => {
+      selectedTabGroup.tabs.forEach(tabState => {
         let box = this._utils.getNotificationboxByLinkedPanel(tabState.linkedPanel);
         if (tabState.linkedPanel == selectedPanel) {
           box.classList.add("tabsplit-focus");
@@ -252,12 +245,11 @@ TabSplit.view = {
     this._tabListeners = null;
   },
 
-  _refreshTabDistributions() {
+  _refreshTabDistributions(selectedTabGroup) {
     console.log("TMP> tabsplit-view - _refreshTabDistributions");
     let selectedPanel = this._state.selectedLinkedPanel;
-    let selectedGroup = this._utils.getTabGroupByLinkedPanel(selectedPanel, this._state);
-    if (selectedGroup) {
-      let areas = selectedGroup.tabs.map(tabState => {
+    if (selectedTabGroup) {
+      let areas = selectedTabGroup.tabs.map(tabState => {
         let { linkedPanel, distribution } = tabState;
         return {
           distribution,
@@ -328,9 +320,9 @@ TabSplit.view = {
     if (this._state.status == "status_destroyed") {
       throw "The current status is destroyed, please init again before updating any view";
     }
-
     let oldState = this._state;
     this._state = newState;
+
     let { status, windowWidth, selectedLinkedPanel } = this._state;
     if (status != oldState.status) {
       switch (status) {
@@ -361,14 +353,6 @@ TabSplit.view = {
       return;
     }
 
-    let changes = new Set();
-    if (windowWidth !== oldState.windowWidth) {
-      changes.add("windowWidth");
-    }
-    if (selectedLinkedPanel !== oldState.selectedLinkedPanel) {
-      changes.add("selectedLinkedPanel");
-    }
-
     let { added, removed, updated } = tabGroupsDiff;
 
     if (removed.length) {
@@ -393,20 +377,17 @@ TabSplit.view = {
       group.tabs.forEach(tabState => this._addSplitPageClickListener(tabState.linkedPanel));
     });
 
-    if (updated.length > 0) {
-      // TODO: Maybe this is useless
-    }
+    let selectedTabGroup = this._utils.getTabGroupByLinkedPanel(
+                             this._state.selectedLinkedPanel, this._state);
 
-    // TODO: When clicking another visible browser,
-    // the selceted browser should change accordingly <= the control's duty
-    this._refreshTabbrowser();
-    this._setTabGroupFocus();
+    // TMP: Do when the selectedLinkedPanel changes
+    this._refreshTabbrowser(selectedTabGroup);
 
-    if (changes.add("windowWidth")) {
-      // TODO: Maybe this is useless
-    }
+    // TMP: Do when the selectedLinkedPanel changes && selectedTabGroup
+    this._setTabGroupFocus(selectedTabGroup);
 
-    this._refreshTabDistributions();
+    // TMP: do every time
+    this._refreshTabDistributions(selectedTabGroup);
     this._orderTabPositions();
   },
 

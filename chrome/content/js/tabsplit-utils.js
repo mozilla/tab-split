@@ -40,6 +40,7 @@ TabSplit.utils = {
     for (let i = visibleTabs.length - 1; i >= 0; i--) {
       if (visibleTabs[i].linkedPanel == linkedPanel) {
         id = visibleTabs[i].getAttribute("data-tabsplit-tab-group-id");
+        break;
       }
     }
     return id ? state.tabGroups[id] : null;

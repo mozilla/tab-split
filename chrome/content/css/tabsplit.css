@@ -22,7 +22,8 @@
 }
 
 .tabsplit-focus {
-  border: 4px solid #9ae08d;
+  outline: 4px solid #9ae08d;
+  outline-offset: -4px;
 }
 
 .tabsplit-spliter-container {
