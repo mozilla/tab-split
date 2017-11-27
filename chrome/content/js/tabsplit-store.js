@@ -340,7 +340,7 @@ TabSplit.store = {
    * @param listener {Function} See `_listeners`
    */
   unsubscribe(listener) {
-    if (this._listeners.has(listener)) {
+    if (this._listeners && this._listeners.has(listener)) {
       this._listeners.delete(listener);
     }
   },

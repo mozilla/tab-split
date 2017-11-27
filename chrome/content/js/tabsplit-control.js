@@ -66,9 +66,7 @@ TabSplit.control = {
           return;
         }
         obs.disconnect();
-        // TODO: Setup listeners to the chrome global event
         this._registerChromeEvents();
-        // TODO: Override the chrome global behavior
         resolve();
       });
       obs.observe(this._gBrowser, { attributes: true });
@@ -88,10 +86,18 @@ TabSplit.control = {
   deactivate() {
     this._lastTimeBeingActive = -1;
     this._unregisterChromeEvents();
-    this._restoreChromeBehaviors();
     this._store.update({
       type: "set_inactive"
     });
+  },
+
+  destroy() {
+    this._lastTimeBeingActive = -1;
+    this._unregisterChromeEvents();
+    this._store.update({
+      type: "set_destroyed"
+    });
+    this._gBrowser = this._utils = this._view = this._store = null;
   },
 
   _currentTabColorIndex: -1,
@@ -193,8 +199,10 @@ TabSplit.control = {
 
   onStateChange(store, tabGroupsDiff) {
     this._state = store.getState();
+    console.log("TMP> tabsplit-control - onStateChange", this._state);
     let { status, tabGroupIds } = this._state;
     if (tabGroupIds && tabGroupIds.length > 0) {
+      console.log("TMP> tabsplit-control - onStateChange - update _lastTimeBeingActive");
       this._lastTimeBeingActive = Date.now();
     } else {
       // Consider users used our tabsplit feature happily for 1 hr,

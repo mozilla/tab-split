@@ -327,15 +327,16 @@ TabSplit.view = {
     if (status != oldState.status) {
       switch (status) {
         case "status_inactive":
+        case "status_destroyed":
           this._uninitTabbrowser();
           this._uninitTabsAll();
           this._clearTabGroupFocus();
           this._clearTabDistributions();
           this._clearSplitPageClickListeners();
-          return;
-
-        case "status_destroyed":
-          // TODO: Destroy
+          if (status == "status_destroyed") {
+            this._removeTabSplitButton();
+            this._listener = this._gBrowser = this._utils = this._store = null;
+          }
           return;
 
         case "status_active":
