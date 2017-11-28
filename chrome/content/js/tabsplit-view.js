@@ -340,77 +340,81 @@ TabSplit.view = {
     if (this._state.status == "status_destroyed") {
       throw "The current status is destroyed, please init TabSplit.view again before updating any view";
     }
-    let oldState = this._state;
-    this._state = newState;
 
-    let { status, windowWidth, selectedLinkedPanel } = this._state;
-    if (status != oldState.status) {
-      switch (status) {
-        case "status_inactive":
-        case "status_destroyed":
-          this._uninitTabbrowser();
-          this._uninitTabsAll();
-          this._clearTabGroupFocus();
-          this._clearTabDistributions();
-          this._clearSplitPageClickListeners();
-          if (status == "status_destroyed") {
-            this._removeTabSplitButton();
-            this._listener = this._gBrowser = this._utils = this._store = null;
-            console.log("TMP> tabsplit-view - go status_destroyed at", Date.now());
-          }
-          return;
+    try {
+      let oldState = this._state;
+      this._state = newState;
 
-        case "status_active":
-          this._initTabbrowser();
-          break;
+      let { status, windowWidth, selectedLinkedPanel } = this._state;
+      if (status != oldState.status) {
+        switch (status) {
+          case "status_inactive":
+          case "status_destroyed":
+            this._uninitTabbrowser();
+            this._uninitTabsAll();
+            this._clearTabGroupFocus();
+            this._clearTabDistributions();
+            this._clearSplitPageClickListeners();
+            if (status == "status_destroyed") {
+              this._removeTabSplitButton();
+              this._listener = this._gBrowser = this._utils = this._store = null;
+              console.log("TMP> tabsplit-view - go status_destroyed at", Date.now());
+            }
+            return;
+
+          case "status_active":
+            this._initTabbrowser();
+            break;
+        }
+      } else if (status == "status_inactive") {
+        // The current status is inactive
+        // so return after saving the new state
+        // but we still leave a message in case of debugging.
+        console.warn(
+          "Updating view under the inactive status has no effect. " +
+          "If you really want to update view, please activate the status first."
+        );
+        return;
       }
-    } else if (status == "status_inactive") {
-      // The current status is inactive
-      // so return after saving the new state
-      // but we still leave a message in case of debugging.
-      console.warn(
-        "Updating view under the inactive status has no effect. " +
-        "If you really want to update view, please activate the status first."
-      );
-      return;
-    }
 
-    let { added, removed, updated } = tabGroupsDiff;
+      let { added, removed, updated } = tabGroupsDiff;
 
-    if (removed.length) {
-      removed.forEach(id => {
-        let group = oldState.tabGroups[id];
-        group.tabs.forEach(tabState => {
-          let tab = this._utils.getTabByLinkedPanel(tabState.linkedPanel);
-          // It's possible to find no tab because the tab was closed
-          if (tab) {
-            this._uninitTab(tab);
-            this._removeSplitPageClickListener(tabState.linkedPanel)
-          }
+      if (removed.length) {
+        removed.forEach(id => {
+          let group = oldState.tabGroups[id];
+          group.tabs.forEach(tabState => {
+            let tab = this._utils.getTabByLinkedPanel(tabState.linkedPanel);
+            // It's possible to find no tab because the tab was closed
+            if (tab) {
+              this._uninitTab(tab);
+              this._removeSplitPageClickListener(tabState.linkedPanel)
+            }
+          });
         });
+        this._clearTabGroupFocus();
+        this._clearTabDistributions();
+      }
+
+      added.forEach(id => { 
+        this._initTab(id);
+        let group = this._state.tabGroups[id];
+        group.tabs.forEach(tabState => this._addSplitPageClickListener(tabState.linkedPanel));
       });
-      this._clearTabGroupFocus();
-      this._clearTabDistributions();
+
+      let selectedTabGroup = this._utils.getTabGroupByLinkedPanel(
+                               this._state.selectedLinkedPanel, this._state);
+      
+      // TMP: Do when the selectedLinkedPanel changes
+      this._refreshTabbrowser(selectedTabGroup);
+      // TMP: Do when the selectedLinkedPanel changes && selectedTabGroup
+      this._setTabGroupFocus(selectedTabGroup);
+      this._refreshTabDistributions(selectedTabGroup);
+      // await so can catch the error if there was any.
+      await this._orderTabPositions();
+    } catch (e) {
+      console.error(e);
+      this._listener.onViewUpdateError(this._state);
     }
-
-    added.forEach(id => { 
-      this._initTab(id);
-      let group = this._state.tabGroups[id];
-      group.tabs.forEach(tabState => this._addSplitPageClickListener(tabState.linkedPanel));
-    });
-
-    let selectedTabGroup = this._utils.getTabGroupByLinkedPanel(
-                             this._state.selectedLinkedPanel, this._state);
-
-    // TMP: Do when the selectedLinkedPanel changes
-    this._refreshTabbrowser(selectedTabGroup);
-
-    // TMP: Do when the selectedLinkedPanel changes && selectedTabGroup
-    this._setTabGroupFocus(selectedTabGroup);
-
-    // TMP: do every time
-    this._refreshTabDistributions(selectedTabGroup);
-    this._orderTabPositions();
   },
 
   onStateChange(store, tabGroupsDiff) {

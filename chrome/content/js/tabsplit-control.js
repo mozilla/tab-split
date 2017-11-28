@@ -303,6 +303,22 @@ TabSplit.control = {
     this._isClosingTab = false;
   },
 
+  onViewUpdateError(stateFromView) {
+    console.log("TMP> tabsplit-control - onViewUpdateError at", stateFromView.status);
+    // Manipulating the tab behavior isn't trival and low risk.
+    // When seeing view update error, we will deactivate or destroy ourselves
+    // so at least, to some degree, we ensure user can keep using Firefox normally.
+    switch (stateFromView.status) {
+      case "status_active":
+        this.deactivate();
+        return;
+
+      case "status_inactive":
+        this.destroy();
+        return;
+    }
+  },
+
   /* The view listeners end */
 
   /* The global listeners */
