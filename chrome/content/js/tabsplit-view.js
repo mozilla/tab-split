@@ -130,9 +130,9 @@ TabSplit.view = {
     boxes.forEach(box => {
       let browser = this._utils.getBrowserByNotificationbox(box);
       let isActive = browser.docShellIsActive;
+      // console.log("TMP> tabsplit-view - _refreshTabbrowser - box.id, isActive =", box.id, isActive);
       // Below only set the docShell state when finding the inconsistency,
       // because that operation is expensive.
-      console.log("TMP> tabsplit-view - _refreshTabbrowser - box.id, isActive =", box.id, isActive);
       if (activePanels.includes(box.id)) {
         box.style.visibility = "visible";
         if (isActive == false) {
@@ -403,7 +403,7 @@ TabSplit.view = {
 
       let selectedTabGroup = this._utils.getTabGroupByLinkedPanel(
                                this._state.selectedLinkedPanel, this._state);
-      
+
       // TMP: Do when the selectedLinkedPanel changes
       this._refreshTabbrowser(selectedTabGroup);
       // TMP: Do when the selectedLinkedPanel changes && selectedTabGroup
@@ -415,6 +415,20 @@ TabSplit.view = {
       console.error(e);
       this._listener.onViewUpdateError(this._state);
     }
+  },
+
+  /**
+   * Call this method when want to update the view but no state has changed.
+   * Usually should avoid calling this unless encountering the situation like
+   * the chrome UI's changes affects us on UI but not on the state.
+   */
+  refresh() {
+    win.requestAnimationFrame(() => {
+      let added = [];
+      let removed = added;
+      let updated = added;
+      this.update(this._state, { added, removed, updated });
+    });
   },
 
   onStateChange(store, tabGroupsDiff) {

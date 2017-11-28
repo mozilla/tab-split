@@ -228,6 +228,13 @@ TabSplit.control = {
 
   async onTabSplitButtonClick() {
     console.log("TMP> tabsplit-control - Clicked onTabSplitButtonClick");
+    if (this._gBrowser.selectedTab.pinned) {
+      // Now don't support split a pinned tab.
+      // And notice here we cannot rely on this._state
+      // because we do lazy active so the state may not be active.
+      return;
+    }
+
     let status = this._state.status;
     if (status != "status_destroyed" && status == "status_inactive") {
       await this.activate(); // Lazy active
@@ -330,8 +337,10 @@ TabSplit.control = {
       return;
     }
     this._chromeEvents = [
+      [ win, "resize", () => this.onWindowResize() ],
       [ this._gBrowser, "TabSwitchDone", () => this.onTabSwitchDone() ],
-      [ win, "resize", () => this.onWindowResize() ]
+      [ this._gBrowser.tabContainer, "TabPinned", e => this.onTabPinned(e) ],
+      [ this._gBrowser.tabContainer, "TabUnpinned", () => this.onTabUnpinned() ],
     ];
     for (let [ target, event, handler ] of this._chromeEvents) {
       target.addEventListener(event, handler);
@@ -358,6 +367,19 @@ TabSplit.control = {
         args: { selectedLinkedPanel: currentPanel }
       });
     }
+  },
+
+  onTabPinned(e) {
+    let id = e.target.getAttribute("data-tabsplit-tab-group-id");
+    if (id) {
+      this.unsplitTab(id);
+    }
+  },
+
+  onTabUnpinned() {
+    // The tabs' position orders will be affected when unpinning a tab
+    // so we have to refresh to have them back in line again.
+    this._view.refresh();
   },
 
   onWindowResize() {
