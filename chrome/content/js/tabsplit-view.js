@@ -44,20 +44,39 @@ TabSplit.view = {
     this._addTabSplitButton();
   },
 
-  _addTabSplitButton(onClick) {
+  async _addTabSplitButton() {
+    console.log('TMP> tabsplit-view - _addTabSplitButton');
     if (!CustomizableUI.getPlacementOfWidget(this.ID_TABSPLIT_BUTTON)) {
-      console.log('TMP> tabsplit-view - _addTabSplitButton');
-      CustomizableUI.createWidget({
-        id: this.ID_TABSPLIT_BUTTON,
-        type: "button",
-        tooltiptext: "Let's split tabs!!!",
-        defaultArea: "nav-bar",
-        localized: false,
-        onCommand: e => this._listener.onTabSplitButtonClick()
+      await new Promise(resolve => {
+        let listener = {
+          onWidgetAfterCreation: () => {
+            console.log('TMP> tabsplit-view - _addTabSplitButton - onWidgetAfterCreation');
+            CustomizableUI.removeListener(listener);
+            resolve();
+          }
+        };
+        CustomizableUI.addListener(listener);
+
+        console.log('TMP> tabsplit-view - _addTabSplitButton - createWidget');
+        CustomizableUI.createWidget({
+          id: this.ID_TABSPLIT_BUTTON,
+          type: "button",
+          tooltiptext: "Let's split tabs!!!",
+          defaultArea: "nav-bar",
+          localized: false,
+          onCommand: e => {
+            console.log('TMP> tabsplit-view - _addTabSplitButton - onCommand', e.target);
+          },
+        });
+        // Explicitly put the button on the nav bar
+        CustomizableUI.addWidgetToArea(this.ID_TABSPLIT_BUTTON, "nav-bar");
       });
-      // Explicitly put the button on the nav bar
-      CustomizableUI.addWidgetToArea("tabsplit-button", "nav-bar")
     }
+    let buttonForThisWindow = win.document.getElementById(this.ID_TABSPLIT_BUTTON);
+    buttonForThisWindow.addEventListener("command", () => this._listener.onTabSplitButtonClick());
+    buttonForThisWindow.setAttribute(
+      "data-tabsplit-tabbrowser-id", this._gBrowser.getAttribute("data-tabsplit-tabbrowser-id"));
+    console.log('TMP> tabsplit-view - _addTabSplitButton - buttonForThisWindow =', buttonForThisWindow);
   },
 
   _removeTabSplitButton() {
@@ -141,12 +160,13 @@ TabSplit.view = {
       box.style.visibility = "";
     });
 
-    this._cSplitter.remove();
-    this._cSplitter = null;
-
     let appContent = this._gBrowser.parentNode;
     appContent.classList.remove("tabsplit-spliter-container");
 
+    if (this._cSplitter) {
+      this._cSplitter.remove();
+      this._cSplitter = null;
+    }
     this._gBrowser.removeAttribute("data-tabsplit-tabbrowser-init");
   },
 
@@ -318,7 +338,7 @@ TabSplit.view = {
     console.log("TMP> tabsplit-view - new state comes", newState, tabGroupsDiff);
 
     if (this._state.status == "status_destroyed") {
-      throw "The current status is destroyed, please init again before updating any view";
+      throw "The current status is destroyed, please init TabSplit.view again before updating any view";
     }
     let oldState = this._state;
     this._state = newState;
@@ -336,6 +356,7 @@ TabSplit.view = {
           if (status == "status_destroyed") {
             this._removeTabSplitButton();
             this._listener = this._gBrowser = this._utils = this._store = null;
+            console.log("TMP> tabsplit-view - go status_destroyed at", Date.now());
           }
           return;
 
@@ -395,6 +416,12 @@ TabSplit.view = {
   onStateChange(store, tabGroupsDiff) {
     console.log("TMP> tabsplit-view - onStateChange");
     let state = store.getState();
+    if (state.status == "status_destroyed") {
+      // On seeing the destroyed status,
+      // we just want to destroy asap so no `requestAnimationFrame`
+      this.update(state, tabGroupsDiff);
+      return;
+    }
     win.requestAnimationFrame(() => this.update(state, tabGroupsDiff));
   }
 };

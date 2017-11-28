@@ -8,8 +8,6 @@ const { classes: Cc, interfaces: Ci, utils: Cu } = Components;
 Cu.import("resource://gre/modules/XPCOMUtils.jsm");
 XPCOMUtils.defineLazyModuleGetter(this, "Services", "resource://gre/modules/Services.jsm");
 
-const ID_TABSPLIT_BUTTON = "tabsplit-button";
-
 const startupObserver = {
   register() {
     Services.obs.addObserver(this, "sessionstore-windows-restored", false);
@@ -43,22 +41,23 @@ const TabSplit = {
 
     tabbrowser.setAttribute("data-tabsplit-tabbrowser-id", ++this._browserCount);
     console.log("TMP > TabSplit - bootstrap - onNewBrowserCreated - browserCount", this._browserCount);
-
     console.log("TMP > TabSplit - bootstrap - onNewBrowserCreated - load overlay tabsplit-navbar-overlay.xul");
     chromeWindow.document.loadOverlay("chrome://tabsplit/content/overlay/tabsplit-navbar-overlay.xul",
       (subj, topic, data) => console.log("TMP > TabSplit - bootstrap - onNewBrowserCreated - load overlay topic", topic));
   },
 
-  destroy() {
-    console.log("TMP > TabSplit - bootstrap - destroy");
+  onDestroy() {
+    console.log("TMP > TabSplit - bootstrap - onDestroy");
     let WM = Cc['@mozilla.org/appshell/window-mediator;1'].getService(Ci.nsIWindowMediator);
     let chromeWindows = WM.getEnumerator("navigator:browser");
     while (chromeWindows.hasMoreElements()) {
       let win = chromeWindows.getNext();
-      win.CustomizableUI.removeWidgetFromArea(ID_TABSPLIT_BUTTON);
-      win.CustomizableUI.destroyWidget(ID_TABSPLIT_BUTTON);
       let tabbrowser = win.document.getElementById("content");
-      console.log("TMP > TabSplit - bootstrap - destroy data-tabsplit-tabbrowser-id =", tabbrowser.getAttribute("data-tabsplit-tabbrowser-id"));
+      if (win.TabSplit) {
+        console.log("TMP > TabSplit - bootstrap - destroying data-tabsplit-tabbrowser-id =", tabbrowser.getAttribute("data-tabsplit-tabbrowser-id"), Date.now());
+        win.TabSplit.control.destroy();
+        console.log("TMP > TabSplit - bootstrap - destroyed at", Date.now());
+      }
       tabbrowser.removeAttribute("data-tabsplit-tabbrowser-id");
       this._browserCount--;
     }
@@ -75,7 +74,7 @@ function startup(data, reason) {
 function shutdown(data, reason) {
   console.log("TMP> TabSplit shutdown with reason =", reason);
   startupObserver.unregister();
-  TabSplit.destroy();
+  TabSplit.onDestroy();
 }
 
 function install(data, reason) {
@@ -85,5 +84,5 @@ function install(data, reason) {
 function uninstall(data, reason) {
   console.log("TMP> TabSplit uninstall with reason =", reason);
   startupObserver.unregister();
-  TabSplit.destroy();
+  TabSplit.onDestroy();
 }

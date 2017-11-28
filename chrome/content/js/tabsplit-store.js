@@ -133,7 +133,7 @@ TabSplit.store = {
     for (let action of actions) {
       try {
         if (this._state.status == "status_destroyed") {
-          throw "The current status is destroyed, please init again before updating any state";
+          throw "The current status is destroyed, please init TabSplit.store again before updating any state";
         }
 
         let args = action.args;
@@ -159,6 +159,7 @@ TabSplit.store = {
           case "set_destroyed":
             this._state.status = "status_destroyed";
             dirty = true;
+            console.log("TMP> tabsplit-store - set_destroyed at", Date.now());
             break;
 
           case "update_window_width":

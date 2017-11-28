@@ -216,6 +216,10 @@ TabSplit.control = {
         return;
       }
     }
+
+    if (status == "status_destroyed") {
+      console.log("TMP> tabsplit-control - TabSplit:OnDestory - get status_destroyed at", Date.now());
+    }
   },
 
   /* The store listeners end */
