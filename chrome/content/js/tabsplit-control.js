@@ -295,6 +295,7 @@ TabSplit.control = {
     this._chromeEvents = [
       [ win, "resize", () => this.onWindowResize() ],
       [ this._gBrowser, "TabSwitchDone", () => this.onTabSwitchDone() ],
+      [ this._gBrowser.tabContainer, "dragstart", e => this.onDragStart(e) ],
       [ this._gBrowser.tabContainer, "TabPinned", e => this.onTabPinned(e) ],
       [ this._gBrowser.tabContainer, "TabUnpinned", () => this.onTabUnpinned() ],
       [ this._gBrowser.tabContainer, "TabClose", e => this.onClosingTabBeingSplit(e) ],
@@ -334,9 +335,18 @@ TabSplit.control = {
   },
 
   onTabUnpinned() {
+    console.log("TMP> tabsplit-control - onTabUnpinned");
     // The tabs' position orders will be affected when unpinning a tab
     // so we have to refresh to have them back in line again.
     this._view.refresh();
+  },
+
+  onDragStart(e) {
+    let tab = e.target;
+    console.log("TMP> tabsplit-control - onDragStart", tab.linkedPanel);
+    // The tabs' position orders will be affected when dragging a tab
+    // so we have to refresh to have them back in line again.
+    tab.addEventListener("TabMove", () => this._view.refresh(), { once: true });
   },
 
   async onClosingTabBeingSplit(e) {
