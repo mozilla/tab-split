@@ -116,8 +116,6 @@ TabSplit.view = {
   },
 
   _refreshTabbrowser(selectedTabGroup) {
-    console.log("TMP> tabsplit-view - _refreshTabbrowser");
-
     let selectedPanel = this._state.selectedLinkedPanel;
     let activePanels = [ selectedPanel ];
     if (selectedTabGroup) {
@@ -125,12 +123,12 @@ TabSplit.view = {
       // so there are multiple active panels.
       activePanels = selectedTabGroup.tabs.map(tab => tab.linkedPanel);
     }
+    console.log("TMP> tabsplit-view - _refreshTabbrowser - activePanels =", activePanels);
 
     let boxes = this._utils.getNotificationboxes();
     boxes.forEach(box => {
       let browser = this._utils.getBrowserByNotificationbox(box);
       let isActive = browser.docShellIsActive;
-      // console.log("TMP> tabsplit-view - _refreshTabbrowser - box.id, isActive =", box.id, isActive);
       // Below only set the docShell state when finding the inconsistency,
       // because that operation is expensive.
       if (activePanels.includes(box.id)) {
@@ -222,18 +220,11 @@ TabSplit.view = {
   },
 
   _initTab(id) {
-    if (!this._tabListeners) {
-      this._tabListeners = {};
-    }
     let color = this._state.tabGroups[id].color;
     let tabStates = this._state.tabGroups[id].tabs;
     let len = tabStates.length;
     for (let i = 0; i < len; i++) {
       let tab = this._utils.getTabByLinkedPanel(tabStates[i].linkedPanel);
-      if (tab.hasAttribute("data-tabsplit-tab-group-id")) {
-        // ok, we are facing re-init tab request, uninit fisrt.
-        this._uninitTab(tab);
-      }
       tab.setAttribute("data-tabsplit-tab-group-id", id);
       tab.classList.add("tabsplit-tab");
       if (i == 0) {
@@ -242,8 +233,6 @@ TabSplit.view = {
         tab.classList.add("tabsplit-tab-last");
       }
       tab.style.borderColor = color;
-      this._tabListeners[tab.linkedPanel] = e => this._listener.onClosingTabBeingSplit(e);
-      tab.addEventListener("TabClose", this._tabListeners[tab.linkedPanel]);
     }
   },
 
@@ -255,14 +244,11 @@ TabSplit.view = {
     tab.removeAttribute("data-tabsplit-tab-group-id");
     tab.classList.remove("tabsplit-tab", "tabsplit-tab-first", "tabsplit-tab-last");
     tab.style.borderColor = "";
-    tab.removeEventListener("TabClose", this._tabListeners[tab.linkedPanel]);
-    delete this._tabListeners[tab.linkedPanel];
   },
 
   _uninitTabsAll() {
     console.log("TMP> tabsplit-view - _uninitTabsAll");
     this._gBrowser.visibleTabs.forEach(tab => this._uninitTab(tab));
-    this._tabListeners = null;
   },
 
   _refreshTabDistributions(selectedTabGroup) {

@@ -266,50 +266,6 @@ TabSplit.control = {
     }
   },
 
-  async onClosingTabBeingSplit(e) {
-    this._isClosingTab = true;
-
-    let promises = [];
-    let tabClosing = e.target;
-    let groupId = tabClosing.getAttribute("data-tabsplit-tab-group-id");
-
-    // For a whole tab closing job, we will see 2 operations:
-    // 1. Switch to another tab if it is the current selected tab being closed
-    // 2. Remove the tab from the DOM tree
-    // We must wait these operations done then proceed to make sure the state correct.
-    if (this._state.selectedLinkedPanel == tabClosing.linkedPanel) {
-      promises.push(new Promise(resolve => {
-        this._gBrowser.addEventListener("TabSwitchDone", resolve, { once: true });
-      }));
-    }
-    if (this._gBrowser.tabContainer.querySelector(`tab[linkedpanel=${tabClosing.linkedPanel}]`)) {
-      promises.push(new Promise(resolve => {
-        let obs = new MutationObserver(mutations => {
-          for (let m of mutations) {
-            let nodes = Array.from(m.removedNodes);
-            let found = !!nodes.find(node => node.linkedPanel == tabClosing.linkedPanel);
-            if (found) {
-              obs.disconnect();
-              resolve();
-              break;
-            }
-          }
-        });
-        obs.observe(this._gBrowser.tabContainer, { childList: true, subtree: true });
-      }));
-    }
-    await Promise.all(promises);
-
-    this._store.update({
-      type: "update_selected_linkedPanel",
-      args: { selectedLinkedPanel: this._gBrowser.selectedTab.linkedPanel }
-    }, {
-      type: "remove_tab_group",
-      args: { id: groupId }
-    });
-    this._isClosingTab = false;
-  },
-
   onViewUpdateError(stateFromView) {
     console.log("TMP> tabsplit-control - onViewUpdateError at", stateFromView.status);
     // Manipulating the tab behavior isn't trival and low risk.
@@ -341,6 +297,7 @@ TabSplit.control = {
       [ this._gBrowser, "TabSwitchDone", () => this.onTabSwitchDone() ],
       [ this._gBrowser.tabContainer, "TabPinned", e => this.onTabPinned(e) ],
       [ this._gBrowser.tabContainer, "TabUnpinned", () => this.onTabUnpinned() ],
+      [ this._gBrowser.tabContainer, "TabClose", e => this.onClosingTabBeingSplit(e) ],
     ];
     for (let [ target, event, handler ] of this._chromeEvents) {
       target.addEventListener(event, handler);
@@ -380,6 +337,54 @@ TabSplit.control = {
     // The tabs' position orders will be affected when unpinning a tab
     // so we have to refresh to have them back in line again.
     this._view.refresh();
+  },
+
+  async onClosingTabBeingSplit(e) {
+    let tabClosing = e.target;
+    let groupId = tabClosing.getAttribute("data-tabsplit-tab-group-id");
+    if (!groupId) {
+      return;
+    }
+    console.log("TMP> tabsplit-control - onClosingTabBeingSplit -", tabClosing);
+
+    this._isClosingTab = true;
+    let promises = [];
+
+    // For a whole tab closing job, we will see 2 operations:
+    // 1. Switch to another tab if it is the current selected tab being closed
+    // 2. Remove the tab from the DOM tree
+    // We must wait these operations done then proceed to make sure the state correct.
+    if (this._state.selectedLinkedPanel == tabClosing.linkedPanel) {
+      promises.push(new Promise(resolve => {
+        this._gBrowser.addEventListener("TabSwitchDone", resolve, { once: true });
+      }));
+    }
+    if (this._gBrowser.tabContainer.querySelector(`tab[linkedpanel=${tabClosing.linkedPanel}]`)) {
+      promises.push(new Promise(resolve => {
+        let obs = new MutationObserver(mutations => {
+          for (let m of mutations) {
+            let nodes = Array.from(m.removedNodes);
+            let found = !!nodes.find(node => node.linkedPanel == tabClosing.linkedPanel);
+            if (found) {
+              obs.disconnect();
+              resolve();
+              break;
+            }
+          }
+        });
+        obs.observe(this._gBrowser.tabContainer, { childList: true, subtree: true });
+      }));
+    }
+    await Promise.all(promises);
+
+    this._store.update({
+      type: "update_selected_linkedPanel",
+      args: { selectedLinkedPanel: this._gBrowser.selectedTab.linkedPanel }
+    }, {
+      type: "remove_tab_group",
+      args: { id: groupId }
+    });
+    this._isClosingTab = false;
   },
 
   onWindowResize() {
