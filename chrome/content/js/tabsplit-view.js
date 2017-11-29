@@ -128,20 +128,14 @@ TabSplit.view = {
     let boxes = this._utils.getNotificationboxes();
     boxes.forEach(box => {
       let browser = this._utils.getBrowserByNotificationbox(box);
-      let isActive = browser.docShellIsActive;
       // Below only set the docShell state when finding the inconsistency,
       // because that operation is expensive.
       if (activePanels.includes(box.id)) {
         box.style.visibility = "visible";
-        if (isActive == false) {
-          console.log("TMP> tabsplit-view - _refreshTabbrowser - set docShellIsActive to true for ", box.id);
-          browser.docShellIsActive = true;
-        }
+        browser.docShellIsActive = true;
       } else {
         box.style.visibility = "hidden";
-        if (isActive == true) {
-          browser.docShellIsActive = false;
-        }
+        browser.docShellIsActive = false;
       }
     });
   },
