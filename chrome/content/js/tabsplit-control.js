@@ -201,7 +201,7 @@ TabSplit.control = {
     this._state = store.getState();
     console.log("TMP> tabsplit-control - onStateChange", this._state);
     let { status, tabGroupIds } = this._state;
-    if (tabGroupIds && tabGroupIds.length > 0) {
+    if (status == "status_active" && tabGroupIds && tabGroupIds.length > 0) {
       console.log("TMP> tabsplit-control - onStateChange - update _lastTimeBeingActive");
       this._lastTimeBeingActive = Date.now();
     } else {
