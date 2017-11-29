@@ -46,7 +46,7 @@ TabSplit.view = {
 
   async _addTabSplitButton() {
     console.log('TMP> tabsplit-view - _addTabSplitButton');
-    if (!CustomizableUI.getPlacementOfWidget(this.ID_TABSPLIT_BUTTON)) {
+    if (!CustomizableUI.getWidget(this.ID_TABSPLIT_BUTTON)) {
       await new Promise(resolve => {
         let listener = {
           onWidgetAfterCreation: () => {
@@ -57,8 +57,7 @@ TabSplit.view = {
         };
         CustomizableUI.addListener(listener);
 
-        console.log('TMP> tabsplit-view - _addTabSplitButton - createWidget');
-        CustomizableUI.createWidget({
+        let w = CustomizableUI.createWidget({
           id: this.ID_TABSPLIT_BUTTON,
           type: "button",
           tooltiptext: "Let's split tabs!!!",
@@ -68,6 +67,7 @@ TabSplit.view = {
             console.log('TMP> tabsplit-view - _addTabSplitButton - onCommand', e.target);
           },
         });
+        console.log('TMP> tabsplit-view - _addTabSplitButton - createWidget', w.id);
         // Explicitly put the button on the nav bar
         CustomizableUI.addWidgetToArea(this.ID_TABSPLIT_BUTTON, "nav-bar");
       });

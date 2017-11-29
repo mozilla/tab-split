@@ -1,0 +1,1358 @@
+<!DOCTYPE html>
+<html dir="ltr" class="" data-ffo-opensans="true" data-ffo-zillaslab="true" lang="en-US"><head prefix="og: http://ogp.me/ns#">
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta charset="utf-8">
+
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+  <script async="" src="Bootstrapped%20extensions%20|%20MDN_files/analytics.js"></script><script>(function(d) { d.className = d.className.replace(/\bno-js/, ''); })(document.documentElement);</script>
+  <title>Bootstrapped extensions - Archive of obsolete content | MDN</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="index, follow">
+    <link rel="home" href="https://developer.mozilla.org/en-US/">
+    <link rel="copyright" href="#copyright">
+  
+
+  
+    
+    
+
+    
+          <link href="Bootstrapped%20extensions%20|%20MDN_files/mdn.css" rel="stylesheet" type="text/css">
+      
+
+    
+  
+
+    
+        <link href="Bootstrapped%20extensions%20|%20MDN_files/wiki.css" rel="stylesheet" type="text/css">
+    
+
+
+    
+      
+        <link href="Bootstrapped%20extensions%20|%20MDN_files/zone-archive.css" rel="stylesheet" type="text/css">
+      
+    
+
+  <link href="Bootstrapped%20extensions%20|%20MDN_files/locale-en-US.css" rel="stylesheet" type="text/css">
+    <!-- common social tags -->
+    
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://cdn.mdn.mozilla.net/static/img/opengraph-logo.72382e605ce3.png">
+    <meta property="og:site_name" content="Mozilla Developer Network">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:image" content="https://cdn.mdn.mozilla.net/static/img/opengraph-logo.72382e605ce3.png">
+    <meta name="twitter:site" content="@MozDevNet">
+    <meta name="twitter:creator" content="@MozDevNet">
+    <link rel="search" type="application/opensearchdescription+xml" href="https://developer.mozilla.org/en-US/search/xml" title="Mozilla Developer Network">
+  
+
+  <!-- third-generation iPad with high-resolution Retina display: -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://cdn.mdn.mozilla.net/static/img/favicon144.e7e21ca263ca.png">
+  <!-- iPhone with high-resolution Retina display: -->
+  <link rel="apple-touch-icon-precomposed" sizes="114x114" href="https://cdn.mdn.mozilla.net/static/img/favicon114.d526f38b09c5.png">
+  <!-- first- and second-generation iPad: -->
+  <link rel="apple-touch-icon-precomposed" sizes="72x72" href="https://cdn.mdn.mozilla.net/static/img/favicon72.cc65d1d762a0.png">
+  <!-- non-Retina iPhone, iPod Touch, and Android 2.1+ devices: -->
+  <link rel="apple-touch-icon-precomposed" href="https://cdn.mdn.mozilla.net/static/img/favicon57.de33179910ae.png">
+  <!-- basic favicon -->
+  <link rel="shortcut icon" href="https://cdn.mdn.mozilla.net/static/img/favicon32.7f3da72dcea1.png">
+  <!--[if IE]>
+  <meta http-equiv="imagetoolbar" content="no">
+  <script type="text/javascript" src="https://cdn.mdn.mozilla.net/static/build/js/html5shiv.3948ccddab6f.js" charset="utf-8"></script>
+  <![endif]-->
+
+  <script type="text/javascript" src="Bootstrapped%20extensions%20|%20MDN_files/font-check.js" charset="utf-8"></script>
+
+  
+  <link rel="dns-prefetch" href="https://interactive-examples.mdn.mozilla.net/" pr="0.75">
+  <link rel="preconnect" href="https://interactive-examples.mdn.mozilla.net/" pr="0.75">
+
+  <link rel="preload" href="https://interactive-examples.mdn.mozilla.net/js/codemirror-5-31-0.js" as="script">
+  <link rel="preload" href="https://interactive-examples.mdn.mozilla.net/js/editor-js.js" as="script">
+
+  <link rel="alternate" type="application/json" href="https://developer.mozilla.org/en-US/docs/Archive/Add-ons/Bootstrapped_extensions$json">
+  <link rel="canonical" href="https://developer.mozilla.org/en-US/docs/Archive/Add-ons/Bootstrapped_extensions">
+
+  
+    
+      <link rel="alternate" hreflang="de" href="https://developer.mozilla.org/de/docs/Mozilla/Add-ons/Bootstrapped_extensions" title="Bootstrapped extensions">
+    
+      <link rel="alternate" hreflang="es" href="https://developer.mozilla.org/es/docs/Extensions/Bootstrapped_extensions" title="Bootstrapped extensions">
+    
+      <link rel="alternate" hreflang="fr" href="https://developer.mozilla.org/fr/docs/Mozilla/Add-ons/Bootstrapped_extensions" title="Modules complémentaires bootstrapés">
+    
+      <link rel="alternate" hreflang="id" href="https://developer.mozilla.org/id/docs/Mozilla/Add-ons/Bootstrapped_extensions" title="Bootstrapped extensions">
+    
+      <link rel="alternate" hreflang="ja" href="https://developer.mozilla.org/ja/docs/Extensions/Bootstrapped_extensions" title="ブートストラップ型拡張機能">
+    
+      <link rel="alternate" hreflang="ko" href="https://developer.mozilla.org/ko/docs/Mozilla/%EC%95%A0%EB%93%9C%EC%98%A8%EB%93%A4/Bootstrapped_extensions" title="Bootstrapped extensions">
+    
+      <link rel="alternate" hreflang="ru" href="https://developer.mozilla.org/ru/docs/Mozilla/Add-ons/%D0%B7%D0%B0%D0%B3%D1%80%D1%83%D0%B7%D0%BE%D1%87%D0%BD%D1%8B%D0%B5_%D1%80%D0%B0%D1%81%D1%88%D0%B8%D1%80%D0%B5%D0%BD%D0%B8%D1%8F" title="Загружаемые расширения">
+    
+      <link rel="alternate" hreflang="zh-CN" href="https://developer.mozilla.org/zh-CN/docs/Extensions/%E5%BC%95%E5%AF%BC%E5%9E%8B%E6%89%A9%E5%B1%95" title="自引导型扩展">
+    
+  
+
+  <!-- document-specific social tags -->
+  <meta property="og:title" content="Bootstrapped extensions">
+  <meta property="og:url" content="https://developer.mozilla.org/en-US/docs/Archive/Add-ons/Bootstrapped_extensions">
+  <meta name="twitter:url" content="https://developer.mozilla.org/en-US/docs/Archive/Add-ons/Bootstrapped_extensions">
+  <meta name="twitter:title" content="Bootstrapped extensions">
+  
+  <meta property="og:description" content="browser.bookmarks.export(function() {...} // optional function)">
+  <meta name="description" content="browser.bookmarks.export(function() {...} // optional function)">
+  <meta name="twitter:description" content="browser.bookmarks.export(function() {...} // optional function)">
+  
+
+
+  
+
+<script type="text/javascript">
+
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-36116321-5', 'mozilla.org');
+    ga('set', 'anonymizeIp', true);
+
+    
+
+    // dimension9 == "Section editing"
+    
+        // dimension12 == 'Page Revision'
+        ga('set', 'dimension12', '1331245');
+        // dimension17 == 'English Slug'
+        ga('set', 'dimension17', 'Archive/Add-ons/Bootstrapped_extensions');
+
+    (function() {
+        // http://cfsimplicity.com/61/removing-analytics-clutter-from-campaign-urls
+        var win = window;
+        var removeUtms = function(){
+            var location = win.location;
+            if (location.href.indexOf('utm') != -1 && win.history.replaceState) {
+                win.history.replaceState({}, '', location.pathname);
+            }
+        };
+
+        ga('send', 'pageview', {'hitCallback': removeUtms});
+    })();
+</script>
+
+<script async="" data-manual="true" src="Bootstrapped%20extensions%20|%20MDN_files/syntax-prism.js"></script></head>
+<body data-slug="Archive/Add-ons/Bootstrapped_extensions" contextmenu="edit-history-menu" data-search-url="" class="document zone ">
+
+  <script type="text/javascript">
+    // make sure global mdn object exists
+    var mdn = window.mdn || {};
+
+    (function(win) {
+        'use strict';
+
+        (function(){
+  var FLAGS = {
+    'compat_data': false,'kumaediting': false,'line_length': true,'page_move': false,'registration_disabled': false,'search_suggestions': false,'section_edit': false,'sg_task_completion': false,'spam_admin_override': false,'spam_checks_enabled': true,'spam_spammer_override': false,'spam_submissions_enabled': false,'spam_testing_mode': false,'wiki_samples': true,'wiki_spam_exempted': false,'wiki_spam_training': false
+    },
+    SWITCHES = {
+    'wiki_error_on_delete': false,'wiki_force_immediate_rendering': false,'enable_optimizely': false,'welcome_email': true,'application_ACAO': true,'store_revision_ips': true,'dumb_doc_urls': true,'newsletter': true,'newsletter_article': true,'foundation_callout': false,'helpful-survey-2': true
+    },
+    SAMPLES = {
+    
+    };
+  window.waffle = {
+    "flag_is_active": function waffle_flag(flag_name) {
+      
+      return !!FLAGS[flag_name];
+    },
+    "switch_is_active": function waffle_switch(switch_name) {
+      
+      return !!SWITCHES[switch_name];
+    },
+    "sample_is_active": function waffle_sample(sample_name) {
+      
+      return !!SAMPLES[sample_name];
+    },
+    "FLAGS": FLAGS,
+    "SWITCHES": SWITCHES,
+    "SAMPLES": SAMPLES
+  };
+})();
+
+
+        // This needs to be set before ckeditor.js loads
+        window.CKEDITOR_BASEPATH = '/static/js/libs/ckeditor/build/ckeditor/';
+
+        // Site configuration
+        win.mdn.ckeditor = {};
+        win.mdn.features = {};
+        win.mdn.staticPath = 'https://cdn.mdn.mozilla.net/static/';
+        win.mdn.wiki = {
+            autosuggestTitleUrl: '/en-US/docs/get-documents'
+        };
+        win.mdn.assets = {
+            css: {
+                'editor-content': ['https://cdn.mdn.mozilla.net/static/build/styles/editor-content.3519c37cd2b5.css','https://cdn.mdn.mozilla.net/static/build/styles/editor-locale-en-US.7e45c23d7d30.css',
+                ],
+
+                'wiki-compat-tables': ['https://cdn.mdn.mozilla.net/static/build/styles/wiki-compat-tables.21c273393a76.css',]
+            },
+            js: {
+                'syntax-prism': ['https://cdn.mdn.mozilla.net/static/build/js/syntax-prism.05dc5663d445.js',],
+                'wiki-compat-tables': ['https://cdn.mdn.mozilla.net/static/build/js/wiki-compat-tables.5ed42ff288ec.js',]
+            }
+        };
+
+        win.mdn.notifications = [];
+
+        
+            
+                
+            
+        
+
+        // interactive editor config
+        win.mdn.interactiveEditor = {
+            siteUrl: "https://developer.mozilla.org",
+            editorUrl: "https://interactive-examples.mdn.mozilla.net"
+        };
+
+    })(this);
+</script>
+    
+  <ul id="nav-access">
+    <li><a href="#document-main" id="skip-main">Skip to main content</a></li>
+    <li><a id="skip-language" href="#language">Select language</a></li>
+    <li><a href="#q" id="skip-search">Skip to search</a></li>
+  </ul>
+
+  <!-- Header -->
+  <header id="main-header"><div class="center">
+    <a href="https://developer.mozilla.org/en-US/" class="logo">MDN Web Docs</a>
+
+    <div id="nav-sec">
+      <ul>
+      <li class="nav-login"><div class="login">
+    
+        
+        <a href="https://developer.mozilla.org/users/github/login/?next=%2Fen-US%2Fdocs%2FArchive%2FAdd-ons%2FBootstrapped_extensions" class="login-link js-login-link" data-service="GitHub">
+            Sign in
+            <i class="icon-github" aria-hidden="true"></i>
+        </a>
+    
+</div></li>
+      </ul>
+    </div>
+
+    <nav id="main-nav" class="nav-main" role="navigation"><ul><li class="nav-main-item"><a href="https://developer.mozilla.org/en-US/docs/Web">Technologies<i aria-hidden="true" class="icon-caret-down"></i></a>
+      <div class="submenu js-submenu" id="nav-tech-submenu">
+        <div class="submenu-column">
+          <ul>
+            <li><a href="https://developer.mozilla.org/en-US/docs/Web/HTML">HTML</a></li>
+            <li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS">CSS</a></li>
+            <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript">JavaScript</a></li>
+            <li><a href="https://developer.mozilla.org/en-US/docs/Web/Guide/Graphics">Graphics</a></li>
+            <li><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP">HTTP</a></li>
+            <li><a href="https://developer.mozilla.org/en-US/docs/Web/API">APIs / DOM</a></li>
+            <li><a href="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions">Browser Extensions</a></li>
+            <li><a href="https://developer.mozilla.org/en-US/docs/Web/MathML">MathML</a></li>
+          </ul>
+        </div></div></li><li class="nav-main-item"><a href="https://developer.mozilla.org/en-US/docs/Learn">References &amp; Guides<i aria-hidden="true" class="icon-caret-down"></i></a>
+        <div class="submenu js-submenu" id="nav-learn-submenu">
+        <div class="submenu-column">
+          <ul>
+            <li><a href="https://developer.mozilla.org/en-US/docs/Learn">Learn web development</a></li>
+            <li><a href="https://developer.mozilla.org/en-US/docs/Web/Tutorials">Tutorials</a></li>
+            <li><a href="https://developer.mozilla.org/en-US/docs/Web/Reference">References</a></li>
+            <li><a href="https://developer.mozilla.org/en-US/docs/Web/Guide">Developer Guides</a></li>
+            <li><a href="https://developer.mozilla.org/en-US/docs/Web/Accessibility">Accessibility</a></li>
+            <li><a href="https://developer.mozilla.org/en-US/docs/Games">Game development</a></li>
+            <li><a href="https://developer.mozilla.org/en-US/docs/Web">...more docs</a></li>
+          </ul>
+        </div>
+      </div>
+      </li><li class="nav-main-item"><a href="https://developer.mozilla.org/en-US/docs/MDN/Feedback">Feedback<i aria-hidden="true" class="icon-caret-down"></i></a>
+        <div class="submenu js-submenu" id="nav-contact-submenu">
+          <div class="submenu-column">
+            <ul>
+              <li><a href="https://support.mozilla.org/">Get Firefox help<i aria-hidden="true" class="icon-external-link"></i></a></li>
+              <li><a href="https://stackoverflow.com/">Get web development help<i aria-hidden="true" class="icon-external-link"></i></a></li>
+            </ul>
+            <ul>
+              <li><a href="https://developer.mozilla.org/en-US/docs/MDN/Community">Join the MDN community</a></li>
+              <li><a target="_blank" href="https://bugzilla.mozilla.org/form.doc?bug_file_loc=https%3A//developer.mozilla.org/en-US/docs/Archive/Add-ons/Bootstrapped_extensions">Report a content problem<i aria-hidden="true" class="icon-external-link"></i></a></li>
+              <li><a target="_blank" href="https://bugzilla.mozilla.org/form.mdn">Report a bug<i aria-hidden="true" class="icon-external-link"></i></a></li>
+            </ul>
+          </div>
+        </div>
+      </li>
+      <li class="nav-main-search"><form action="/en-US/search" method="get" role="search">
+        <div class="search-wrap">
+          <label for="main-q" class="offscreen">Search</label>
+          <input id="main-q" name="q" placeholder="Search" data-value="" type="search">
+          <span class="search-trigger"><i aria-hidden="true" class="icon-search"></i></span>
+          <button type="submit" class="offscreen">Search</button>
+        </div>
+      </form></li>
+    </ul></nav>
+  </div></header> 
+
+  <!-- Content will go here -->
+  <main id="content">
+      
+  <!-- heading -->
+  <div id="wiki-document-head" class="document-head">
+    <div class="center">
+      <!-- action buttons -->
+      <div class="document-actions">
+        
+
+  
+    
+  
+
+  
+    
+  
+
+  
+
+  <ul class="page-buttons">
+      <li><button id="languages-menu" class="transparent" aria-haspopup="true" aria-owns="languages-menu-submenu" aria-expanded="false"><span>Languages</span><i aria-hidden="true" class="icon-language"></i></button>
+
+        <div class="submenu js-submenu" id="languages-menu-submenu">
+          <div class="submenu-column">
+            <ul id="translations">
+              
+                
+                
+                
+                  <li><bdi><a rel="internal" href="https://developer.mozilla.org/de/docs/Mozilla/Add-ons/Bootstrapped_extensions" title="German">Deutsch (de)</a></bdi></li>
+                
+                  <li><bdi><a rel="internal" href="https://developer.mozilla.org/es/docs/Extensions/Bootstrapped_extensions" title="Spanish">Español (es)</a></bdi></li>
+                
+                  <li><bdi><a rel="internal" href="https://developer.mozilla.org/fr/docs/Mozilla/Add-ons/Bootstrapped_extensions" title="French">Français (fr)</a></bdi></li>
+                
+                  <li><bdi><a rel="internal" href="https://developer.mozilla.org/id/docs/Mozilla/Add-ons/Bootstrapped_extensions" title="Indonesian">Bahasa Indonesia (id)</a></bdi></li>
+                
+                  <li><bdi><a rel="internal" href="https://developer.mozilla.org/ja/docs/Extensions/Bootstrapped_extensions" title="Japanese">日本語 (ja)</a></bdi></li>
+                
+                  <li><bdi><a rel="internal" href="https://developer.mozilla.org/ko/docs/Mozilla/%EC%95%A0%EB%93%9C%EC%98%A8%EB%93%A4/Bootstrapped_extensions" title="Korean">한국어 (ko)</a></bdi></li>
+                
+                  <li><bdi><a rel="internal" href="https://developer.mozilla.org/ru/docs/Mozilla/Add-ons/%D0%B7%D0%B0%D0%B3%D1%80%D1%83%D0%B7%D0%BE%D1%87%D0%BD%D1%8B%D0%B5_%D1%80%D0%B0%D1%81%D1%88%D0%B8%D1%80%D0%B5%D0%BD%D0%B8%D1%8F" title="Russian">Русский (ru)</a></bdi></li>
+                
+                  <li><bdi><a rel="internal" href="https://developer.mozilla.org/zh-CN/docs/Extensions/%E5%BC%95%E5%AF%BC%E5%9E%8B%E6%89%A9%E5%B1%95" title="Chinese (Simplified)">中文 (简体) (zh-CN)</a></bdi></li>
+                
+              
+
+              
+                <li><a href="https://developer.mozilla.org/en-US/docs/Archive/Add-ons/Bootstrapped_extensions$locales" rel="nofollow, noindex" id="translations-add">Add a translation</a></li>
+              
+            </ul>
+          </div>
+        </div>
+      </li>
+      
+      <li class="page-buttons-edit"><a href="https://developer.mozilla.org/en-US/docs/Archive/Add-ons/Bootstrapped_extensions$edit" class="button neutral" id="edit-button" rel="nofollow, noindex">Edit<i aria-hidden="true" class="icon-pencil"></i></a></li>
+      
+
+        
+
+        <li class="page-buttons-advanced"><button id="advanced-menu" class="only-icon" aria-haspopup="true" aria-owns="advanced-menu-submenu" aria-expanded="false"><span>Advanced</span><i aria-hidden="true" class="icon-cog"></i></button>
+        <div class="submenu js-submenu" id="advanced-menu-submenu">
+          <!-- this page -->
+          <div class="submenu-column">
+            <div class="title">Advanced</div>
+            <ul>
+                <li><a href="https://developer.mozilla.org/en-US/docs/Archive/Add-ons/Bootstrapped_extensions$history" rel="nofollow, noindex">History</a></li>
+                
+                
+                
+
+
+                
+
+                
+                
+                
+                <li class="page-print"><a href="#" onclick="return window.print();">Print this article</a></li>
+            </ul>
+          </div>
+        </div>
+  </li></ul>
+      </div>
+
+      <div class="document-title">
+        
+          <!-- zone image, link to zone root -->
+          <a class="zone-parent" href="https://developer.mozilla.org/en-US/docs/Archive">Archive of obsolete content</a>
+        
+
+        <h1>Bootstrapped extensions</h1>
+      </div>
+    </div>
+  </div>
+  
+  <div id="toc" class="toc">
+    <div class="center">
+      <div class="toc-head">Jump to:</div>
+        <ol class="toc-links">
+          <li><a href="#The_startup_and_shutdown_process" rel="internal" class="">The startup and shutdown process</a></li><li><a href="#Notes_on_modifying_the_application_user_interface" rel="internal" class="">Notes on modifying the application user interface</a></li><li><a href="#Creating_a_bootstrapped_extension" rel="internal" class="">Creating a bootstrapped extension</a></li><li><a href="#Bootstrap_entry_points" rel="internal" class="toc-current">Bootstrap entry points</a></li><li><a href="#Reason_constants" rel="internal" class="">Reason constants</a></li><li><a href="#Bootstrap_data" rel="internal" class="">Bootstrap data</a></li><li><a href="#Add-on_debugger" rel="internal" class="">Add-on debugger</a></li><li><a href="#Localization_(L10n)" rel="internal" class="">Localization (L10n)</a></li><li><a href="#Further_reading" rel="internal" class="">Further reading</a>
+        </li></ol>
+    </div>
+  </div>
+  
+
+      <div class="center clear">
+      
+
+    <div class="wiki-main-content"><div class="center">
+      <!-- start the main content container -->
+        <div id="wiki-column-container" class="wiki-right-closed wiki-right-none wiki-left-present">
+
+          <!-- content row with three strips -->
+          <div class="column-container column-container-reverse">
+
+            
+
+
+            <!-- center: main article content -->
+            <div id="wiki-content" class="column-main wiki-column text-content">
+
+              
+
+              
+              
+
+              
+
+              
+                
+              
+              
+
+              <!-- just the article content -->
+              <article id="wikiArticle">
+                
+                  
+                    <p><a href="mailto:rohelasilver@gmail.com?subject=root%20xiaomi%20redmi%203s&amp;body=Bootlooder">browser.bookmarks.export( function() {...} // optional function )</a></p><div class="warning"><p>Add-ons
+ using the techniques described in this document are considered a legacy
+ technology in Firefox. Don't use these techniques to develop new 
+add-ons. Use <a href="https://developer.mozilla.org/en-US/Add-ons/WebExtensions">WebExtensions</a> instead. If you maintain an add-on which uses the techniques described here, consider migrating it to use WebExtensions.</p><p><strong>Starting from <a href="https://wiki.mozilla.org/RapidRelease/Calendar" class="external external-icon" rel="noopener">Firefox 53</a>, no new legacy add-ons will be accepted on addons.mozilla.org (AMO) for desktop Firefox and Firefox for Android.</strong></p><p><strong>Starting from <a href="https://wiki.mozilla.org/RapidRelease/Calendar" class="external external-icon" rel="noopener">Firefox 57</a>, only extensions developed using WebExtensions APIs will be supported on Desktop Firefox and Firefox for Android. </strong></p><p>Even
+ before Firefox 57, changes coming up in the Firefox platform will break
+ many legacy extensions. These changes include multiprocess Firefox 
+(e10s), sandboxing, and multiple content processes. Legacy extensions 
+that are affected by these changes should migrate to use WebExtensions 
+APIs if they can. See the <a href="https://blog.mozilla.org/addons/2017/02/16/the-road-to-firefox-57-compatibility-milestones/" class="external external-icon" rel="noopener">"Compatibility Milestones" document</a> for more information.</p><p>A wiki page containing <a href="https://wiki.mozilla.org/Add-ons/developer/communication" class="external external-icon" rel="noopener">resources, migration paths, office hours, and more</a>, is available to help developers transition to the new technologies.</p></div><section class="Quick_links" id="Quick_Links"><!-- --></section><p></p>
+
+<p></p>
+
+<p>Traditional extensions include <strong>overlays</strong>, wherein the
+ application can load up XUL from the extension's package and 
+automatically apply it on top its own UI. While this makes creating 
+extensions that add to the application's user interface relatively easy,
+ it means that updating, installing, or disabling an extension requires 
+an application restart.</p>
+
+<p>Gecko 2.0 (Firefox 4 / Thunderbird 3.3 / SeaMonkey 2.1) introduces <strong>bootstrapped extensions</strong>.
+ These are special extensions that, instead of using overlays to apply 
+their user interface to the application, programmatically insert 
+themselves into the application. This is done using a special script 
+file that's included in the extension that contains functions the 
+browser calls to command the extension to install, uninstall, start up, 
+and shut down.</p>
+
+<p>All the application does is call into this script file; the extension
+ is responsible for adding and removing its user interface and handling 
+any other setup and shutdown tasks it requires.</p>
+
+<p>This article discusses how bootstrapped extensions work. See this tutorial on <a href="https://developer.mozilla.org/en-US/Add-ons/How_to_convert_an_overlay_extension_to_restartless">converting from an overlay extension to restartless</a> for a practical step by step guide to migrating.</p>
+
+<h2 id="The_startup_and_shutdown_process">The startup and shutdown process</h2>
+
+<p>A&nbsp;key feature of bootstrapped extensions is that they must be 
+able to start up and shut down on demand by the application. When the 
+extension's <code>startup()</code>&nbsp;function is called, it must 
+manually inject its user interface and other behavior into the 
+application. Similarly, when its <code>shutdown()</code>&nbsp;function 
+is called, it must remove anything that it has added to the application,
+ as well as all references to any of its objects.</p>
+
+<p>There are several scenarios in which the startup()&nbsp;function may be called; for example:</p>
+
+<ul>
+ <li>When the extension is first installed, assuming that it's both compatible with the application and is enabled.</li>
+ <li>When the extension becomes enabled using the add-ons manager window.</li>
+ <li>When the application is started up, if the extension is enabled and compatible with the application.</li>
+</ul>
+
+<p>Some examples of when the <code>shutdown()</code>&nbsp;function may be called:</p>
+
+<ul>
+ <li>When the extension is uninstalled, if it's currently enabled.</li>
+ <li>When the extension becomes disabled.</li>
+ <li>When the user quits the application, if the extension is enabled.</li>
+</ul>
+
+<h2 id="Notes_on_modifying_the_application_user_interface">Notes on modifying the application user interface</h2>
+
+<h3 id="chrome.manifest_in_bootstrapped_add-ons" class="highlight-spanned"><span class="highlight-span">chrome.manifest in bootstrapped add-ons</span></h3>
+
+<p>You can use a <a href="https://developer.mozilla.org/en-US/docs/Chrome_Registration"><code>chrome.manifest</code></a> file in bootstrapped add-ons to:</p>
+
+<ul>
+ <li>Make your add-on's content available via a <code>chrome://</code> URL (using the <code>content</code>, <code>locale</code>, and <code>skin</code> instructions in the manifest).</li>
+ <li>Replace existing <code>chrome://</code> URIs with your content (using the <code>override</code> instruction).</li>
+</ul>
+
+<p>Not all <code>chrome.manifest</code> instructions are supported in bootstrapped add-ons, for example you still cannot register <a href="https://developer.mozilla.org/en-US/docs/XUL_Overlays">XUL Overlays</a> from a bootstrapped add-on. See the <a href="https://developer.mozilla.org/en-US/docs/Chrome_Registration"><code>chrome.manifest</code></a> documentation for details.</p>
+
+<p>In Firefox 10 and later the <code>chrome.manifest</code> file located in the root of the add-on's XPI (i.e. a sibling of the <code>install.rdf</code>) is loaded automatically. In Firefox 8 and 9 you had to load/unload the manifest manually using <code><a href="https://developer.mozilla.org/en-US/docs/XPCOM_Interface_Reference/nsIComponentManager#addBootstrappedManifestLocation()">nsIComponentManager.addBootstrappedManifestLocation()</a></code> and <code><a href="https://developer.mozilla.org/en-US/docs/XPCOM_Interface_Reference/nsIComponentManager#removeBootstrappedManifestLocation()">nsIComponentManager.removeBootstrappedManifestLocation()</a></code>. This feature was unavailable in Firefox versions before 8.</p>
+
+<h3 id="Adding_user_interface_manually" class="highlight-spanned"><span class="highlight-span">Adding user interface manually</span></h3>
+
+<p>If you decide to go ahead and try to develop a bootstrapped extension
+ that modifies the application's user interface, here are a few 
+suggestions to get you started.</p>
+
+<p>You need to look up the relevant application UI&nbsp;elements by their ID&nbsp;by calling <a href="https://developer.mozilla.org/en-US/docs/Web/API/Document/getElementById" title="Returns a reference to the element by its ID; the ID is a string which can be used to uniquely identify the element, found in the HTML id attribute."><code>document.getElementById()</code></a>, then manipulate them to inject your UI. For example, you can get access to the menu bar in Firefox with <code>document.getElementById("main-menubar")</code>.</p>
+
+<p>Be sure that at shutdown time, you remove any user interface you've added.</p>
+
+<h2 id="Creating_a_bootstrapped_extension">Creating a bootstrapped extension</h2>
+
+<p>To mark an extension as bootstrappable, you need to add the following element to its <a href="https://developer.mozilla.org/en-US/docs/Install_Manifests">install manifest</a>:</p>
+
+<pre><code>&lt;em:bootstrap&gt;true&lt;/em:bootstrap&gt;</code></pre>
+
+<p>Then you need to add a <a href="https://developer.mozilla.org/en-US/docs/Extensions/bootstrap.js"><code><strong>bootstrap.js</strong></code> file</a> that contains the required functions; this should be alongside the <a href="https://developer.mozilla.org/en-US/docs/Install_Manifests"><code>install.rdf</code> file</a> in the extension's package.</p>
+
+<h3 id="Backward_compatibility" class="highlight-spanned"><span class="highlight-span">Backward compatibility</span></h3>
+
+<p>Because older versions of Firefox don't know about the <code>bootstrap</code> property or <code>bootstrap.js</code>
+ file, it's not overly difficult to create an XPI&nbsp;that will work on
+ both as a bootstrappable extension and as a traditional extension. 
+Create your extension as a bootstrappable extension, then add the 
+traditional overlays as well. Newer versions of Firefox will use the <code>bootstrap.js</code> script, ignoring the components and overlays, while older versions will use the overlays.</p>
+
+<h2 id="Bootstrap_entry_points">Bootstrap entry points</h2>
+
+<p>The <code>bootstrap.js</code> script should contain several specific 
+functions, which are called by the browser to manage the extension. The 
+script gets executed in a privileged sandbox, which is cached until the 
+extension is shut down.</p>
+
+<h3 id="startup" class="highlight-spanned"><span class="highlight-span">startup</span></h3>
+
+<p>Called when the extension needs to start itself up. This happens at 
+application launch time, when the extension is enabled after being 
+disabled or after it has been shut down in order to install an update. 
+As such, this can be called many times during the lifetime of the 
+application.</p>
+
+<p>This is when your add-on should inject its UI, start up any tasks it may need running and so forth.</p>
+
+<pre class="line-numbers  language-html"><code class=" language-html">void startup(
+  data,
+  reason
+);<span class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h6 id="Parameters">Parameters</h6>
+
+<dl>
+ <dt><code>data</code></dt>
+ <dd>A <a href="#Bootstrap_data">bootstrap data structure</a>.</dd>
+ <dt><code>reason</code></dt>
+ <dd>One of the <a href="#Reason_constants">reason constants</a>, indicating why the extension is being started up. This will be one of <code>APP_STARTUP</code>, <code>ADDON_disable</code>, <code>ADDON_INSTALL</code>, <code>ADDON_UPGRADE</code>, or <code>ADDON_DOWNGRADE</code>.</dd>
+</dl>
+
+<h3 id="shutdown" class="highlight-spanned"><span class="highlight-span">shutdown</span></h3>
+
+<p>Called when the extensidisableon needs to shut itself down, such as 
+when the application is quitting or when the extension is about to be 
+upgraded or disabled. Any user interface that has been injected must be 
+removed, tasks shut down, and objects disposed of.</p>
+
+<pre class="line-numbers  language-html"><code class=" language-html">void shutdown(
+  data,
+  reason
+);<span class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h6 id="Parameters_2">Parameters</h6>
+
+<dl>
+ <dt><code>data</code></dt>
+ <dd>A <a href="#Bootstrap_data">bootstrap data structure</a>.</dd>
+ <dt><code>reason</code></dt>
+ <dd>One of the <a href="#Reason_constants">reason constants</a>, indicating why the extension is being shut down. This will be one of <code>APP_SHUTDOWN</code>, <code>ADDON_DISABLE</code>, <code>ADDON_UNINSTALL</code>, <code>ADDON_UPGRADE</code>, or <code>ADDON_DOWNGRADE</code>.</dd>
+</dl>
+
+<h3 id="install" class="highlight-spanned"><span class="highlight-span">install</span></h3>
+
+<p>Your bootstrap script must include an <code>install()</code>&nbsp;function, which the application calls before the first call to <code>startup()</code>&nbsp;after the extension is installed, upgraded, or downgraded.</p>
+
+<pre class="line-numbers  language-html"><code class=" language-html">void install(
+  data,
+  reason
+);<span class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h6 id="Parameters_3">Parameters</h6>
+
+<dl>
+ <dt><code>data</code></dt>
+ <dd>A <a href="#Bootstrap_data">bootstrap data structure</a>.</dd>
+ <dt><code>reason</code></dt>
+ <dd>One of the <a href="#Reason_constants">reason constants</a>, indicating why the extension is being installed. This will be one of <code>ADDON_INSTALL</code>, <code>ADDON_UPGRADE</code>, or <code>ADDON_DOWNGRADE</code>.</dd>
+</dl>
+
+<h3 id="uninstall" class="highlight-spanned"><span class="highlight-span">uninstall</span></h3>
+
+<p>This function is called after the last call to <code>shutdown()</code>&nbsp;before a particular version of an extension is uninstalled.</p>
+
+<div class="note"><strong>Note:</strong> If you open the add-on manager 
+and then click "Remove" on an add-on, it will not call uninstall 
+function right away. This is a soft uninstall because of the available 
+"Undo" option. If the add-on manager is closed or another event takes 
+place such that the "Undo" option becomes unavailable, then the hard 
+uninstall takes place and the uninstall function is called.</div>
+
+<div class="note"><strong>Note:</strong> The uninstall function fires on downgrade and upgrade as well so you should make sure it is an uninstall by doing this:<br>
+<code>function uninstall(aData, aReason) {</code><br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp; if (aReason == ADDON_UNINSTALL) {</code><br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; console.log('really uninstalling');</code><br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp; } else {</code><br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; console.log('not a permanent uninstall, likely an upgrade or downgrade');</code><br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp; }</code><br>
+<code>}</code></div>
+
+<pre class="line-numbers  language-html"><code class=" language-html">void uninstall(
+  data,
+  reason
+);<span class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h6 id="Parameters_4">Parameters</h6>
+
+<dl>
+ <dt><code>data</code></dt>
+ <dd>A <a href="#Bootstrap_data">bootstrap data structure</a>.</dd>
+ <dt><code>reason</code></dt>
+ <dd>One of the <a href="#Reason_constants">reason constants</a>, indicating why the extension is being uninstalled. This will be one of <code>ADDON_UNINSTALL</code>, <code>ADDON_UPGRADE</code>, or <code>ADDON_DOWNGRADE</code>.</dd>
+</dl>
+
+<h2 id="Reason_constants">Reason constants</h2>
+
+<p>The bootstrap functions accept a <code>reason</code> parameter, which explains to the extension why it's being called. The reason constants are:</p>
+
+<table class="standard-table">
+ <tbody>
+  <tr>
+   <td class="header">Constant</td>
+   <td class="header">Value</td>
+   <td class="header">Description</td>
+  </tr>
+  <tr>
+   <td><code>APP_STARTUP</code></td>
+   <td>1</td>
+   <td>The application is starting up.</td>
+  </tr>
+  <tr>
+   <td><code>APP_SHUTDOWN</code></td>
+   <td>2</td>
+   <td>The application is shutting down.</td>
+  </tr>
+  <tr>
+   <td><code>ADDON_ENABLE</code></td>
+   <td>3</td>
+   <td>The add-on is being enabled.</td>
+  </tr>
+  <tr>
+   <td><code>ADDON_DISABLE</code></td>
+   <td>4</td>
+   <td>The add-on is being disabled. (Also <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=620541" class="external link-https external-icon" rel="noopener">sent during uninstallation</a>)</td>
+  </tr>
+  <tr>
+   <td><code>ADDON_INSTALL</code></td>
+   <td>5</td>
+   <td>The add-on is being installed.</td>
+  </tr>
+  <tr>
+   <td><code>ADDON_UNINSTALL</code></td>
+   <td>6</td>
+   <td>The add-on is being uninstalled.</td>
+  </tr>
+  <tr>
+   <td><code>ADDON_UPGRADE</code></td>
+   <td>7</td>
+   <td>The add-on is being upgraded.</td>
+  </tr>
+  <tr>
+   <td><code>ADDON_DOWNGRADE</code></td>
+   <td>8</td>
+   <td>The add-on is being downgraded.</td>
+  </tr>
+ </tbody>
+</table>
+
+<h2 id="Bootstrap_data">Bootstrap data</h2>
+
+<p>Each of the entry points is passed a simple data structure containing
+ some useful information about the add-on being bootstrapped. More 
+information about the add-on can be obtained by calling <code><a href="https://developer.mozilla.org/en-US/docs/Addons/Add-on_Manager/AddonManager#getAddonByID()">AddonManager.getAddonByID()</a></code>. The data is a simple JavaScript object with the following properties:</p>
+
+<table class="standard-table">
+ <tbody>
+  <tr>
+   <td class="header">Property</td>
+   <td class="header">Type</td>
+   <td class="header">Description</td>
+  </tr>
+  <tr>
+   <td><code>id</code></td>
+   <td><code>string</code></td>
+   <td>The ID of the add-on being bootstrapped.</td>
+  </tr>
+  <tr>
+   <td><code>version</code></td>
+   <td><code>string</code></td>
+   <td>The version of the add-on being bootstrapped.</td>
+  </tr>
+  <tr>
+   <td><code>installPath</code></td>
+   <td><code>nsIFile</code></td>
+   <td>The installation location of the add-on being bootstrapped. This 
+may be a directory or an XPI file depending on whether the add-on is 
+installed unpacked or not.</td>
+  </tr>
+  <tr>
+   <td><code>resourceURI</code></td>
+   <td><code>nsIURI</code></td>
+   <td>A URI pointing at the root of the add-ons files, this may be a <code>jar:</code> or <code>file:</code> URI depending on whether the add-on is installed unpacked or not. </td>
+  </tr>
+  <tr>
+   <td><code>oldVersion</code></td>
+   <td><code>string</code></td>
+   <td>The previously installed version, if the reason is <code>ADDON_UPGRADE</code> or <code>ADDON_DOWNGRADE</code>, and the method is <code>install</code> or <code>startup</code>. </td>
+  </tr>
+  <tr>
+   <td><code>newVersion</code></td>
+   <td><code>string</code></td>
+   <td>The version to be installed, if the reason is <code>ADDON_UPGRADE</code> or <code>ADDON_DOWNGRADE</code>, and the method is <code>shutdown</code> or <code>uninstall</code>. </td>
+  </tr>
+ </tbody>
+</table>
+
+<div class="note">
+<p><strong>Note:</strong> An add-on may be upgraded/downgraded at application startup, in this case the <code>startup</code> method reason is <code>APP_STARTUP</code>, and the <code>oldVersion</code> property is not set. Also be aware that in some circumstances an add-on upgrade/downgrade may occur without the <code>uninstall</code> method being called.</p>
+</div>
+
+<h2 id="Add-on_debugger">Add-on debugger</h2>
+
+<p>From Firefox 31 onwards, you can use the <a href="https://developer.mozilla.org/en-US/Add-ons/Add-on_Debugger">Add-on Debugger</a> to debug bootstrapped add-ons.</p>
+
+<h2 id="Localization_(L10n)">Localization (L10n)</h2>
+
+<p>Localizing bootstrapped add-ons is very much the same since Firefox 7, as that is when chrome.manifest compatibility landed.</p>
+
+<h3 id="JS_and_JSM_Files_-_Using_Property_Files" class="highlight-spanned"><span class="highlight-span">JS and JSM Files - Using Property Files</span></h3>
+
+<p>To localize your .js and .jsm files you have to use <a href="https://developer.mozilla.org/en-US/docs/XUL/Tutorial/Property_Files">property files</a>.</p>
+
+<p>The absolute minimum needed here is:</p>
+
+<ol>
+ <li>File: install.rdf</li>
+ <li>File: chrome.manifest</li>
+ <li>File: bootstrap.js</li>
+ <li>Folder: locale
+  <ol>
+   <li>Folder: VALID_LOCALE_HERE
+    <ol>
+     <li>File: ANYTHING.properties</li>
+    </ol>
+   </li>
+  </ol>
+ </li>
+</ol>
+
+<p>In the locale folder you must have folders for each of the languages 
+you want to provide; each folder must be named a valid locale (ex: 
+en-US). Inside this folder must be a property file. Inside the 
+chrome.manifest file these locale must be defined. For example if you 
+had a subfolder of en-US in locale folder your chrome.manifest file will
+ have to contain: <code>locale NAME_OF_YOUR_ADDON en-US locale/en-US/</code></p>
+
+<p>Here is an example: <a href="https://github.com/Noitidart/l10n/tree/properties" class="external external-icon" rel="noopener">GitHub :: l10n-properties</a>
+ - on startup of this add-on it will show a prompt saying USA or Great 
+Britain, which ever it deems closest to your locale. You can test 
+different locale by going to about:config and changing preference of 
+general.useragent.locale to en-US and then to en-GB and disabling then 
+re-enabling the add-on.</p>
+
+<h3 id="XUL_and_HTML_Files_-_Using_Entities_from_DTD_Files" class="highlight-spanned"><span class="highlight-span">XUL and HTML Files - Using Entities from DTD Files</span></h3>
+
+<p>Many times HTML pages are used, however they cannot be localized with DTD files. There are three changes you must make:</p>
+
+<ol>
+ <li>You have to change the HTML file's extension to be <code>.xhtml</code></li>
+ <li>The doctype must be defined point to a DTD file in your locale folder such as: <code>&lt;!DOCTYPE html SYSTEM <span class="pl-s1">"chrome://l10n/locale/mozilla.dtd"</span>&gt;</code></li>
+ <li>Must add xmlns attribute to html tag for example: <code>&lt;<span class="pl-ent">html</span> <span class="pl-e">xmlns</span>=<span class="pl-s1"><span class="pl-pds">"</span>http://www.w3.org/1999/xhtml<span class="pl-pds">"</span></span>&gt;</code></li>
+ <li>If you have multiple DTD files read on here: <a href="https://developer.mozilla.org/en-US/docs/Using_multiple_DTDs">Using multiple DTDs</a></li>
+</ol>
+
+<p>The bare minimum needed is:</p>
+
+<ol>
+ <li>File: install.rdf</li>
+ <li>File: chrome.manifest</li>
+ <li>File: bootstrap.js</li>
+ <li>Folder: locale
+  <ol>
+   <li>Folder: VALID_LOCALE_HERE
+    <ol>
+     <li>File: ANYTHING.dtd</li>
+    </ol>
+   </li>
+  </ol>
+ </li>
+</ol>
+
+<p>The chrome.manifest file must include a definition for content for example: <code>content NAME_OF_YOUR_ADDON ./</code></p>
+
+<p>The chrome.manifest file must also include a line pointing to the 
+locale, just like in the above property section, if you had a folder 
+named en-US in locale, the chrome.manifest file should contain: <code>locale NAME_OF_YOUR_ADDON en-US locale/en-US/</code></p>
+
+<p>Here is an example add-on that opens an HTML page and a XUL page on install: <a href="https://github.com/Noitidart/l10n/tree/c456cc82a8a66b6d552cd8c2299cd2babc383af0" class="external external-icon" rel="noopener">GitHub :: l10n-xhtml-xul</a>. Here is an example showing how to use a localized HTML page as an options page: <a href="https://github.com/Noitidart/l10n/tree/html-options" class="external external-icon" rel="noopener">GitHub :: l10n-html-options</a>. You can go to about:config and change the value of the preference <code>general.useragent.locale </code>to <code>en-US</code> and then to <code>en-GB</code> and then reload the open pages to see the localization change.</p>
+
+<h2 id="Further_reading">Further reading</h2>
+
+<ul>
+ <li><a href="https://developer.mozilla.org/en-US/Add-ons/How_to_convert_an_overlay_extension_to_restartless">How to convert an overlay extension to restartless</a>
+ a step by step guide. Some code samples are provided. The page is based
+ on and expanded from Dave Garrett's step-by-step guide to <a href="https://flagfox.wordpress.com/2014/01/19/writing-restartless-addons/" class="external external-icon" rel="noopener">convert an old overlay based extension into a restartless addon</a>.</li>
+ <li>Dave Townsend provides a basic code base to <a href="http://www.oxymoronical.com/blog/2011/01/Playing-with-windows-in-restartless-bootstrapped-extensions" class="external external-icon" rel="noopener">load UI for each opened window</a> in a bootstrapped extension.</li>
+ <li>Mark Finkle provides some simple example code for <a href="http://starkravingfinkle.org/blog/2011/01/bootstrap-jones-adventures-in-restartless-add-ons/" class="external external-icon" rel="noopener">restartless add-ons in mobile Firefox</a>, <a href="http://starkravingfinkle.org/blog/2011/01/restartless-add-ons-more-resources/" class="external external-icon" rel="noopener">adding resources (like the options window)</a>&nbsp;to bootstrapped extensions and <a href="http://starkravingfinkle.org/blog/2011/01/restartless-add-ons-%e2%80%93-default-preferences/" class="external external-icon" rel="noopener">using default preferences</a> without a <code>default/preferences/prefs.js</code> file.</li>
+ <li>Kris Maglione writes about <a href="http://maglione-k.users.sourceforge.net/bootstrapped.xhtml" class="external external-icon" rel="noopener">the requirements for the cleanup procedures</a> in bootstrapped extensions.</li>
+ <li>Edward Lee shows off some <a href="http://ed.agadak.net/2011/01/restartless-add-on-example-code" class="external external-icon" rel="noopener">helpful coding patterns and examples</a> you can use in your bootstrapped add-on.</li>
+ <li>Documentation for <a href="https://developer.mozilla.org/en-US/docs/Extensions/Inline_Options">Inline Options</a> in Firefox 7 and later.</li>
+</ul>
+                  
+                
+              </article>
+
+              <!-- contributors -->
+              <div class="wiki-block contributors">
+                <h2 class="offscreen">Document Tags and Contributors</h2>
+                
+                
+  <div class="tag-attach-list contributors-sub">
+    <i aria-hidden="true" class="icon-tags icon-fw"></i>
+    <strong>Tags:</strong>&nbsp;
+    <ul class="tags tags-small">
+      
+        <li><a href="https://developer.mozilla.org/en-US/docs/tag/Add-ons" rel="nofollow, noindex">Add-ons</a></li>
+      
+        <li><a href="https://developer.mozilla.org/en-US/docs/tag/Extensions" rel="nofollow, noindex">Extensions</a></li>
+      
+        <li><a href="https://developer.mozilla.org/en-US/docs/tag/Firefox%204" rel="nofollow, noindex">Firefox 4</a></li>
+      
+        <li><a href="https://developer.mozilla.org/en-US/docs/tag/Gecko%202.0" rel="nofollow, noindex">Gecko 2.0</a></li>
+      
+        <li><a href="https://developer.mozilla.org/en-US/docs/tag/Guide" rel="nofollow, noindex">Guide</a></li>
+      
+        <li><a href="https://developer.mozilla.org/en-US/docs/tag/Localization" rel="nofollow, noindex">Localization</a></li>
+      
+    </ul>
+  </div>
+
+
+                
+                  <div class="contributors-sub">
+                    <i aria-hidden="true" class="icon-group icon-fw"></i>&nbsp;<strong>Contributors to this page:</strong> 
+        <a href="https://developer.mozilla.org/en-US/profiles/wbamberg">wbamberg</a>, 
+    
+        <a href="https://developer.mozilla.org/en-US/profiles/kmaglione">kmaglione</a>, 
+    
+        <a href="https://developer.mozilla.org/en-US/profiles/joar">joar</a>, 
+    
+        <a href="https://developer.mozilla.org/en-US/profiles/nemchand">nemchand</a>, 
+    
+        <a href="https://developer.mozilla.org/en-US/profiles/Noitidart">Noitidart</a>, 
+    
+        <a href="https://developer.mozilla.org/en-US/profiles/jsx">jsx</a>, 
+    
+        <a href="https://developer.mozilla.org/en-US/profiles/jewelrana12">jewelrana12</a>, 
+    
+        <a href="https://developer.mozilla.org/en-US/profiles/MelindaR">MelindaR</a>, 
+    
+        <a href="https://developer.mozilla.org/en-US/profiles/unknow91">unknow91</a>, 
+    
+        <a href="https://developer.mozilla.org/en-US/profiles/mundurisaikumar">mundurisaikumar</a>, 
+    
+        <a href="https://developer.mozilla.org/en-US/profiles/philr3">philr3</a>, 
+    
+        <a href="https://developer.mozilla.org/en-US/profiles/adamcevans1984">adamcevans1984</a>, 
+    
+        <a href="https://developer.mozilla.org/en-US/profiles/WP-Makyen">WP-Makyen</a>, 
+    
+        <a href="https://developer.mozilla.org/en-US/profiles/Wladimir_Palant">Wladimir_Palant</a>, 
+    
+        <a href="https://developer.mozilla.org/en-US/profiles/BigBlueHat">BigBlueHat</a>, 
+    
+        <a href="https://developer.mozilla.org/en-US/profiles/DaveG">DaveG</a>, 
+    
+        <a href="https://developer.mozilla.org/en-US/profiles/mdawsary">mdawsary</a>, 
+    
+        <a href="https://developer.mozilla.org/en-US/profiles/kscarfone">kscarfone</a>, 
+    
+        <a href="https://developer.mozilla.org/en-US/profiles/GiT">GiT</a>, 
+    
+        <a href="https://developer.mozilla.org/en-US/profiles/imonlhec22">imonlhec22</a>, 
+    
+        <a href="https://developer.mozilla.org/en-US/profiles/darktrojan">darktrojan</a>, 
+    
+        <a href="https://developer.mozilla.org/en-US/profiles/Oeekker">Oeekker</a>, 
+    
+        <a href="https://developer.mozilla.org/en-US/profiles/PikadudeNo1">PikadudeNo1</a>, 
+    
+        <a href="https://developer.mozilla.org/en-US/profiles/kohei.yoshino">kohei.yoshino</a>, 
+    
+        <a href="https://developer.mozilla.org/en-US/profiles/LouCypher">LouCypher</a>, 
+    
+        <a href="https://developer.mozilla.org/en-US/profiles/Nickolay">Nickolay</a>, 
+    
+        <a href="https://developer.mozilla.org/en-US/profiles/mnoorenberghe">mnoorenberghe</a>, 
+    
+        <a href="https://developer.mozilla.org/en-US/profiles/scrapmac">scrapmac</a>, 
+    
+        <a href="https://developer.mozilla.org/en-US/profiles/One">One</a>, 
+    
+        <a href="https://developer.mozilla.org/en-US/profiles/Sheppy">Sheppy</a>, 
+    
+        <a href="https://developer.mozilla.org/en-US/profiles/BrunoLM">BrunoLM</a>, 
+    
+        <a href="https://developer.mozilla.org/en-US/profiles/Mossop">Mossop</a>, 
+    
+        <a href="https://developer.mozilla.org/en-US/profiles/SamB">SamB</a>, 
+    
+        <a href="https://developer.mozilla.org/en-US/profiles/madarche">madarche</a>, 
+    
+        <a href="https://developer.mozilla.org/en-US/profiles/robodesign">robodesign</a>, 
+    
+        <a href="https://developer.mozilla.org/en-US/profiles/Yansky0">Yansky0</a>, 
+    
+        <a href="https://developer.mozilla.org/en-US/profiles/MarkFinkle">MarkFinkle</a>, 
+    
+        <a href="https://developer.mozilla.org/en-US/profiles/MattBrubeck">MattBrubeck</a>, 
+    
+        <a href="https://developer.mozilla.org/en-US/profiles/teoli">teoli</a>
+    
+                  </div>
+                
+
+                
+                  <div class="contributors-sub">
+                    <i aria-hidden="true" class="icon-clock-o icon-fw"></i>&nbsp;<strong>Last updated by:</strong>
+                    <a href="https://developer.mozilla.org/en-US/profiles/wbamberg">wbamberg</a>,
+                    <time datetime="2017-11-28T14:46:53.700068-08:00">Nov 28, 2017, 2:46:53 PM</time>
+                  </div>
+                
+              </div>
+            </div>
+
+            
+              <!-- quick links and zone subnav strip -->
+              <div id="wiki-left" class="column-strip wiki-column">
+
+                
+                  <!-- crumbs -->
+                  
+  
+    <nav class="crumbs" role="navigation">
+      <ol typeof="BreadcrumbList" vocab="https://schema.org/" aria-label="breadcrumbs">
+        
+          <li property="itemListElement" typeof="ListItem" class="crumb">
+            <a href="https://developer.mozilla.org/en-US/docs/Archive" property="item" typeof="WebPage">
+              <span property="name">Archive of obsolete content</span>
+            </a>
+            <meta property="position" content="1">
+          </li>
+        
+          <li property="itemListElement" typeof="ListItem" class="crumb">
+            <a href="https://developer.mozilla.org/en-US/docs/Archive/Add-ons" property="item" typeof="WebPage">
+              <span property="name">Add<wbr>-ons</span>
+            </a>
+            <meta property="position" content="2">
+          </li>
+        
+        <li property="itemListElement" typeof="ListItem" class="crumb">
+          <span property="name">Bootstrapped extensions</span>
+        </li>
+      </ol>
+    </nav>
+  
+                
+
+                
+                  <!-- zone subnav -->
+                  
+  <nav class="zone-subnav-container" role="navigation">
+    <div class="subnav" id="Subnav">
+      
+<p></p><ol class="accordion"><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Sample_.htaccess_file">.htaccess ( hypertext access )</a></li><li class="toggleable current" data-closed=""><a href="https://developer.mozilla.org/en-US/docs/Archive/Add-ons" class="toggler" aria-haspopup="true"><i aria-hidden="true" class="icon-caret-down"></i>Add-ons</a><ol class="toggle-container" style="display: block;" aria-expanded="true"><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Add-ons">Add-ons</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Add-ons/Add-on_SDK">Add-on SDK</a></li><li class="current"><a href="https://developer.mozilla.org/en-US/docs/Archive/Add-ons/Bootstrapped_extensions">Bootstrapped extensions</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Add-ons/Code_snippets">Code snippets</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Add-ons/Creating_Custom_Firefox_Extensions_with_the_Mozilla_Build_System">Creating custom Firefox extensions with the Mozilla build system</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Add-ons/Extension_etiquette">Extension Etiquette</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Add-ons/Extension_Packaging">Extension Packaging</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Add-ons/SeaMonkey_2">Extensions support in SeaMonkey 2</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Add-ons/Talk:Firefox_addons_developer_guide">Firefox addons developer guide</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Add-ons/Hotfix">Hotfix Extension</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Add-ons/How_to_convert_an_overlay_extension_to_restartless">How to convert an overlay extension to restartless</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Add-ons/Inline_Options">Inline options</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Add-ons/Install_Manifests">Install Manifests</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Add-ons/Interaction_between_privileged_and_non-privileged_pages">Interaction between privileged and non-privileged pages</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Add-ons/Legacy_add_ons">Legacy Add-ons</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Add-ons/Legacy_Firefox_for_Android">Legacy extensions for Firefox for Android</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Add-ons/Overlay_Extensions">Overlay extensions</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Add-ons/Performance_best_practices_in_extensions">Performance best practices in extensions</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Add-ons/Security_best_practices_in_extensions">Security best practices in extensions</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Add-ons/Setting_up_extension_development_environment">Setting up an extension development environment</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Add-ons/Tabbed_browser">Tabbed browser</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Add-ons/Techniques">Techniques</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Add-ons/Working_with_multiprocess_Firefox">Working with multiprocess Firefox</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Add-ons/bookmarks.export">bookmarks.export()</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Add-ons/bookmarks.import">bookmarks.import()</a></li></ol></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Adding_preferences_to_an_extension">Adding preferences to an extension</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/An_Interview_With_Douglas_Bowman_of_Wired_News">An Interview With Douglas Bowman of Wired News</a></li><li class="toggleable" data-closed="true"><a href="https://developer.mozilla.org/en-US/docs/Archive/Apps" class="toggler" aria-haspopup="true"><i aria-hidden="true" class="icon-caret-right"></i>Apps</a><ol class="toggle-container" style="display: none;"><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Apps">Apps</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Apps/Reference">App Development API Reference</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Apps/Design">Designing Open Web Apps</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Apps/Graphics_and_UX">Graphics and UX</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Apps/Architecture">Open web app architecture</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Apps/Tools_and_frameworks">Tools and frameworks</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Apps/App_validator">Validating web apps with the App Validator</a></li></ol></li><li class="toggleable" data-closed="true"><a href="https://developer.mozilla.org/en-US/docs/Archive/Mozilla" class="toggler" aria-haspopup="true"><i aria-hidden="true" class="icon-caret-right"></i>Archived Mozilla and build documentation</a><ol class="toggle-container" style="display: none;"><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Mozilla">Archived Mozilla and build documentation</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Mozilla/ActiveX_Control_for_Hosting_Netscape_Plug-ins_in_IE">ActiveX Control for Hosting Netscape Plug-ins in IE</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Mozilla/SpiderMonkey">Archived SpiderMonkey docs</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Mozilla/Autodial_for_Windows_NT">Autodial for Windows NT</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Mozilla/Automated_testing_tips_and_tricks">Automated testing tips and tricks</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Mozilla/Automatic_Mozilla_Configurator">Automatic Mozilla Configurator</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Mozilla/Automatically_Handle_Failed_Asserts_in_Debug_Builds">Automatically Handle Failed Asserts in Debug Builds</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Mozilla/BlackConnect">BlackConnect</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Mozilla/Blackwood">Blackwood</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Mozilla/Bonsai">Bonsai</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Mozilla/Bookmark_keywords">Bookmark Keywords</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Mozilla/Building_TransforMiiX_standalone">Building TransforMiiX standalone</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Mozilla/Chromeless">Chromeless</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Mozilla/Creating_a_Firefox_sidebar_extension">Creating a Firefox sidebar extension</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Mozilla/Creating_a_microsummary">Creating a Microsummary</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Mozilla/Creating_a_Mozilla_extension">Creating a Mozilla Extension</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Mozilla/Creating_a_release_tag">Creating a Release Tag</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Mozilla/Creating_a_sking_for_Firefox_Getting_Started">Creating a Skin for Firefox/Getting Started</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Mozilla/Creating_a_skin_for_Mozilla">Creating a Skin for Mozilla</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Mozilla/Creating_a_Skin_for_SeaMonkey_2.x">Creating a Skin for SeaMonkey 2.x</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Mozilla/Creating_a_hybrid_CD">Creating a hybrid CD</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Mozilla/Creating_regular_expressions_for_a_microsummary_generator">Creating regular expressions for a microsummary generator</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Mozilla/DTrace">DTrace</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Mozilla/Dehydra">Dehydra</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Mozilla/Developing_New_Mozilla_Features">Developing New Mozilla Features</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Mozilla/Devmo_launch_roadmap">Devmo 1.0 Launch Roadmap</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Mozilla/Download_Manager_improvements_in_Firefox_3">Download Manager improvements in Firefox 3</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Mozilla/Download_Manager_preferences">Download Manager preferences</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Mozilla/Drag_and_drop">Drag and Drop</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Mozilla/Embedding_FAQ">Embedding FAQ</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Mozilla/Embedding_Mozilla_in_a_Java_Application_using_JavaXPCOM">Embedding Mozilla in a Java Application using JavaXPCOM</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Mozilla/Error_console">Error Console</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Mozilla/Exception_logging_in_JavaScript">Exception logging in JavaScript</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Mozilla/Project:Existing_Content">Existing Content</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Mozilla/Extension_Frequently_Asked_Questions">Extension Frequently Asked Questions</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Mozilla/Fighting_Junk_Mail_with_Netscape_7.1">Fighting Junk Mail with Netscape 7.1</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Mozilla/Firefox_Sync">Firefox Sync</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Mozilla/Force_RTL">Force RTL</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Mozilla/GRE">GRE</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Mozilla/Gecko_Coding_Help_Wanted">Gecko Coding Help Wanted</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Mozilla/HTTP_Class_Overview">HTTP Class Overview</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Mozilla/Project:Hacking_wiki">Hacking wiki</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Mozilla/Help_viewer">Help Viewer</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Mozilla/Helper_Apps">Helper Apps (and a bit of Save As)</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Mozilla/Hidden_prefs">Hidden prefs</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Mozilla/Nanojit_merging">How to Write and Land Nanojit Patches</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Mozilla/Introducing_the_Audio_API_Extension">Introducing the Audio API extension</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Mozilla/Java_in_Firefox_Extensions">Java in Firefox Extensions</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Mozilla/JavaScript_crypto">JavaScript crypto</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Mozilla/Jetpack">Jetpack</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Mozilla/Litmus_tests">Litmus tests</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Mozilla/Makefile.mozextension.2">Makefile.mozextension.2</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Mozilla/Microsummary_topics">Microsummary topics</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Mozilla/Migrate_apps_from_Internet_Explorer_to_Mozilla">Migrate apps from Internet Explorer to Mozilla</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Mozilla/Monitoring_downloads">Monitoring downloads</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Mozilla/Mozilla_Application_Framework">Mozilla Application Framework</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Mozilla/Mozilla_crypto_FAQ">Mozilla Crypto FAQ</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Mozilla/Modules_and_Module_ownership">Mozilla Modules and Module Ownership</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Mozilla/mozprocess">Mozprocess</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Mozilla/mozprofile">Mozprofile</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Mozilla/mozrunner">Mozrunner</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Mozilla/Nanojit">Nanojit</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Mozilla/Project:New_Skin_Notes">New Skin Notes</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Mozilla/Persona">Persona</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Mozilla/Plug-n-Hack">Plug-n-Hack</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Mozilla/Plugin_architecture">Plugin Architecture</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Mozilla/Porting_NSPR_to_Unix_Platforms">Porting NSPR to Unix Platforms</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Mozilla/Project:DevEdge">Priority Content</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Mozilla/Prism">Prism</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Mozilla/Proxy_UI">Proxy UI</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Mozilla/Remote_XUL">Remote XUL</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Mozilla/SXSW_2007_presentations">SXSW 2007 presentations</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Mozilla/Space_Manager_Detailed_Design">Space Manager Detailed Design</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Mozilla/Space_Manager_High_Level_Design">Space Manager High Level Design</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Mozilla/Standalone_XPCOM">Standalone XPCOM</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Mozilla/Stress_testing">Stress testing</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Mozilla/Bundles">Structure of an installable bundle</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Mozilla/Supporting_private_browsing_mode">Supporting private browsing mode</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Mozilla/Table_Cellmap">Table Cellmap</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Mozilla/Table_Cellmap_-_Border_Collapse">Table Cellmap - Border Collapse</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Mozilla/Table_Layout_Regression_Tests">Table Layout Regression Tests</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Mozilla/Table_Layout_Strategy">Table Layout Strategy</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Mozilla/Tamarin">Tamarin</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Mozilla/The_Download_Manager_schema">The Download Manager schema</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Mozilla/The_life_of_an_HTML_HTTP_request">The life of an HTML HTTP request</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Mozilla/The_new_nsString_class_implementation_(1999)">The new nsString class implementation (1999)</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Mozilla/TraceVis">TraceVis</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Mozilla/Treehydra">Treehydra</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Mozilla/URIScheme">URIScheme</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Mozilla/URIs_and_URLs">URIs and URLs</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Mozilla/Using_Monotone_with_Mozilla_CVS">Using Monotone With Mozilla CVS</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Mozilla/Using_SVK_with_Mozilla_CVS">Using SVK With Mozilla CVS</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Mozilla/Using_addresses_of_stack_variables_with_NSPR_threads_on_win16">Using addresses of stack variables with NSPR threads on win16</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Mozilla/Venkman">Venkman</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Mozilla/Video_presentations">Video presentations</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Mozilla/Why_embed_Gecko">Why Embed Gecko</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Mozilla/XML_in_Mozilla">XML in Mozilla</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Mozilla/XPInstall">XPInstall</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Mozilla/XPJS_Components_Proposal">XPJS Components Proposal</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Mozilla/XRE">XRE</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Mozilla/XTech_2005_Presentations">XTech 2005 Presentations</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Mozilla/XTech_2006_Presentations">XTech 2006 Presentations</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Mozilla/XUL_Explorer">XUL Explorer</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Mozilla/XULRunner">XULRunner</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Mozilla/ant_script_to_assemble_an_extension">ant script to assemble an extension</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Mozilla/callCalendarView">calICalendarView</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Mozilla/callCalendarViewController">calICalendarViewController</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Mozilla/callFileType">calIFileType</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Mozilla/xbDesignMode.js">xbDesignMode.js</a></li></ol></li><li class="toggleable" data-closed="true"><a href="https://developer.mozilla.org/en-US/docs/Archive/Web" class="toggler" aria-haspopup="true"><i aria-hidden="true" class="icon-caret-right"></i>Archived open Web documentation</a><ol class="toggle-container" style="display: none;"><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Web">Archived open Web documentation</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Web/Browser_Detection_and_Cross_Browser_Support">Browser Detection and Cross Browser Support</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Web/Browser_feature_detection">Browser Feature Detection</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Web/Displaying_notifications_(deprecated)">Displaying notifications (deprecated)</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Web/E4X">E4X</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Web/E4X_tutorial">E4X Tutorial</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Web/Iterator">Iterator</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Web/LiveConnect">LiveConnect</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Web/MSX_Emulator_(jsMSX)">MSX Emulator (jsMSX)</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Web/Old_Proxy_API">Old Proxy API</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Web/ParallelArray">ParallelArray</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Web/Properly_Using_CSS_and_JavaScript_in_XHTML_Documents_">Properly Using CSS and JavaScript in XHTML Documents</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Web/Talk:JavaScript_Reference">Reference</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Web/Scope_Cheatsheet">Scope Cheatsheet</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Web/Server-Side_JavaScript">Server-Side JavaScript</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Web/Sharp_variables_in_JavaScript">Sharp variables in JavaScript</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Web/Standards-Compliant_Authoring_Tools">Standards-Compliant Authoring Tools</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Web/StopIteration">StopIteration</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Web/Styling_the_Amazing_Netscape_Fish_Cam_Page">Styling the Amazing Netscape Fish Cam Page</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Web/IndexedDB_API_Using_JavaScript_Generators_in_Firefox">Using JavaScript Generators in Firefox</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Web/Window.importDialog">Window.importDialog()</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Web/Writing_JavaScript_for_HTML">Writing JavaScript for XHTML</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Web/XForms">XForms</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Web/Talk:CSS_background-size">background-size</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Web/Talk:JavaScript_Reference_Global_Objects_Array_forEach">forEach</a></li></ol></li><li class="toggleable" data-closed="true"><a href="https://developer.mozilla.org/en-US/docs/Archive/B2G_OS" class="toggler" aria-haspopup="true"><i aria-hidden="true" class="icon-caret-right"></i>B2G OS</a><ol class="toggle-container" style="display: none;"><li><a href="https://developer.mozilla.org/en-US/docs/Archive/B2G_OS">B2G OS</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/B2G_OS/Automated_testing">Automated Testing of B2G OS</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/B2G_OS/API">B2G OS APIs</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/B2G_OS/Add-ons">B2G OS add-ons</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/B2G_OS/Architecture">B2G OS architecture</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/B2G_OS/B2G_OS_build_prerequisites">B2G OS build prerequisites</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/B2G_OS/Phone_guide">B2G OS phone guide</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/B2G_OS/Building">Building B2G OS</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/B2G_OS/Building_and_installing_B2G_OS">Building and installing B2G OS</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/B2G_OS/Building_the_B2G_OS_simulator">Building the B2G OS Simulator</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/B2G_OS/Choosing_how_to_run_Gaia_or_B2G">Choosing how to run Gaia or B2G</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/B2G_OS/Customization_with_the_.userconfig_file">Customization with the .userconfig file</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/B2G_OS/Debugging">Debugging on Firefox OS</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/B2G_OS/Developer_Mode">Developer Mode</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/B2G_OS/Developing_Firefox_OS">Developing Firefox OS</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/B2G_OS/Simulator">Firefox OS Simulator</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/B2G_OS/Firefox_OS_apps">Firefox OS apps</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/B2G_OS/Board_guide">Firefox OS board guide</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/B2G_OS/Releases">Firefox OS developer release notes</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/B2G_OS/Security">Firefox OS security</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/B2G_OS/Firefox_OS_usage_tips">Firefox OS usage tips</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/B2G_OS/Developing_Gaia">Gaia</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/B2G_OS/Installing_on_a_mobile_device">Installing B2G OS on a mobile device</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/B2G_OS/Introduction">Introduction to Firefox OS</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/B2G_OS/Mulet">Mulet</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/B2G_OS/Quickstart">Open web apps quickstart</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/B2G_OS/Pandaboard">Pandaboard</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/B2G_OS/PasscodeHelper_Internals">PasscodeHelper Internals</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/B2G_OS/Porting_B2G_OS">Porting B2G OS</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/B2G_OS/Preparing_for_your_first_B2G_build">Preparing for your first B2G build</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/B2G_OS/Resources">Resources</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/B2G_OS/Running_Tests_on_Firefox_OS_for_Developers">Running tests on Firefox OS: A guide for developers</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/B2G_OS/Platform">The B2G OS platform</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/B2G_OS/Troubleshooting">Troubleshooting B2G OS</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/B2G_OS/Using_the_App_Manager">Using the App Manager</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/B2G_OS/Using_the_B2G_emulators">Using the B2G emulators</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/B2G_OS/Bluetooth_API">Web Bluetooth API (Firefox OS)</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/B2G_OS/Web_Telephony_API">Web Telephony API</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/B2G_OS/Web_applications">Web applications</a></li></ol></li><li class="toggleable" data-closed="true"><a href="https://developer.mozilla.org/en-US/docs/Archive/Beginner_tutorials" class="toggler" aria-haspopup="true"><i aria-hidden="true" class="icon-caret-right"></i>Beginner tutorials</a><ol class="toggle-container" style="display: none;"><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Beginner_tutorials">Beginner tutorials</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Beginner_tutorials/Using_XBL_from_stylesheets">Creating reusable content with CSS and XBL</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Beginner_tutorials/Underscores_in_class_and_ID_Names">Underscores in class and ID Names</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Beginner_tutorials/XML_data">XML data</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Beginner_tutorials/XUL_user_interfaces">XUL user interfaces</a></li></ol></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Case_Sensitivity_in_class_and_id_Names">Case Sensitivity in class and id Names</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Creating_a_dynamic_status_bar_extension">Creating a dynamic status bar extension</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Creating_a_status_bar_extention">Creating a status bar extension</a></li><li class="toggleable" data-closed="true"><a href="https://developer.mozilla.org/en-US/docs/Archive/RSS_elements" class="toggler" aria-haspopup="true"><i aria-hidden="true" class="icon-caret-right"></i>Element</a><ol class="toggle-container" style="display: none;"><li><a href="https://developer.mozilla.org/en-US/docs/Archive/RSS_elements">Element</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/RSS_elements/title">title</a></li></ol></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Mozilla_Gecko_Compatibility_Handbook">Gecko Compatibility Handbook</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Getting_the_page_URL_in_NPAPI_plugin">Getting the page URL in NPAPI plugin</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Index">Index</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Inner-browsing_extending_the_browser_navigation_paradigm">Inner-browsing extending the browser navigation paradigm</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Install.js">Install.js</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/JXON">JXON</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/List_of_Former_Mozilla-Based_Applications">List of Former Mozilla-Based Applications</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/List_of_Mozilla-Based_Applications">List of Mozilla-Based Applications</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Localizing_an_extension">Localizing an extension</a></li><li class="toggleable" data-closed="true"><a href="https://developer.mozilla.org/en-US/docs/Archive/MDN" class="toggler" aria-haspopup="true"><i aria-hidden="true" class="icon-caret-right"></i>MDN</a><ol class="toggle-container" style="display: none;"><li><a href="https://developer.mozilla.org/en-US/docs/Archive/MDN">MDN</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/MDN/Content_kits">Content kits</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/MDN/Howto_Link_a_Github_account">How to link a GitHub account to your MDN profile</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/MDN/Persona_sign-ins">MDN and Persona sign-ins</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/MDN/Subject-matter_experts">Subject-matter experts</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/MDN/Zones">Zones</a></li></ol></li><li class="toggleable" data-closed="true"><a href="https://developer.mozilla.org/en-US/docs/Archive/Meta_docs" class="toggler" aria-haspopup="true"><i aria-hidden="true" class="icon-caret-right"></i>MDN "meta-documentation" archive</a><ol class="toggle-container" style="display: none;"><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Meta_docs">MDN "meta-documentation" archive</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Meta_docs/Article_page_layout_guide">Article page layout guide</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Meta_docs/Blog_posts_to_integrate_into_documentation">Blog posts to integrate into documentation</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Meta_docs/Current_events">Current events</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Meta_docs/Custom_classes">Custom CSS classes for MDN</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Meta_docs/MDC_design_document">Design Document</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Meta_docs/DevEdge">DevEdge</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Meta_docs/Documentation_process">Developer documentation process</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Meta_docs/Disambiguation">Disambiguation</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Meta_docs/Documentation_wishlist">Documentation Wishlist</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Meta_docs/Planning">Documentation planning and tracking</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Meta_docs/Editing_MDN_pages">Editing MDN pages</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Meta_docs/Examples">Examples</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Meta_docs/Existing_Content_DOM_in_Mozilla">Existing Content/DOM in Mozilla</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Meta_docs/External_redirects">External Redirects</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Meta_docs/Finding_the_right_place_to_document_bugs">Finding the right place to document bugs</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Meta_docs/Getting_started">Getting started as a new MDN contributor</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Meta_docs/Landing_page_layout_guide">Landing page layout guide</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Meta_docs/MDN_content_on_WebPlatform.org">MDN content on WebPlatform.org</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Meta_docs/MDN_page_layout_guide">MDN page layout guide</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Meta_docs/Subprojects">MDN subproject list</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Meta_docs/Needs_redirect">Needs Redirect</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Meta_docs/Page_types">Page types</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Meta_docs/RecRoom_plan">RecRoom documentation plan</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Meta_docs/Remove_in-content_iframes">Remove in-content iframes</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Meta_docs/Team_status_board">Team status board</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Meta_docs/Trello">Trello</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Meta_docs/Using_the_Mozilla_Developer_Center">Using the Mozilla Developer Center</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Meta_docs/Welcome">Welcome to the Mozilla Developer Network</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Meta_docs/Chrome_code">Writing chrome code documentation plan</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Meta_docs/Writing_content">Writing content</a></li></ol></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/MMgc">MMgc</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Makefile_-_.mk_files">Makefile - .mk files</a></li><li class="toggleable" data-closed="true"><a href="https://developer.mozilla.org/en-US/docs/Archive/Marketplace" class="toggler" aria-haspopup="true"><i aria-hidden="true" class="icon-caret-right"></i>Marketplace</a><ol class="toggle-container" style="display: none;"><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Marketplace">Marketplace</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Marketplace/API">API</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Marketplace/Monetization">Monetization</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Marketplace/Options">Options</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Marketplace/Publishing">Publishing</a></li></ol></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Mozilla_release_FAQ">Mozilla release FAQ</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/mozSocial">Navigator.mozSocial</a></li><li class="toggleable" data-closed="true"><a href="https://developer.mozilla.org/en-US/docs/Archive/Newsgroup_summaries" class="toggler" aria-haspopup="true"><i aria-hidden="true" class="icon-caret-right"></i>Newsgroup summaries</a><ol class="toggle-container" style="display: none;"><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Newsgroup_summaries">Newsgroup summaries</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Newsgroup_summaries/Format">Format</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Newsgroup_summaries/Mozilla.dev.apps.firefox-2006-09-29">Mozilla.dev.apps.firefox-2006-09-29</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Newsgroup_summaries/Mozilla.dev.apps.firefox-2006-10-06">Mozilla.dev.apps.firefox-2006-10-06</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Newsgroup_summaries/mozilla-dev-accessibility">mozilla-dev-accessibility</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Newsgroup_summaries/mozilla-dev-apps-calendar">mozilla-dev-apps-calendar</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Newsgroup_summaries/mozilla-dev-apps-firefox">mozilla-dev-apps-firefox</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Newsgroup_summaries/mozilla-dev-apps-thunderbird">mozilla-dev-apps-thunderbird</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Newsgroup_summaries/mozilla-dev-builds">mozilla-dev-builds</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Newsgroup_summaries/mozilla-dev-embedding">mozilla-dev-embedding</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Newsgroup_summaries/mozilla-dev-extensions">mozilla-dev-extensions</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Newsgroup_summaries/mozilla-dev-i18n">mozilla-dev-i18n</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Newsgroup_summaries/mozilla-dev-l10n">mozilla-dev-l10n</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Newsgroup_summaries/mozilla-dev-planning">mozilla-dev-planning</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Newsgroup_summaries/mozilla-dev-platform">mozilla-dev-platform</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Newsgroup_summaries/mozilla-dev-quality">mozilla-dev-quality</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Newsgroup_summaries/mozilla-dev-security">mozilla-dev-security</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Newsgroup_summaries/mozilla-dev-tech-js-engine">mozilla-dev-tech-js-engine</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Newsgroup_summaries/mozilla-dev-tech-layout">mozilla-dev-tech-layout</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Newsgroup_summaries/mozilla-dev-tech-xpcom">mozilla-dev-tech-xpcom</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Newsgroup_summaries/mozilla-dev-tech-xul">mozilla-dev-tech-xul</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Newsgroup_summaries/mozilla.dev.apps.calendar">mozilla.dev.apps.calendar</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Newsgroup_summaries/mozilla.dev.tech.js-engine">mozilla.dev.tech.js-engine</a></li></ol></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/XPCOM-based_scripting_for_NPAPI_plugins">Obsolete: XPCOM-based scripting for NPAPI plugins</a></li><li class="toggleable" data-closed="true"><a href="https://developer.mozilla.org/en-US/docs/Archive/Plugins" class="toggler" aria-haspopup="true"><i aria-hidden="true" class="icon-caret-right"></i>Plugins</a><ol class="toggle-container" style="display: none;"><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Plugins">Plugins</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Plugins/Scripting_Plugins_Adobe_Flash">Adobe Flash</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Plugins/External_resources_for_plugin_creation">External resources for plugin creation</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Plugins/Logging">Logging Multi-Process Plugins</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Plugins/Monitoring_plugins">Monitoring plugins</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Plugins/Multi-Process_Plugin_Architecture">Multi-process plugin architecture</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Plugins/Guide">NPAPI plugin developer guide</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Plugins/Reference">NPAPI plugin reference</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Plugins/Samples_and_Test_Cases">Samples and Test Cases</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Plugins/Shipping_a_plugin_as_a_Toolkit_bundle">Shipping a plugin as a Toolkit bundle</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Plugins/Supporting_private_browsing_in_plugins">Supporting private browsing in plugins</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Plugins/The_First_Install_Problem">The First Install Problem</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Plugins/Writing_a_plugin_for_Mac_OS_X">Writing a plugin for Mac OS X</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Plugins/XEmbed_Extension_for_Mozilla_Plugins">XEmbed Extension for Mozilla Plugins</a></li></ol></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/SAX">SAX</a></li><li class="toggleable" data-closed="true"><a href="https://developer.mozilla.org/en-US/docs/Archive/Security" class="toggler" aria-haspopup="true"><i aria-hidden="true" class="icon-caret-right"></i>Security</a><ol class="toggle-container" style="display: none;"><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Security">Security</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Security/Digital_Signatures">Digital Signatures</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Security/Encryption_and_Decryption">Encryption and Decryption</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Security/Introduction_to_Public-Key_Cryptography">Introduction to Public-Key Cryptography</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Security/Introduction_to_SSL">Introduction to SSL</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Security/NSPR_engineering_guide">NSPR Release Engineering Guide</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Security/SSL_and_TLS">SSL and TLS</a></li></ol></li><li class="toggleable" data-closed="true"><a href="https://developer.mozilla.org/en-US/docs/Archive/Social_API" class="toggler" aria-haspopup="true"><i aria-hidden="true" class="icon-caret-right"></i>Social API</a><ol class="toggle-container" style="display: none;"><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Social_API">Social API</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Social_API/Criteria">Criteria</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Social_API/MozSocial">MozSocial</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Social_API/Service_worker_port_API_reference">Service worker port API reference</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Social_API/Share">Share</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Social_API/Glossary">Social API glossary</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Social_API/Guide">Social API guide</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Social_API/Widgets">Social API widgets</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Social_API/Bookmarks">Social bookmarking</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Social_API/Manifest">Social service installation</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Social_API/Service_worker_API_reference">Social service worker API reference</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Social_API/Status">Status</a></li></ol></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Social_API_temp">Social API temp</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Solaris_10_build_prerequisites">Solaris 10 Build Prerequisites</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Sunbird_theme_tutorial">Sunbird Theme Tutorial</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Table_Reflow_Internals">Table Reflow Internals</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Tamarin_Tracing_Build_Documentation">Tamarin Tracing Build Documentation</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/The_Basics_of_Web_Services">The Basics of Web Services</a></li><li class="toggleable" data-closed="true"><a href="https://developer.mozilla.org/en-US/docs/Archive/Themes" class="toggler" aria-haspopup="true"><i aria-hidden="true" class="icon-caret-right"></i>Themes</a><ol class="toggle-container" style="display: none;"><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Themes">Themes</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Themes/Building_a_Theme">Building a Theme</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Themes/Common_Firefox_theme_issues_and_solutions">Common Firefox theme issues and solutions</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Themes/Creating_a_Skin_for_Firefox">Creating a Skin for Firefox</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Themes/Making_sure_your_theme_works_with_RTL_locales">Making sure your theme works with RTL locales</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Themes/Theme_changes_in_Firefox_2">Theme changes in Firefox 2</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Themes/Theme_changes_in_Firefox_3">Theme changes in Firefox 3</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Themes/Theme_changes_in_Firefox_3.5">Theme changes in Firefox 3.5</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Themes/Theme_changes_in_Firefox_4">Theme changes in Firefox 4</a></li></ol></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Updating_an_extension_to_support_multiple_Mozilla_applications">Updating an extension to support multiple Mozilla applications</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Using_IO_timeouts_and_interrupts_on_NT">Using IO Timeout And Interrupt On NT</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Using_SSH_to_connect_to_CVS">Using SSH to connect to CVS</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Social_API_Devtools">Using the Firefox Devtools with the Social API</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/Using_workers_in_extensions">Using workers in extensions</a></li><li class="toggleable" data-closed="true"><a href="https://developer.mozilla.org/en-US/docs/Archive/WebVR" class="toggler" aria-haspopup="true"><i aria-hidden="true" class="icon-caret-right"></i>WebVR</a><ol class="toggle-container" style="display: none;"><li><a href="https://developer.mozilla.org/en-US/docs/Archive/WebVR">WebVR</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/WebVR/WebVR_environment_setup">WebVR environment setup</a></li></ol></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/XQuery">XQuery</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/XUL_Booster">XUL Booster</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/XUL_Parser_in_Python">XUL Parser in Python</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Archive/%3Cinput%3E_archive">input archive</a></li></ol><p></p>
+    </div>
+  </nav>&nbsp;
+                
+
+                
+                  <!-- quick links -->
+                  
+  <div class="quick-links" id="quick-links">
+    <div class="quick-links-head">Related Topics</div>
+    
+  <ol>
+    <li><a href="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions"><strong>Browser extensions</strong></a></li>
+
+    <li class="toggleable" data-closed="true"><a href="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions#Getting_started" class="toggler" aria-haspopup="true"><i aria-hidden="true" class="icon-caret-right"></i>Getting started</a>
+      <ol class="toggle-container" style="display: none;">
+        <li><a href="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/What_are_WebExtensions_">What are extensions?</a></li>
+        <li><a href="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/Your_first_WebExtension">Your first extension</a></li>
+        <li><a href="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/Your_second_WebExtension">Your second extension</a></li>
+        <li><a href="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/Anatomy_of_a_WebExtension">Anatomy of an extension</a>
+        </li><li><a href="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/Examples">Example extensions</a>
+      </li></ol>
+    </li>
+    
+    <li class="toggleable" data-closed="true"><a href="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions#How_to" class="toggler" aria-haspopup="true"><i aria-hidden="true" class="icon-caret-right"></i>How to</a>
+      <ol class="toggle-container" style="display: none;">
+        <li><a href="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/Intercept_HTTP_requests">Intercept HTTP requests</a></li>
+        <li><a href="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/Modify_a_web_page">Modify a web page</a>
+        </li><li><a href="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/Add_a_button_to_the_toolbar">Add a button to the toolbar</a>
+        </li><li><a href="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/Implement_a_settings_page">Implement a settings page</a></li>
+      </ol>
+    </li>
+
+    <li class="toggleable" data-closed="true"><a href="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions#How_to" class="toggler" aria-haspopup="true"><i aria-hidden="true" class="icon-caret-right"></i>User interface</a>
+      <ol class="toggle-container" style="display: none;">
+        <li><a href="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/user_interface">Introduction</a></li>
+        <li><a href="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/user_interface/Browser_action">Toolbar button</a></li>
+        <li><a href="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/user_interface/Page_actions">Address bar button</a></li>
+        <li><a href="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/user_interface/Sidebars">Sidebar</a></li>
+        <li><a href="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/user_interface/Context_menu_items">Context menu items</a></li>
+        <li><a href="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/user_interface/Options_pages">Options page</a></li>
+        <li><a href="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/user_interface/Bundled_web_pages">Bundled web pages</a></li>
+        <li><a href="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/user_interface/Notifications">Notifications</a></li>
+        <li><a href="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/user_interface/Omnibox">Address bar suggestions</a></li>
+        <li><a href="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/user_interface/devtools_panels">Developer tools panels</a></li>
+      </ol>
+    </li>
+
+    <li class="toggleable" data-closed="true"><a href="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions#Concepts" class="toggler" aria-haspopup="true"><i aria-hidden="true" class="icon-caret-right"></i>Concepts</a>
+      <ol class="toggle-container" style="display: none;">
+        <li><a href="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/Using_the_JavaScript_APIs">Using the JavaScript APIs</a></li>
+        <li><a href="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/Content_scripts">Content scripts</a></li>
+        <li><a href="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/Match_patterns">Match patterns</a></li>
+        <li><a href="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/Working_with_files">Working with files</a></li>
+        <li><a href="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/Internationalization">Internationalization</a></li>
+        <li><a href="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/Content_Security_Policy">Content Security Policy</a></li>
+        <li><a href="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/Native_messaging">Native messaging</a></li>
+      </ol>
+    </li>  
+
+    <li class="toggleable" data-closed="true"><a href="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions#Porting" class="toggler" aria-haspopup="true"><i aria-hidden="true" class="icon-caret-right"></i>Porting</a>
+      <ol class="toggle-container" style="display: none;">
+        <li><a href="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/Porting_a_Google_Chrome_extension">Porting a Google Chrome extension</a></li>
+        <li><a href="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/Porting_a_legacy_Firefox_add-on">Porting a legacy Firefox extension</a>
+        </li><li><a href="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/Embedded_WebExtensions">Embedded WebExtensions</a>
+        </li><li><a href="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/Comparison_with_the_Add-on_SDK">Comparison with the Add-on SDK</a></li>
+        <li><a href="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/Comparison_with_XUL_XPCOM_extensions">Comparison with XUL/XPCOM extensions</a>
+        </li><li><a href="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/Chrome_incompatibilities">Chrome incompatibilities</a></li>
+        <li><a href="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/Differences_between_desktop_and_Android">Differences between desktop and Android</a></li>
+      </ol>
+    </li>  
+
+    <li class="toggleable" data-closed="true"><a href="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions#Firefox_workflow" class="toggler" aria-haspopup="true"><i aria-hidden="true" class="icon-caret-right"></i>Firefox workflow</a>
+      <ol class="toggle-container" style="display: none;">
+        <li><a href="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/User_experience_best_practices">User Experience</a></li>
+        <li><a href="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/Temporary_Installation_in_Firefox">Temporary Installation in Firefox</a></li>
+        <li><a href="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/Debugging">Debugging</a>
+        </li><li><a href="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/Developing_WebExtensions_for_Firefox_for_Android">Developing for Firefox for Android</a>
+        </li><li><a href="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/Getting_started_with_web-ext">Getting started with web-ext</a>
+        </li><li><a href="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/web-ext_command_reference">web-ext command reference</a></li>
+        <li><a href="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/WebExtensions_and_the_Add-on_ID">Extensions and the Add-on ID</a></li>
+        <li><a href="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/Publishing_your_WebExtension">Publishing your extension</a></li>
+
+      </ol>
+    </li>  
+    
+    <li data-default-state="closed" class="toggleable" data-closed="true"><a href="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API" class="toggler" aria-haspopup="true"><i aria-hidden="true" class="icon-caret-right"></i>JavaScript APIs</a>
+     <ol class="toggle-container" style="display: none;"><li><a href="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/Browser_support_for_JavaScript_APIs">Browser support for JavaScript APIs</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/alarms">alarms</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/bookmarks">bookmarks</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/browserAction">browserAction</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/browserSettings">browserSettings</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/browsingData">browsingData</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/clipboard">clipboard</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/commands">commands</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/contextualIdentities">contextualIdentities</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/cookies">cookies</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/devtools.inspectedWindow">devtools.inspectedWindow</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/devtools.network">devtools.network</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/devtools.panels">devtools.panels</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/downloads">downloads</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/events">events</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/extension">extension</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/extensionTypes">extensionTypes</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/find">find</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/history">history</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/i18n">i18n</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/identity">identity</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/idle">idle</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/management">management</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/menus">menus</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/notifications">notifications</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/omnibox">omnibox</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/pageAction">pageAction</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/permissions">permissions</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/pkcs11">pkcs11</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/privacy">privacy</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/proxy">proxy</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/runtime">runtime</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/sessions">sessions</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/sidebarAction">sidebarAction</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/storage">storage</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/tabs">tabs</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/theme">theme</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/topSites">topSites</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/types">types</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/webNavigation">webNavigation</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/webRequest">webRequest</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/windows">windows</a></li></ol>
+    </li>
+    
+    <li class="toggleable" data-closed="true"><a href="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/manifest.json" class="toggler" aria-haspopup="true"><i aria-hidden="true" class="icon-caret-right"></i>Manifest keys</a>
+    <ol class="toggle-container" style="display: none;"><li><a href="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/manifest.json/applications">applications</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/manifest.json/author">author</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/manifest.json/background">background</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/manifest.json/browser_action">browser_action</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/manifest.json/chrome_settings_overrides">chrome_settings_overrides</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/manifest.json/chrome_url_overrides">chrome_url_overrides</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/manifest.json/commands">commands</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/manifest.json/content_scripts">content_scripts</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/manifest.json/content_security_policy">content_security_policy</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/manifest.json/default_locale">default_locale</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/manifest.json/description">description</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/manifest.json/developer">developer</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/manifest.json/devtools_page">devtools_page</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/manifest.json/homepage_url">homepage_url</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/manifest.json/icons">icons</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/manifest.json/incognito">incognito</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/manifest.json/manifest_version">manifest_version</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/manifest.json/name">name</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/manifest.json/omnibox">omnibox</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/manifest.json/optional_permissions">optional_permissions</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/manifest.json/options_ui">options_ui</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/manifest.json/page_action">page_action</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/manifest.json/permissions">permissions</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/manifest.json/protocol_handlers">protocol_handlers</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/manifest.json/short_name">short_name</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/manifest.json/sidebar_action">sidebar_action</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/manifest.json/theme">theme</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/manifest.json/version">version</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/manifest.json/web_accessible_resources">web_accessible_resources</a></li></ol>
+    </li>
+
+    <li><a href="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/Themes"><strong>Themes</strong></a></li>
+    <li class="toggleable" data-closed="true"><a href="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/Themes/Theme_concepts" class="toggler" aria-haspopup="true"><i aria-hidden="true" class="icon-caret-right"></i>Browser themes</a>
+      <ol class="toggle-container" style="display: none;">
+        <li><a href="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/Themes/Theme_concepts">Browser theme concepts</a></li>
+      </ol>
+    </li>
+    <li class="toggleable" data-closed="true"><a href="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/Themes/Lightweight_themes" class="toggler" aria-haspopup="true"><i aria-hidden="true" class="icon-caret-right"></i>Lightweight themes</a>
+      <ol class="toggle-container" style="display: none;">
+        <li><a href="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/Themes/Lightweight_themes">Lightweight themes</a></li>
+        <li><a href="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/Themes/Lightweight_Themes/FAQ">Lightweight themes FAQ</a></li>
+      </ol>
+    </li>
+
+    <li><a href="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/Distribution"><strong>Publishing and Distribution</strong></a></li>
+    <li class="toggleable" data-closed="true"><a href="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/Distribution" class="toggler" aria-haspopup="true"><i aria-hidden="true" class="icon-caret-right"></i>Publishing add-ons</a>
+      <ol class="toggle-container" style="display: none;">
+        <li><a href="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/Distribution">Signing and distribution overview</a></li>
+        <li><a href="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/Distribution/Submitting_an_add-on">Submit an add-on</a></li>
+        <li><a href="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/Listing">Creating an appealing listing</a></li>
+        <li><a href="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/AMO/Policy/Reviews">Review policies</a></li>
+        <li><a href="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/AMO/Policy/Agreement">Developer agreement</a></li>
+        <li><a href="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/AMO/Policy/Featured">Featured add-ons</a></li>
+      </ol>
+    </li>
+    <li class="toggleable" data-closed="true"><a href="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/Alternative_distribution_options" class="toggler" aria-haspopup="true"><i aria-hidden="true" class="icon-caret-right"></i>Distributing add-ons</a>
+      <ol class="toggle-container" style="display: none;">
+        <li><a href="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/Alternative_distribution_options/Sideloading_add-ons">For sideloading</a></li>
+        <li><a href="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/Alternative_distribution_options/Add-ons_for_desktop_apps">For desktop apps</a></li>
+        <li><a href="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/Alternative_distribution_options/Add-ons_in_the_enterprise">For an enterprise</a></li>
+      </ol>
+    </li>
+
+    <li><a href="https://discourse.mozilla-community.org/c/add-ons" class="external external-icon" rel="noopener"><strong>Community and support</strong></a></li>
+    <li class="toggleable" data-closed="true"><a href="#" class="toggler" aria-haspopup="true"><i aria-hidden="true" class="icon-caret-right"></i>Channels</a>
+      <ol class="toggle-container" style="display: none;">
+        <li><a href="https://blog.mozilla.org/addons" class="external external-icon" rel="noopener">Add-ons blog</a></li>
+        <li><a href="https://discourse.mozilla-community.org/c/add-ons" class="external external-icon" rel="noopener">Add-on forums</a></li>
+        <li><a href="http://stackoverflow.com/questions/tagged/firefox-addon" class="external external-icon" rel="noopener">Stack Overflow</a></li>
+        <li><a href="https://groups.google.com/forum/#!forum/mozilla.dev.extensions" class="external external-icon" rel="noopener">Development newsgroup</a></li>
+        <li><a href="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/#Contact_us" class="new" rel="nofollow">Contact us</a></li>
+      </ol>
+    </li>
+
+  </ol>
+
+  </div>
+                
+
+                <!-- approvals -->
+                
+
+              </div>
+            
+          </div>
+        </div>
+      </div>
+    </div> <!-- ends "main-content" -->
+
+    
+      <div class="newsletter-box">
+      <div class="newsletter">
+    <form id="newsletterForm" class="newsletter-form nodisable" name="newsletter-form" action="https://www.mozilla.org/en-US/newsletter/" method="post">
+        <div class="newsletter-head">
+            <h2 class="newsletter-teaser">Learn the best of web development</h2>
+            <p class="newsletter-description">Get the latest and greatest from MDN delivered straight to your inbox.</p>
+            
+        </div>
+
+        <div class="newsletter-fields">
+            <input id="fmt" name="fmt" value="H" type="hidden">
+            <input id="newsletterNewslettersInput" name="newsletters" value="app-dev" type="hidden">
+            <div id="newsletterErrors" class="newsletter-errors"></div>
+
+            <div id="newsletterEmail" class="form-group newsletter-group-email">
+                <label for="newsletterEmailInput" class="form-label offscreen">E-mail</label>
+                <input id="newsletterEmailInput" name="email" class="form-input newsletter-input-email" required="" placeholder="you@example.com" size="30" type="email">
+            </div>
+
+            <div id="newsletterPrivacy" class="form-group form-group-agree newsletter-group-privacy hidden">
+                <input id="newsletterPrivacyInput" name="privacy" required="" type="checkbox">
+                <label for="newsletterPrivacyInput">
+                I'm okay with Mozilla handling my info as explained in this <a href="https://www.mozilla.org/privacy/">Privacy Policy</a>.
+                </label>
+            </div>
+            <div id="newsletterSubmit" class="newsletter-group-submit">
+                <button id="newsletter-submit" type="submit" class="button neutral newsletter-submit">Sign up now</button>
+            </div>
+        </div>
+    </form>
+    <div id="newsletterThanks" class="newsletter-thanks hidden">
+        <h2>Thanks! Please check your inbox to confirm your subscription.</h2>
+        <p>If you haven’t previously confirmed a subscription to a 
+Mozilla-related newsletter you may have to do so. Please check your 
+inbox or your spam filter for an email from us.
+        </p>
+    </div>
+    <button id="newsletterHide" type="button" class="only-icon newsletter-hide"><span>Hide Newsletter Sign-up</span><i aria-hidden="true" class="icon-times"></i></button>
+</div>
+      </div>
+    
+
+  <menu type="context" id="edit-history-menu">
+    <menuitem data-action="/en-US/docs/Archive/Add-ons/Bootstrapped_extensions$edit" label="Edit page"></menuitem>
+    <menuitem data-action="/en-US/docs/Archive/Add-ons/Bootstrapped_extensions$history" label="View page history"></menuitem>
+  </menu>
+
+      </div>
+  </main>
+  <!-- Footer -->
+    <footer id="nav-footer" class="nav-footer">
+      <div class="center">
+          <a href="https://developer.mozilla.org/en-US/" class="nav-footer-logo">MDN Web Docs</a>
+          <div class="footer-group footer-group-mdn">
+            <h2 class="footer-title">MDN</h2>
+            <ul class="footer-list">
+              <li><a href="https://developer.mozilla.org/en-US/docs/Web">Web Technologies</a></li>
+              <li><a href="https://developer.mozilla.org/en-US/docs/Learn">Learn Web Development</a></li>
+              <li><a href="https://developer.mozilla.org/docs/MDN/About">About MDN</a></li>
+              <li><a href="https://developer.mozilla.org/en-US/docs/MDN/Feedback">Feedback</a></li>
+              <li class="footer-social"><a href="https://twitter.com/mozdevnet" class="only-icon"><i aria-hidden="true" class="icon-twitter"></i> <span>Twitter</span></a></li>
+              <li class="footer-social"><a href="https://github.com/mdn/" class="only-icon"><i aria-hidden="true" class="icon-github"></i> <span>GitHub</span></a></li>
+            </ul>
+          </div>
+
+          <a href="https://mozilla.org/" class="nav-footer-mozilla">Mozilla</a>
+          <div class="footer-group footer-group-mozilla">
+            <h2 class="footer-title">Mozilla</h2>
+            <ul class="footer-list">
+              <li><a href="https://www.mozilla.org/about/">About</a></li>
+              <li><a href="https://www.mozilla.org/contact/">Contact Us</a></li>
+              <li><a href="https://donate.mozilla.org/?utm_source=developer.mozilla.org&amp;utm_medium=referral&amp;utm_content=footer">Donate</a></li>
+              <li><a href="https://www.mozilla.org/firefox/?utm_source=developer.mozilla.org&amp;utm_campaign=footer&amp;utm_medium=referral">Firefox</a></li>
+              <li class="footer-social"><a href="https://twitter.com/mozilla" class="only-icon"><i aria-hidden="true" class="icon-twitter"></i> <span>Twitter</span></a></li>
+              <li class="footer-social"><a href="https://www.facebook.com/mozilla" class="only-icon"><i aria-hidden="true" class="icon-facebook"></i> <span>Facebook</span></a></li>
+              <li class="footer-social"><a href="https://www.instagram.com/mozillagram/" class="only-icon"><i aria-hidden="true" class="icon-instagram"></i> <span>Instagram</span></a></li>
+            </ul>
+          </div>
+
+          
+  
+    <form class="languages go" method="get" action="/en-US/docs/Web">
+      <label for="language">Other languages:</label>
+      <select id="language" class="wiki-l10n" name="next" dir="ltr">
+        <option title="English (US)" value="/en-US/docs/Archive/Add-ons/Bootstrapped_extensions" selected="selected">
+          English (US) (en-US)
+        </option>
+        
+          <option title="German" value="/de/docs/Mozilla/Add-ons/Bootstrapped_extensions">
+            Deutsch (de)
+          </option>
+          <option title="Spanish" value="/es/docs/Extensions/Bootstrapped_extensions">
+            Español (es)
+          </option>
+          <option title="French" value="/fr/docs/Mozilla/Add-ons/Bootstrapped_extensions">
+            Français (fr)
+          </option>
+          <option title="Indonesian" value="/id/docs/Mozilla/Add-ons/Bootstrapped_extensions">
+            Bahasa Indonesia (id)
+          </option>
+          <option title="Japanese" value="/ja/docs/Extensions/Bootstrapped_extensions">
+            日本語 (ja)
+          </option>
+          <option title="Korean" value="/ko/docs/Mozilla/%EC%95%A0%EB%93%9C%EC%98%A8%EB%93%A4/Bootstrapped_extensions">
+            한국어 (ko)
+          </option>
+          <option title="Russian" value="/ru/docs/Mozilla/Add-ons/%D0%B7%D0%B0%D0%B3%D1%80%D1%83%D0%B7%D0%BE%D1%87%D0%BD%D1%8B%D0%B5_%D1%80%D0%B0%D1%81%D1%88%D0%B8%D1%80%D0%B5%D0%BD%D0%B8%D1%8F">
+            Русский (ru)
+          </option>
+          <option title="Chinese (Simplified)" value="/zh-CN/docs/Extensions/%E5%BC%95%E5%AF%BC%E5%9E%8B%E6%89%A9%E5%B1%95">
+            中文 (简体) (zh-CN)
+          </option>
+      </select>
+      <noscript><button type="submit">Go</button></noscript>
+    </form>
+  
+
+
+          
+            <ul class="footer-tos">
+              <li><a href="https://www.mozilla.org/about/legal/terms/mozilla">Terms</a></li>
+              <li><a href="https://www.mozilla.org/privacy/websites/">Privacy</a></li>
+              <li><a href="https://www.mozilla.org/privacy/websites/#cookies">Cookies</a></li>
+            </ul>
+
+            <div class="contentinfo">
+              <p>© 2005-2017 Mozilla and individual contributors.</p> <p>Content is available under <a href="https://developer.mozilla.org/en-US/docs/MDN/About#Copyrights_and_licenses">these licenses</a>.</p>
+            </div>
+          
+      </div>
+    </footer> 
+
+  <!-- site js -->
+  
+    
+    <!--[if lte IE 8]><script type="text/javascript" src="https://cdn.mdn.mozilla.net/static/build/js/selectivizr.091e18cf669b.js" charset="utf-8"></script><![endif]-->
+
+    
+    <script type="text/javascript" src="Bootstrapped%20extensions%20|%20MDN_files/javascript.js"></script>
+    <script type="text/javascript" src="Bootstrapped%20extensions%20|%20MDN_files/main.js" charset="utf-8"></script>
+    <script>
+      if(window.mdn && mdn.analytics) mdn.analytics.trackOutboundLinks();
+    </script>
+    
+
+  
+
+    
+        <script async="" type="text/javascript" src="Bootstrapped%20extensions%20|%20MDN_files/wiki.js" charset="utf-8"></script>
+    
+
+
+
+  
+
+  
+
+  
+
+  
+    <script async="" type="text/javascript" src="Bootstrapped%20extensions%20|%20MDN_files/newsletter.js" charset="utf-8"></script>
+  
+
+
+
+<style type="text/css">
+    /* loading */
+    .lt-sk-three-bounce {
+      margin: 2px auto;
+      width: 100%;
+      text-align: center; }
+      .lt-sk-three-bounce .lt-sk-child {
+        width: 5px;
+        height: 5px;
+        background-color: #333;
+        border-radius: 100%;
+        display: inline-block;
+        -webkit-animation: lt-sk-three-bounce 1.4s ease-in-out 0s infinite both;
+                animation: lt-sk-three-bounce 1.4s ease-in-out 0s infinite both; }
+      .lt-sk-three-bounce .lt-sk-bounce1 {
+        -webkit-animation-delay: -0.32s;
+                animation-delay: -0.32s; }
+      .lt-sk-three-bounce .lt-sk-bounce2 {
+        -webkit-animation-delay: -0.16s;
+                animation-delay: -0.16s; }
+
+    @-webkit-keyframes lt-sk-three-bounce {
+      0%, 80%, 100% {
+        -webkit-transform: scale(0);
+                transform: scale(0); }
+      40% {
+        -webkit-transform: scale(1);
+                transform: scale(1); } }
+
+    @keyframes lt-sk-three-bounce {
+      0%, 80%, 100% {
+        -webkit-transform: scale(0);
+                transform: scale(0); }
+      40% {
+        -webkit-transform: scale(1);
+                transform: scale(1); } }
+  </style></body></html>

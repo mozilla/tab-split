@@ -74,7 +74,10 @@ function startup(data, reason) {
 function shutdown(data, reason) {
   console.log("TMP> TabSplit shutdown with reason =", reason);
   startupObserver.unregister();
-  TabSplit.onDestroy();
+  if (reason != APP_SHUTDOWN) {
+    console.log("TMP> TabSplit shutdown to destroy");
+    TabSplit.onDestroy();
+  }
 }
 
 function install(data, reason) {
