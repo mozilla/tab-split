@@ -38,7 +38,7 @@ TabSplit.store = {
   //
   // status {String} the status of TabSplit function, could be "status_active", "status_inactive", "status_destroyed".
   //
-  // windowWidth {Number} the current window width
+  // tabbrowserWidth {Number} the current tabbrowser width
   //
   // selectedLinkedPanel {String} the selected tab's linkedPanel attribute value
   //
@@ -62,7 +62,7 @@ TabSplit.store = {
   _resetState() {
     this._state = {
       status: "status_inactive",
-      windowWidth: -1,
+      tabbrowserWidth: -1,
       selectedLinkedPanel: "",
       tabGroupIds: [],
       tabGroups: {},
@@ -103,9 +103,9 @@ TabSplit.store = {
    *  - type: "set_destroyed"; this will clear all other states and listeners
    *  - args: null, not required
    *
-   *  - type: "update_window_width"
+   *  - type: "update_tabbrowser_width"
    *  - args:
-   *      - windowWidth {Number} the crruent window width
+   *      - tabbrowserWidth {Number} see `tabbrowserWidth` in `_state`
    *
    *  - type: "update_selected_linkedPanel"
    *  - args: 
@@ -162,12 +162,12 @@ TabSplit.store = {
             console.log("TMP> tabsplit-store - set_destroyed at", Date.now());
             break;
 
-          case "update_window_width":
-            if (args.windowWidth <= 0) {
-              throw `Invalid window width of ${v}`;
+          case "update_tabbrowser_width":
+            if (args.tabbrowserWidth <= 0) {
+              throw `Invalid tabbrowser width of ${v}`;
             }
-            if (args.windowWidth !== this._state.windowWidth) {
-              this._state.windowWidth = args.windowWidth;
+            if (args.tabbrowserWidth !== this._state.tabbrowserWidth) {
+              this._state.tabbrowserWidth = args.tabbrowserWidth;
               dirty = true;
             }
             break;

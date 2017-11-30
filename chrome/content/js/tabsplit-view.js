@@ -259,11 +259,11 @@ TabSplit.view = {
       });
       let [ left, right ] = areas;
       // Resize the notificationboxs
-      let availableWidth = this._state.windowWidth - this.PX_COLUMN_SPLITTER_WIDTH;
+      let availableWidth = this._state.tabbrowserWidth - this.PX_COLUMN_SPLITTER_WIDTH;
       left.width = availableWidth * left.distribution;
       right.width = availableWidth - left.width;
-      left.box.style.marginRight = (this._state.windowWidth - left.width) + "px";
-      right.box.style.marginLeft = (this._state.windowWidth - right.width) + "px";
+      left.box.style.marginRight = (this._state.tabbrowserWidth - left.width) + "px";
+      right.box.style.marginLeft = (this._state.tabbrowserWidth - right.width) + "px";
       // Position the splitter
       this._cSplitter.style.left = left.width + "px";
       this._cSplitter.style.display = "block";
@@ -326,7 +326,7 @@ TabSplit.view = {
       let oldState = this._state;
       this._state = newState;
 
-      let { status, windowWidth, selectedLinkedPanel } = this._state;
+      let { status, selectedLinkedPanel } = this._state;
       if (status != oldState.status) {
         switch (status) {
           case "status_inactive":

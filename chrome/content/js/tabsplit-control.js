@@ -74,8 +74,8 @@ TabSplit.control = {
       this._store.update({
         type: "set_active"
       },{
-        type: "update_window_width",
-        args: { windowWidth: win.innerWidth }
+        type: "update_tabbrowser_width",
+        args: { tabbrowserWidth: this._gBrowser.boxObject.width }
       }, {
         type: "update_selected_linkedPanel",
         args: { selectedLinkedPanel: this._gBrowser.selectedTab.linkedPanel }
@@ -151,17 +151,25 @@ TabSplit.control = {
       return;
     } 
     console.log("TMP> tabsplit-control - _startDraggingColumnSplitter");
+    let windowWidth = window.innerWidth;
     this.onDraggingColumnSplitter = e => {
       let mousePosX = e.clientX;
       win.requestAnimationFrame(() => {
-        // Cannot drag the splitter and the window at the same time
-        // so safe to assume the window width is unchanged here and
-        // don't have to make a sync flow call of window.innerWidth.
-        let availableWidth = this._state.windowWidth - this._view.PX_COLUMN_SPLITTER_WIDTH;
+        // Cannot drag the splitter and other place at the same time
+        // so safe to assume the widths are unchanged here and
+        // don't have to make a sync flow call to get the widths again.
+        let availableWidth = this._state.tabbrowserWidth - this._view.PX_COLUMN_SPLITTER_WIDTH;
+        // When the side bar is on, the window would be like
+        // |      |             |            |
+        // | side |  tab A page | tab B page |
+        // | bar  |             |            |
+        // |      |             |            | 
+        // so have to substract the side bar's width
+        let sideBarWidth = windowWidth - this._state.tabbrowserWidth;
+        let leftDistribution = (mousePosX - sideBarWidth) / availableWidth;
+        let rightDistribution = 1 - leftDistribution;
         // Make sure no distribution is smaller than the min distribution
         let minDistribution = this._view.MIN_TAB_SPLIT_DISTRIBUTION;
-        let leftDistribution = mousePosX / availableWidth;
-        let rightDistribution = 1 - leftDistribution;
         if (leftDistribution < minDistribution) {
           leftDistribution = minDistribution;
           rightDistribution = 1 - leftDistribution;
@@ -292,8 +300,18 @@ TabSplit.control = {
     if (this._chromeEvents) {
       return;
     }
+
+    // This is not beatiful but in order to detect the resize of the tabbrowser
+    // we have to append an iframe so able to receive the resize event.
+    // The window resize event is not enough for us because when the side bar opens
+    // the tabbrowser will be resized but the winodw will not.
+    this._iframeForResize = document.createElementNS("http://www.w3.org/1999/xhtml", "iframe");
+    this._iframeForResize.sandbox.add(); // Disallow all permissions
+    this._iframeForResize.id = "tabsplit-iframe-for-resize";
+    this._gBrowser.parentNode.appendChild(this._iframeForResize);
+
     this._chromeEvents = [
-      [ win, "resize", () => this.onWindowResize() ],
+      [ this._iframeForResize, "resize", () => this.onResize() ],
       [ this._gBrowser, "TabSwitchDone", () => this.onTabSwitchDone() ],
       [ this._gBrowser.tabContainer, "dragstart", e => this.onDragStart(e) ],
       [ this._gBrowser.tabContainer, "TabPinned", e => this.onTabPinned(e) ],
@@ -312,6 +330,8 @@ TabSplit.control = {
     for (let [ target, event, handler ] of this._chromeEvents) {
       target.removeEventListener(event, handler);
     }
+    this._iframeForResize.remove();
+    this._iframeForResize = null;
     this._chromeEvents = null;
   },
 
@@ -397,11 +417,12 @@ TabSplit.control = {
     this._isClosingTab = false;
   },
 
-  onWindowResize() {
+  onResize() {
     win.requestAnimationFrame(() => {
+      console.log("TMP> tabsplit-control - onResize");
       this._store.update({
-        type: "update_window_width",
-        args: { windowWidth: win.innerWidth }
+        type: "update_tabbrowser_width",
+        args: { tabbrowserWidth: this._gBrowser.boxObject.width }
       });
     });
   },
