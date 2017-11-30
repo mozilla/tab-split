@@ -46,7 +46,8 @@ TabSplit.view = {
 
   async _addTabSplitButton() {
     console.log('TMP> tabsplit-view - _addTabSplitButton');
-    if (!CustomizableUI.getWidget(this.ID_TABSPLIT_BUTTON)) {
+    let buttonForThisWindow = win.document.getElementById(this.ID_TABSPLIT_BUTTON);
+    if (!buttonForThisWindow) {
       await new Promise(resolve => {
         let listener = {
           onWidgetAfterCreation: () => {
@@ -72,7 +73,7 @@ TabSplit.view = {
         CustomizableUI.addWidgetToArea(this.ID_TABSPLIT_BUTTON, "nav-bar");
       });
     }
-    let buttonForThisWindow = win.document.getElementById(this.ID_TABSPLIT_BUTTON);
+    buttonForThisWindow = win.document.getElementById(this.ID_TABSPLIT_BUTTON);
     buttonForThisWindow.addEventListener("command", () => this._listener.onTabSplitButtonClick());
     buttonForThisWindow.setAttribute(
       "data-tabsplit-tabbrowser-id", this._gBrowser.getAttribute("data-tabsplit-tabbrowser-id"));
