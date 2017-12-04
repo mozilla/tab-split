@@ -67,6 +67,7 @@ TabSplit.control = {
         }
         obs.disconnect();
         this._registerChromeEvents();
+        this._overrideChromeBehaviors();
         resolve();
       });
       obs.observe(this._gBrowser, { attributes: true });
@@ -83,17 +84,21 @@ TabSplit.control = {
     });
   },
 
-  deactivate() {
+  _cleanUp() {
     this._lastTimeBeingActive = -1;
     this._unregisterChromeEvents();
+    this._restoreChromeBehaviors();
+  },
+
+  deactivate() {
+    this._cleanUp();
     this._store.update({
       type: "set_inactive"
     });
   },
 
   destroy() {
-    this._lastTimeBeingActive = -1;
-    this._unregisterChromeEvents();
+    this._cleanUp();
     this._store.update({
       type: "set_destroyed"
     });
@@ -204,7 +209,6 @@ TabSplit.control = {
   },
 
   /* The store listeners */
-
   onStateChange(store, tabGroupsDiff) {
     this._state = store.getState();
     console.log("TMP> tabsplit-control - onStateChange", this._state);
@@ -229,11 +233,9 @@ TabSplit.control = {
       console.log("TMP> tabsplit-control - TabSplit:OnDestory - get status_destroyed at", Date.now());
     }
   },
-
   /* The store listeners end */
 
   /* The view listeners */
-
   async onTabSplitButtonClick() {
     console.log("TMP> tabsplit-control - Clicked onTabSplitButtonClick");
     if (this._gBrowser.selectedTab.pinned) {
@@ -270,6 +272,7 @@ TabSplit.control = {
 
   onClickPageSplit(linkedPanel) {
     if (linkedPanel != this._state.selectedLinkedPanel) {
+      console.log("TMP> tabsplit-control - onClickPageSplit", linkedPanel);
       gBrowser.selectedTab = this._utils.getTabByLinkedPanel(linkedPanel);
     }
   },
@@ -289,11 +292,9 @@ TabSplit.control = {
         return;
     }
   },
-
   /* The view listeners end */
 
   /* The global listeners */
-
   _chromeEvents: null,
 
   _registerChromeEvents() {
@@ -426,8 +427,76 @@ TabSplit.control = {
       });
     });
   },
-
   /* The global listeners end */
+
+  /* Override the chrome behaviours */
+  _chromeBehaviors: null,
+
+  _overrideChromeBehaviors() {
+    if (this._chromeBehaviors) {
+      return;
+    }
+    this._chromeBehaviors = [
+      {
+        targetParent: gBrowser,
+        targetName: "_getSwitcher",
+        target: gBrowser._getSwitcher,
+        proxyHandler: this._getGetSwitcherProxy(),
+      }
+    ];
+    for (let { targetParent, targetName, target, proxyHandler } of this._chromeBehaviors) {
+      targetParent[targetName] = new Proxy(target, proxyHandler);
+    }
+  },
+
+  _restoreChromeBehaviors() {
+    if (!this._chromeBehaviors) {
+      return;
+    }
+    for (let { targetParent, targetName, target } of this._chromeBehaviors) {
+      targetParent[targetName] = target;
+    }
+    this._chromeBehaviors = null;
+  },
+
+  _getGetSwitcherProxy() {
+    let proxy = {};
+    proxy.apply = (target, thisArg, args) => {
+      console.log("TMP> tabsplit-control - _getSwitcher proxy", target.name);
+      // The switcher will be destroyed so we override everytime.
+      let switcher = target.call(thisArg, ...args);
+      switcher.setTabState = new Proxy(switcher.setTabState, this._getSetTabStateProxy());
+      return switcher;
+    };
+    return proxy;
+  },
+
+  _getSetTabStateProxy() {
+    let proxy = {};
+    proxy.apply = (target, thisArg, args) => {
+      console.log("TMP> tabsplit-control - setTabState proxy", target.name);
+      let state = args[1];
+      let switcher = thisArg;
+      if (state == switcher.STATE_UNLOADING) {
+        let tab = args[0];
+        let unloadingTabGroupId = tab.getAttribute("data-tabsplit-tab-group-id");
+        let requestedTabGroupId = switcher.requestedTab ?
+          switcher.requestedTab.getAttribute("data-tabsplit-tab-group-id") : "";
+        if (requestedTabGroupId && requestedTabGroupId === unloadingTabGroupId && !tab.closing) {
+          // The unloading tab is in the same tab group as the tab being switched to
+          // and the unloading tab is not being closed.
+          // In this case we don't want to unload it but should still change the state without actions,
+          // because the switcher's `unloadNonRequiredTabs` will keep trying to unload tabs not in the unloaded state.
+          // Later the view will tidy up tabs' loading state.
+          switcher.setTabStateNoAction(tab, switcher.STATE_UNLOADED);
+          return;
+        }
+      }
+      return target.call(switcher, ...args);
+    };
+    return proxy;
+  },
+  /* Override the chrome behaviours end */
 };
 
 })(this);

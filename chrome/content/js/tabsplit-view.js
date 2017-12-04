@@ -127,16 +127,21 @@ TabSplit.view = {
     console.log("TMP> tabsplit-view - _refreshTabbrowser - activePanels =", activePanels);
 
     let boxes = this._utils.getNotificationboxes();
+    let switcher = this._gBrowser._getSwitcher();
     boxes.forEach(box => {
-      let browser = this._utils.getBrowserByNotificationbox(box);
-      // Below only set the docShell state when finding the inconsistency,
-      // because that operation is expensive.
+      let tab = this._utils.getTabByLinkedPanel(box.id);
+      let state = switcher.tabState.get(tab);
       if (activePanels.includes(box.id)) {
         box.style.visibility = "visible";
-        browser.docShellIsActive = true;
+        if (state !== switcher.STATE_LOADED) {
+          switcher.setTabState(tab, switcher.STATE_LOADING);
+        }
       } else {
         box.style.visibility = "hidden";
-        browser.docShellIsActive = false;
+        // Pre-loaded about:newtab have box but no tab
+        if (tab && state !== undefined && state !== switcher.STATE_UNLOADED) {
+          switcher.setTabState(tab, switcher.STATE_UNLOADING);
+        }
       }
     });
   },
@@ -147,9 +152,20 @@ TabSplit.view = {
     gBrowser.mPanelContainer.style.display = "";
     let selectedPanel = this._gBrowser.selectedTab.linkedPanel;
     let boxes = this._utils.getNotificationboxes();
+    let switcher = this._gBrowser._getSwitcher();
     boxes.forEach(box => {
-      let browser = this._utils.getBrowserByNotificationbox(box);
-      browser.docShellIsActive = box.id == selectedPanel;
+      let tab = this._utils.getTabByLinkedPanel(box.id);
+      let state = switcher.tabState.get(tab);
+      // Pre-loaded about:newtab have box but no tab
+      if (tab && tab.linkedPanel == selectedPanel) {
+        if (state !== switcher.STATE_LOADED) {
+          switcher.setTabState(tab, switcher.STATE_LOADING);
+        }
+      } else {
+        if (tab && state !== undefined && state !== switcher.STATE_UNLOADED) {
+          switcher.setTabState(tab, switcher.STATE_UNLOADING);
+        }
+      }
       box.style.visibility = "";
     });
 
@@ -185,6 +201,7 @@ TabSplit.view = {
     let box = this._utils.getNotificationboxByLinkedPanel(linkedPanel);
     if (box) {
       box.removeEventListener("click", this._NotificationboxClickHandlers[linkedPanel]);
+      delete this._NotificationboxClickHandlers[linkedPanel];
     }
   },
 

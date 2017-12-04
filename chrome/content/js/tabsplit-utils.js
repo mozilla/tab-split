@@ -67,7 +67,7 @@ TabSplit.utils = {
 
   getBrowserByNotificationbox(box) {
     return box.getElementsByTagName("browser")[0] || box.getElementsByTagName("xul:browser")[0];
-  }
+  },
 };
 
 })(this);
