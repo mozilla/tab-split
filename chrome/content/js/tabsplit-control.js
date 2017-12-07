@@ -438,14 +438,14 @@ TabSplit.control = {
     }
     this._chromeBehaviors = [
       {
-        targetParent: gBrowser,
+        targetHolder: gBrowser,
         targetName: "_getSwitcher",
         target: gBrowser._getSwitcher,
         proxyHandler: this._getGetSwitcherProxy(),
       }
     ];
-    for (let { targetParent, targetName, target, proxyHandler } of this._chromeBehaviors) {
-      targetParent[targetName] = new Proxy(target, proxyHandler);
+    for (let { targetHolder, targetName, target, proxyHandler } of this._chromeBehaviors) {
+      targetHolder[targetName] = new Proxy(target, proxyHandler);
     }
   },
 
@@ -453,18 +453,18 @@ TabSplit.control = {
     if (!this._chromeBehaviors) {
       return;
     }
-    for (let { targetParent, targetName, target } of this._chromeBehaviors) {
-      targetParent[targetName] = target;
+    for (let { targetHolder, targetName, target } of this._chromeBehaviors) {
+      targetHolder[targetName] = target;
     }
     this._chromeBehaviors = null;
   },
 
   _getGetSwitcherProxy() {
     let proxy = {};
-    proxy.apply = (target, thisArg, args) => {
-      console.log("TMP> tabsplit-control - _getSwitcher proxy", target.name);
+    proxy.apply = (_getSwitcher, thisArg, args) => {
+      console.log("TMP> tabsplit-control - _getSwitcher proxy", _getSwitcher.name);
       // The switcher will be destroyed so we override everytime.
-      let switcher = target.call(thisArg, ...args);
+      let switcher = _getSwitcher.call(thisArg, ...args);
       switcher.setTabState = new Proxy(switcher.setTabState, this._getSetTabStateProxy());
       return switcher;
     };
@@ -473,8 +473,8 @@ TabSplit.control = {
 
   _getSetTabStateProxy() {
     let proxy = {};
-    proxy.apply = (target, thisArg, args) => {
-      console.log("TMP> tabsplit-control - setTabState proxy", target.name);
+    proxy.apply = (setTabState, thisArg, args) => {
+      console.log("TMP> tabsplit-control - setTabState proxy", setTabState.name);
       let state = args[1];
       let switcher = thisArg;
       if (state == switcher.STATE_UNLOADING) {
@@ -492,7 +492,7 @@ TabSplit.control = {
           return;
         }
       }
-      return target.call(switcher, ...args);
+      return setTabState.call(switcher, ...args);
     };
     return proxy;
   },
