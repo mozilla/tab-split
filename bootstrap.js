@@ -56,6 +56,7 @@ const TabSplit = {
       if (win.TabSplit) {
         console.log("TMP > TabSplit - bootstrap - destroying data-tabsplit-tabbrowser-id =", tabbrowser.getAttribute("data-tabsplit-tabbrowser-id"), Date.now());
         win.TabSplit.control.destroy();
+        delete win.TabSplit;
         console.log("TMP > TabSplit - bootstrap - destroyed at", Date.now());
       }
       tabbrowser.removeAttribute("data-tabsplit-tabbrowser-id");
