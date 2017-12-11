@@ -484,10 +484,9 @@ TabSplit.control = {
           switcher.requestedTab.getAttribute("data-tabsplit-tab-group-id") : "";
         if (requestedTabGroupId && requestedTabGroupId === unloadingTabGroupId && !tab.closing) {
           // The unloading tab is in the same tab group as the tab being switched to
-          // and the unloading tab is not being closed.
-          // In this case we don't want to unload it but should still change the state without actions,
-          // because the switcher's `unloadNonRequiredTabs` will keep trying to unload tabs not in the unloaded state.
-          // Later the view will tidy up tabs' loading state.
+          // and the unloading tab is not being closed. In this case we don't want to unload it
+          // but should still change the state without actions, because the switcher's `unloadNonRequiredTabs`
+          // will keep trying to unload tabs not in the unloaded state.
           switcher.setTabStateNoAction(tab, switcher.STATE_UNLOADED);
           return;
         }

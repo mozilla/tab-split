@@ -117,8 +117,7 @@ TabSplit.view = {
   },
 
   _refreshTabbrowser(selectedTabGroup) {
-    let selectedPanel = this._state.selectedLinkedPanel;
-    let activePanels = [ selectedPanel ];
+    let activePanels = [ this._state.selectedLinkedPanel ];
     if (selectedTabGroup) {
       // Now the selected tab is in one tab-split group,
       // so there are multiple active panels.
@@ -127,21 +126,21 @@ TabSplit.view = {
     console.log("TMP> tabsplit-view - _refreshTabbrowser - activePanels =", activePanels);
 
     let boxes = this._utils.getNotificationboxes();
-    let switcher = this._gBrowser._getSwitcher();
     boxes.forEach(box => {
-      let tab = this._utils.getTabByLinkedPanel(box.id);
-      let state = switcher.tabState.get(tab);
+      let browser = this._utils.getBrowserByNotificationbox(box);
       if (activePanels.includes(box.id)) {
         box.style.visibility = "visible";
-        if (state !== switcher.STATE_LOADED) {
-          switcher.setTabState(tab, switcher.STATE_LOADING);
+        // Why don't use the tabbrowser's switcher here is because
+        // the switcher is for tab switching and will be destroyed after switching,
+        // and we refresh after tab switching and not switching tab here either.
+        // Just setting the docShell state is enough.
+        if (!browser.docShellIsActive) {
+          // To activate the docShell isn't cheap so only do this when not active.
+          browser.docShellIsActive = true;
         }
       } else {
         box.style.visibility = "hidden";
-        // Pre-loaded about:newtab have box but no tab
-        if (tab && state !== undefined && state !== switcher.STATE_UNLOADED) {
-          switcher.setTabState(tab, switcher.STATE_UNLOADING);
-        }
+        browser.docShellIsActive = false;
       }
     });
   },
@@ -152,20 +151,9 @@ TabSplit.view = {
     gBrowser.mPanelContainer.style.display = "";
     let selectedPanel = this._gBrowser.selectedTab.linkedPanel;
     let boxes = this._utils.getNotificationboxes();
-    let switcher = this._gBrowser._getSwitcher();
     boxes.forEach(box => {
-      let tab = this._utils.getTabByLinkedPanel(box.id);
-      let state = switcher.tabState.get(tab);
-      // Pre-loaded about:newtab have box but no tab
-      if (tab && tab.linkedPanel == selectedPanel) {
-        if (state !== switcher.STATE_LOADED) {
-          switcher.setTabState(tab, switcher.STATE_LOADING);
-        }
-      } else {
-        if (tab && state !== undefined && state !== switcher.STATE_UNLOADED) {
-          switcher.setTabState(tab, switcher.STATE_UNLOADING);
-        }
-      }
+      let browser = this._utils.getBrowserByNotificationbox(box);
+      browser.docShellIsActive = box.id === selectedPanel;
       box.style.visibility = "";
     });
 
