@@ -100,19 +100,6 @@ TabSplit.view = {
       }
     });
     gBrowser.mPanelContainer.style.display = "-moz-stack"; // <xul:tabpanels anonid="panelcontainer">
-
-    // Append the splitter
-    let appContent = this._gBrowser.parentNode;
-    appContent.classList.add("tabsplit-spliter-container");
-    this._cSplitter = document.createElement("vbox");
-    this._cSplitter.classList.add("tabsplit-column-splitter");
-    this._cSplitter.style.width = this.PX_COLUMN_SPLITTER_WIDTH + "px";
-    appContent.appendChild(this._cSplitter);
-    this._cSplitter.addEventListener("mousedown", e => {
-      this._listener.onMouseDownOnSplitter(e);
-      win.addEventListener("mouseup", e => this._listener.onMouseUpOnSplitter(e), { once: true });
-    });
-    
     this._gBrowser.setAttribute("data-tabsplit-tabbrowser-init", "true");
   },
 
@@ -156,14 +143,6 @@ TabSplit.view = {
       browser.docShellIsActive = box.id === selectedPanel;
       box.style.visibility = "";
     });
-
-    let appContent = this._gBrowser.parentNode;
-    appContent.classList.remove("tabsplit-spliter-container");
-
-    if (this._cSplitter) {
-      this._cSplitter.remove();
-      this._cSplitter = null;
-    }
     this._gBrowser.removeAttribute("data-tabsplit-tabbrowser-init");
   },
 
@@ -253,6 +232,20 @@ TabSplit.view = {
 
   _refreshTabDistributions(selectedTabGroup) {
     console.log("TMP> tabsplit-view - _refreshTabDistributions");
+    if (!this._cSplitter) {
+      // Append the splitter
+      let appContent = this._gBrowser.parentNode;
+      appContent.classList.add("tabsplit-spliter-container");
+      this._cSplitter = document.createElement("vbox");
+      this._cSplitter.classList.add("tabsplit-column-splitter");
+      this._cSplitter.style.width = this.PX_COLUMN_SPLITTER_WIDTH + "px";
+      appContent.appendChild(this._cSplitter);
+      this._cSplitter.addEventListener("mousedown", e => {
+        this._listener.onMouseDownOnSplitter(e);
+        win.addEventListener("mouseup", e => this._listener.onMouseUpOnSplitter(e), { once: true });
+      });
+    }
+
     let selectedPanel = this._state.selectedLinkedPanel;
     if (selectedTabGroup) {
       let areas = selectedTabGroup.tabs.map(tabState => {
@@ -282,6 +275,13 @@ TabSplit.view = {
     console.log("TMP> tabsplit-view - _clearTabDistributions");
     let boxes = this._utils.getNotificationboxes();
     boxes.forEach(box => box.style.marginLeft = box.style.marginRight = "");
+    
+    let appContent = this._gBrowser.parentNode;
+    appContent.classList.remove("tabsplit-spliter-container");
+    if (this._cSplitter) {
+      this._cSplitter.remove();
+      this._cSplitter = null;
+    }
   },
 
   async _orderTabPositions() {
