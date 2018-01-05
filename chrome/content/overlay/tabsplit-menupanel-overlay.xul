@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+
+<overlay id="tabsplit-menupanel-overlay"
+         xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+
+  <popupset id="mainPopupSet">
+    <!-- The panel has level="top" to ensure that it is never hidden by the
+         taskbar on Windows. See bug 672365. -->
+    <panel id="tabsplit-menupanel"
+           role="group"
+           type="arrow"
+           orient="vertical"
+           level="top">
+
+      <hbox id="tabsplit-menupanel-footer">
+        <!-- TODO: L10n for label and accesskey-->
+        <button id="tabsplit-menupanel-unsplit-all-button"
+                label="Unsplit all tabs"
+                accesskey="U"
+                flex="1"/>
+      </hbox>
+
+    </panel>
+  </popupset>
+</overlay>

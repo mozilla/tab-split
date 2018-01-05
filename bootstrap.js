@@ -41,8 +41,8 @@ const TabSplit = {
 
     tabbrowser.setAttribute("data-tabsplit-tabbrowser-id", ++this._browserCount);
     console.log("TMP > TabSplit - bootstrap - onNewBrowserCreated - browserCount", this._browserCount);
-    console.log("TMP > TabSplit - bootstrap - onNewBrowserCreated - load overlay tabsplit-navbar-overlay.xul");
-    chromeWindow.document.loadOverlay("chrome://tabsplit/content/overlay/tabsplit-navbar-overlay.xul",
+    console.log("TMP > TabSplit - bootstrap - onNewBrowserCreated - load overlay tabsplit-init-overlay.xul");
+    chromeWindow.document.loadOverlay("chrome://tabsplit/content/overlay/tabsplit-init-overlay.xul",
       (subj, topic, data) => console.log("TMP > TabSplit - bootstrap - onNewBrowserCreated - load overlay topic", topic));
   },
 

@@ -26,6 +26,9 @@ TabSplit.view = {
   // The column splitter
   _cSplitter: null,
 
+  // The #tabsplit-menupanel
+  _menuPanel: null,
+
   /**
    * @params params {Object}
    *    - store {Objec} TabSplit.store
@@ -74,7 +77,28 @@ TabSplit.view = {
       });
     }
     buttonForThisWindow = win.document.getElementById(this.ID_TABSPLIT_BUTTON);
-    buttonForThisWindow.addEventListener("command", () => this._listener.onTabSplitButtonClick());
+    buttonForThisWindow.addEventListener("command", async e => {
+      let tab = this._utils.getTabByLinkedPanel(this._state.selectedLinkedPanel);
+      // When the status is inactive and the button is clicked,
+      // we notify the outside listener that a user is commanding to split tab
+      // so the outside listener can know time to activate and split tabs.
+      if (this._state.status == "status_inactive" || !tab.getAttribute("data-tabsplit-tab-group-id")) {
+        this._listener.onCommandSplitTab();
+        return;
+      }
+
+      // If the status is active and the current selected tab is being splitted,
+      // let's open menu panel to offer more options to users.
+      if (!this._menuPanel) {
+        await this._addMenuPanel();
+      }
+      if (this._menuPanel.state == "closed") {
+        let anchor = win.document.getAnonymousElementByAttribute(e.target, "class", "toolbarbutton-icon");
+        this._menuPanel.openPopup(anchor, "bottomcenter topright", 0, 0, false, null);
+      } else if (this._menuPanel.state == "open") {
+        this._menuPanel.hidePopup();
+      }
+    });
     buttonForThisWindow.setAttribute(
       "data-tabsplit-tabbrowser-id", this._gBrowser.getAttribute("data-tabsplit-tabbrowser-id"));
     console.log('TMP> tabsplit-view - _addTabSplitButton - buttonForThisWindow =', buttonForThisWindow);
@@ -84,6 +108,24 @@ TabSplit.view = {
     console.log('TMP> tabsplit-view - _removeTabSplitButton');
     CustomizableUI.removeWidgetFromArea(this.ID_TABSPLIT_BUTTON);
     CustomizableUI.destroyWidget(this.ID_TABSPLIT_BUTTON);
+  },
+
+  async _addMenuPanel() {
+    if (this._menuPanel) {
+      return;
+    }
+    await new Promise(resolve => {
+      win.document.loadOverlay("chrome://tabsplit/content/overlay/tabsplit-menupanel-overlay.xul", resolve);
+    });
+    console.log('TMP> tabsplit-view - tabsplit-menupanel-overlay.xul loaded');
+    this._menuPanel = win.document.getElementById("tabsplit-menupanel");
+  },
+
+  _removeMenuPanel() {
+    if (this._menuPanel) {
+      this._menuPanel.remove();
+      this._menuPanel = null;
+    }
   },
 
   _initTabbrowser() {
@@ -342,6 +384,7 @@ TabSplit.view = {
             this._clearTabDistributions();
             this._clearSplitPageClickListeners();
             if (status == "status_destroyed") {
+              this._removeMenuPanel();
               this._removeTabSplitButton();
               this._listener = this._gBrowser = this._utils = this._store = null;
               console.log("TMP> tabsplit-view - go status_destroyed at", Date.now());

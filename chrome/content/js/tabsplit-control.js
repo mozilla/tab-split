@@ -236,8 +236,8 @@ TabSplit.control = {
   /* The store listeners end */
 
   /* The view listeners */
-  async onTabSplitButtonClick() {
-    console.log("TMP> tabsplit-control - Clicked onTabSplitButtonClick");
+  async onCommandSplitTab() {
+    console.log("TMP> tabsplit-control - Clicked onCommandSplitTab");
     if (this._gBrowser.selectedTab.pinned) {
       // Now don't support split a pinned tab.
       // And notice here we cannot rely on this._state
