@@ -433,9 +433,7 @@ TabSplit.view = {
       let selectedTabGroup = this._utils.getTabGroupByLinkedPanel(
                                this._state.selectedLinkedPanel, this._state);
 
-      // TMP: Do when the selectedLinkedPanel changes
       this._refreshTabbrowser(selectedTabGroup);
-      // TMP: Do when the selectedLinkedPanel changes && selectedTabGroup
       this._setTabGroupFocus(selectedTabGroup);
       this._refreshTabDistributions(selectedTabGroup);
       // await so can catch the error if there was any.
