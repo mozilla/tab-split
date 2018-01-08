@@ -12,9 +12,33 @@
            orient="vertical"
            level="top">
 
+      <hbox id="tabsplit-menupanel-header">
+        <!-- TODO: L10n for label-->
+        <label>Edit layout</label>
+      </hbox>
+
+      <hbox id="tabsplit-menupanel-body">
+        <!-- TODO: Replace the buttons with the real image-->
+        <button class="tabsplit-menupanel-button tabsplit-menupanel-split-option"
+                label="2 : 1"
+                accesskey="1">
+        </button>
+        <splitter class="tabsplit-menupanel-splitter"></splitter>
+        <button class="tabsplit-menupanel-button tabsplit-menupanel-split-option"
+                label="1 : 1"
+                accesskey="2">
+        </button>
+        <splitter class="tabsplit-menupanel-splitter"></splitter>
+        <button class="tabsplit-menupanel-button tabsplit-menupanel-split-option"
+                label="1 : 2"
+                accesskey="3">
+        </button>
+      </hbox>
+
       <hbox id="tabsplit-menupanel-footer">
         <!-- TODO: L10n for label and accesskey-->
         <button id="tabsplit-menupanel-unsplit-all-button"
+                class="tabsplit-menupanel-button"
                 label="Unsplit all tabs"
                 accesskey="U"
                 flex="1"/>
