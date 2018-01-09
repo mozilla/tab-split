@@ -119,6 +119,9 @@ TabSplit.store = {
    *  - args:
    *      - id {Number} the id of tabGroup in `_state`
    *
+   *  - type: "remove_all_tab_groups"
+   *  - args: null, not required
+   *
    *  - type: "update_tab_distibutions".
    *  - args:
    *      - id {Number} the id of the group to update.
@@ -189,6 +192,27 @@ TabSplit.store = {
           case "remove_tab_group":
             this._removeTabGroup(args.id);
             removed.push(args.id);
+            dirty = true;
+            break;
+
+          case "remove_all_tab_groups":
+            // Notice: Here is important because we allow batch updates.
+            // Assume there are tab groups [ 1, 2, 3 ] and
+            // 1. The 1st update is "remove_tab_group" for the group 1,
+            //    so tab groups is [ 2, 3 ] and `removed` is [1]
+            // 2. The 2nd update is "remove_all_tab_groups",
+            //    so we should collect the `removed`: [1] with the rest tab groups: [ 2, 3 ].
+            //
+            // If it went the opposite direction, which was
+            // 1. The 1st update is "remove_all_tab_groups"
+            // 2. The 2nd update is "remove_tab_group" for the group 1, then
+            //    it will throw because of no more tab groups.
+            // This case should be reasonable and the outside should take care of that
+            // since the outside demands *remove_all_tab_groups* first.
+            // Though no batch update, just one-by-one update, the same throw will occur.
+            removed.splice(0, 0, ...this._state.tabGroupIds);
+            this._state.tabGroupIds = [];
+            this._state.tabGroups = {};
             dirty = true;
             break;
 

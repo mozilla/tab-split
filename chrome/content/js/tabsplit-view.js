@@ -118,7 +118,16 @@ TabSplit.view = {
       win.document.loadOverlay("chrome://tabsplit/content/overlay/tabsplit-menupanel-overlay.xul", resolve);
     });
     console.log('TMP> tabsplit-view - tabsplit-menupanel-overlay.xul loaded');
+
     this._menuPanel = win.document.getElementById("tabsplit-menupanel");
+    this._menuPanel.addEventListener("click", e => {
+      this._menuPanel.hidePopup();
+      if (e.target.id == "tabsplit-menupanel-unsplit-all-button") {
+        this._listener.onCommandUnsplitTabsAll();
+      } else if (e.target.classList.contains("tabsplit-menupanel-split-option")) {
+        this._listener.onCommandSplitOption(e.target.getAttribute("data-tabsplit-split-option"));
+      }
+    });
   },
 
   _removeMenuPanel() {

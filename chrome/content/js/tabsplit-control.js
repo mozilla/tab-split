@@ -111,9 +111,15 @@ TabSplit.control = {
     "#d8707b", "#ce7be5", "#7b7ee5", "#7bc2e5", "#7fd8d3", "#9ed87f", "#e0ba76", "#e07f76" 
   ],
 
-  splitTabs() {
-    console.log("TMP> tabsplit-control - splitTabs");
+  splitTab() {
+    // Notice here we cannot rely on this._state
+    // because we do lazy active so the state may not be active.
     let leftTab = this._gBrowser.selectedTab;
+    if (leftTab.getAttribute("data-tabsplit-tab-group-id")) {
+      return; // The tab has been split already
+    }
+    console.log("TMP> tabsplit-control - splitTab");
+
     let rightTab = this._gBrowser.addTab("about:newtab");
     this._gBrowser.addEventListener("TabSwitchDone", () => {
       let newTabGroup = {};
@@ -250,14 +256,17 @@ TabSplit.control = {
       await this.activate(); // Lazy active
       console.log("TMP> tabsplit-control - activate done");
     }
-    // TMP: Toggle split mode
-    let group = this._utils.getTabGroupByLinkedPanel(this._state.selectedLinkedPanel, this._state);
-    if (group) {
-      this.unsplitTab(group.id);
-      return;
+    this.splitTab();
+  },
+
+  onCommandUnsplitTabsAll() {
+    if (this._state.tabGroupIds.length > 0) {
+      this._store.update({ type: "remove_all_tab_groups" });
     }
-    // TMP end
-    this.splitTabs();
+  },
+
+  onCommandSplitOption(splitOption) {
+    // TODO
   },
 
   onMouseDownOnSplitter() {
