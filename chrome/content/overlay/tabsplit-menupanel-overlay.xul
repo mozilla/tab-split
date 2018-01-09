@@ -20,9 +20,9 @@
       <hbox id="tabsplit-menupanel-body">
         <!-- TODO: Replace the buttons with the real image-->
         <button class="tabsplit-menupanel-button tabsplit-menupanel-split-option"
-                label="2 : 1"
-                data-tabsplit-split-option="vertical-2:1"
-                accesskey="1">
+                label="1 : 2"
+                data-tabsplit-split-option="vertical-1:2"
+                accesskey="3">
         </button>
         <splitter class="tabsplit-menupanel-splitter"></splitter>
         <button class="tabsplit-menupanel-button tabsplit-menupanel-split-option"
@@ -32,9 +32,9 @@
         </button>
         <splitter class="tabsplit-menupanel-splitter"></splitter>
         <button class="tabsplit-menupanel-button tabsplit-menupanel-split-option"
-                label="1 : 2"
-                data-tabsplit-split-option="vertical-1:2"
-                accesskey="3">
+                label="2 : 1"
+                data-tabsplit-split-option="vertical-2:1"
+                accesskey="1">
         </button>
       </hbox>
 

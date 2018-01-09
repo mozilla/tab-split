@@ -266,7 +266,36 @@ TabSplit.control = {
   },
 
   onCommandSplitOption(splitOption) {
-    // TODO
+    let leftDistribution = 0;
+    switch (splitOption) {
+      case "vertical-2:1":
+        leftDistribution = 0.67;
+        break;
+
+      case "vertical-1:1":
+        leftDistribution = 0.5;
+        break;
+
+      case "vertical-1:2":
+        leftDistribution = 0.33;
+        break;
+
+      default:
+        return;
+    }
+
+    let tab = this._utils.getTabByLinkedPanel(this._state.selectedLinkedPanel);
+    let groupId = tab.getAttribute("data-tabsplit-tab-group-id");
+    if (!groupId) {
+      return;
+    }
+    this._store.update({
+      type: "update_tab_distibutions",
+      args: {
+        id: groupId,
+        distributions: [ leftDistribution, 1 - leftDistribution ]
+      }
+    });
   },
 
   onMouseDownOnSplitter() {
@@ -367,16 +396,16 @@ TabSplit.control = {
   onTabUnpinned() {
     console.log("TMP> tabsplit-control - onTabUnpinned");
     // The tabs' position orders will be affected when unpinning a tab
-    // so we have to refresh to have them back in line again.
-    this._view.refresh();
+    // so we have to force updating to have them back in line again.
+    this._view.forceUpdate();
   },
 
   onDragStart(e) {
     let tab = e.target;
     console.log("TMP> tabsplit-control - onDragStart", tab.linkedPanel);
     // The tabs' position orders will be affected when dragging a tab
-    // so we have to refresh to have them back in line again.
-    tab.addEventListener("TabMove", () => this._view.refresh(), { once: true });
+    // so we have to force updating to have them back in line again.
+    tab.addEventListener("TabMove", () => this._view.forceUpdate(), { once: true });
   },
 
   async onClosingTabBeingSplit(e) {

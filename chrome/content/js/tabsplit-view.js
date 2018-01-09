@@ -458,7 +458,7 @@ TabSplit.view = {
    * Usually should avoid calling this unless encountering the situation like
    * the chrome UI's changes affects us on UI but not on the state.
    */
-  refresh() {
+  forceUpdate() {
     win.requestAnimationFrame(() => {
       let added = [];
       let removed = added;
