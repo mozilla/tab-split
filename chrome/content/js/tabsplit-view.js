@@ -50,32 +50,37 @@ TabSplit.view = {
   async _addTabSplitButton() {
     console.log('TMP> tabsplit-view - _addTabSplitButton');
     let buttonForThisWindow = win.document.getElementById(this.ID_TABSPLIT_BUTTON);
-    if (!buttonForThisWindow) {
-      await new Promise(resolve => {
-        let listener = {
-          onWidgetAfterCreation: () => {
-            console.log('TMP> tabsplit-view - _addTabSplitButton - onWidgetAfterCreation');
-            CustomizableUI.removeListener(listener);
-            resolve();
-          }
-        };
-        CustomizableUI.addListener(listener);
-
-        let w = CustomizableUI.createWidget({
-          id: this.ID_TABSPLIT_BUTTON,
-          type: "button",
-          tooltiptext: "Let's split tabs!!!",
-          defaultArea: "nav-bar",
-          localized: false,
-          onCommand: e => {
-            console.log('TMP> tabsplit-view - _addTabSplitButton - onCommand', e.target);
-          },
-        });
-        console.log('TMP> tabsplit-view - _addTabSplitButton - createWidget', w.id);
-        // Explicitly put the button on the nav bar
-        CustomizableUI.addWidgetToArea(this.ID_TABSPLIT_BUTTON, "nav-bar");
-      });
+    if (buttonForThisWindow) {
+      return;
     }
+
+    await new Promise(resolve => {
+      let listener = {
+        onWidgetAfterCreation: () => {
+          console.log('TMP> tabsplit-view - _addTabSplitButton - onWidgetAfterCreation');
+          CustomizableUI.removeListener(listener);
+          resolve();
+        }
+      };
+      CustomizableUI.addListener(listener);
+
+      let w = CustomizableUI.createWidget({
+        id: this.ID_TABSPLIT_BUTTON,
+        type: "button",
+        // TODO: Should we have "Tab Split" l10n?
+        label: "Tab Split",
+        tooltiptext: "Tab Split",
+        defaultArea: "nav-bar",
+        localized: false,
+        onCommand: e => {
+          console.log('TMP> tabsplit-view - _addTabSplitButton - onCommand', e.target);
+        },
+      });
+      console.log('TMP> tabsplit-view - _addTabSplitButton - createWidget', w.id);
+      // Explicitly put the button on the nav bar
+      CustomizableUI.addWidgetToArea(this.ID_TABSPLIT_BUTTON, "nav-bar");
+    });
+    
     buttonForThisWindow = win.document.getElementById(this.ID_TABSPLIT_BUTTON);
     buttonForThisWindow.addEventListener("command", async e => {
       let tab = this._utils.getTabByLinkedPanel(this._state.selectedLinkedPanel);
