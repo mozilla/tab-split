@@ -346,7 +346,7 @@ TabSplit.store = {
     let { col, distribution, linkedPanel } = tab;
     if ((col < 0 || col > 1 ) ||
         (distribution <= 0 || distribution >= 1) ||
-        !this._utils.getTabByLinkedPanel(tab.linkedPanel)) {
+        !this._utils.getTabByLinkedPanel(linkedPanel)) {
       return false;
     }
     return true;
