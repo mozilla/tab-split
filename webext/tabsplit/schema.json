@@ -1,0 +1,15 @@
+[
+  {
+    "namespace": "tabsplit",
+    "description": "Tab split",
+    "functions": [
+      {
+        "name": "tabsplit",
+        "type": "function",
+        "description": "splits the current tab, or shows options if already split",
+        "async": true,
+        "parameters": []
+      }
+    ]
+  }
+]

@@ -1,0 +1,33 @@
+{
+  "manifest_version": 2,
+  "name": "tabsplit webextension experiment",
+  "description": "Test to see if tabsplit can be implemented as a webextension experiment.",
+  "version": "1.0",
+
+  "applications": {
+    "gecko": {
+      "id": "tabsplit-webextension@donovanpreston.com"
+    }
+  },
+
+  "experiment_apis": {
+    "tabsplit": {
+      "schema": "tabsplit/schema.json",
+      "parent": {
+        "scopes": ["addon_parent"],
+        "script": "tabsplit/api.js",
+        "paths": [["tabsplit"]]
+      }
+    }
+  },
+
+  "background": {
+    "scripts": ["background.js"]
+  },
+
+  "browser_action": {
+    "browser_style": true,  
+    "default_icon": "tabsplit-fox.png"
+  }
+
+}
