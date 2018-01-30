@@ -1,0 +1,118 @@
+#tabsplit-button {
+  list-style-image: url("resource://extension-tabsplit-api/chrome/img/tabsplit-fox.png");
+}
+
+.tabsplit-tab > .tab-stack {
+  border-width: 4px;
+  border-top-style: solid;
+  /* We dynamically set the color at .tabsplit-tab so inherit the color here. */
+  border-color: inherit;
+}
+
+.tabsplit-tab-first > .tab-stack {
+  border-left-style: solid;
+}
+
+.tabsplit-tab-last > .tab-stack {
+  border-right-style: solid; 
+}
+
+.tabsplit-tab .tab-line {
+  display: none;
+}
+
+.tabsplit-focus {
+  outline: 4px solid #9ae08d;
+  outline-offset: -4px;
+}
+
+.tabsplit-spliter-container {
+  position: relative;
+}
+
+.tabsplit-column-splitter {
+  /* `width` will be set in the view */
+  height: 100%;
+  background: #e7e8e9;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 99;
+  cursor: col-resize;
+  display: none;
+}
+
+#tabsplit-iframe-for-resize {
+  width: 100%;
+  height: 0;
+  padding: 0;
+  border: 0;
+  margin: 0;
+}
+
+#tabsplit-menupanel .panel-arrowcontent {
+  margin: 0;
+  padding: 0;
+}
+
+#tabsplit-menupanel-header,
+#tabsplit-menupanel-body {
+  padding: 18px 16px;
+}
+
+#tabsplit-menupanel-header {
+  padding-bottom: 0;
+}
+
+#tabsplit-menupanel-header > label {
+  font-size: 1.2rem;
+  color: #707070;
+  margin: 0;
+}
+
+.tabsplit-menupanel-button {
+  border: 0;
+  margin: 0;
+  padding: 0;
+  -moz-appearance: none;
+}
+
+.tabsplit-menupanel-split-option {
+  width: 50px;
+  height: 50px;
+  min-width: 0;
+  font-weight: bold;
+  color: #565656;
+  background: #f2f2f2;
+  border: 1px solid #e0e0e0;
+}
+
+.tabsplit-menupanel-splitter {
+  border: 0;
+  margin: 0;
+  padding: 0 10px;
+  background: none;
+}
+
+#tabsplit-menupanel-footer {
+  width: 100%;
+  border-top: 1px solid #e5e5e5;
+}
+
+#tabsplit-menupanel-unsplit-all-button {
+  width: 100%;
+  padding: 12px 0;
+  font-size: 1.1rem;
+  color: #e24f4f;
+  background: #ebebeb;
+}
+
+.tabsplit-menupanel-split-option:hover,
+#tabsplit-menupanel-unsplit-all-button:hover {
+  background: #e5e5e5; 
+}
+
+.tabsplit-menupanel-split-option:active,
+#tabsplit-menupanel-unsplit-all-button:active {
+  background: #e0e0e0; 
+}

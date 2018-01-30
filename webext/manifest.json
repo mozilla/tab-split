@@ -6,9 +6,5 @@
 
   "background": { "scripts": ["background.js"] },
 
-  "permissions": [ "experiments.tabsplit" ],
-
-  "browser_action": {
-    "default_icon": "tabsplit-fox.png"
-  }
+  "permissions": [ "experiments.tabsplit" ]
 }

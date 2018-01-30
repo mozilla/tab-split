@@ -5,9 +5,23 @@
     "permissions": ["experiments.tabsplit"],
     "functions": [
       {
+        "name": "init",
+        "type": "function",
+        "description": "Sets up tabsplit.",
+        "async": true,
+        "parameters": []
+      },
+      {
         "name": "tabsplit",
         "type": "function",
         "description": "Splits the current tab, or shows the tab split popup if already split.",
+        "async": true,
+        "parameters": []
+      },
+      {
+        "name": "destroy",
+        "type": "function",
+        "description": "Tears down all tabsplit state.",
         "async": true,
         "parameters": []
       }
