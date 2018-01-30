@@ -1,12 +1,13 @@
 [
   {
     "namespace": "tabsplit",
-    "description": "Tab split",
+    "description": "Tab Split",
+    "permissions": ["experiments.tabsplit"],
     "functions": [
       {
         "name": "tabsplit",
         "type": "function",
-        "description": "splits the current tab, or shows options if already split",
+        "description": "Splits the current tab, or shows the tab split popup if already split.",
         "async": true,
         "parameters": []
       }

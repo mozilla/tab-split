@@ -1,8 +1,6 @@
+console.log('welcome to tabsplit');
 
-function browseraction() {
-  console.log("browseraction");
-}
+browser.tabsplit.tabsplit().then(
+  message => console.log(`tabsplit sez: "${message}"`)
+);
 
-
-browser.browserAction.onClicked.addListener(browseraction);
- 
