@@ -5,7 +5,7 @@
 /**
  * @params win {Object} ChromeWindow
  */
-(function (win) {
+(function(win) {
 "use strict";
 
 if (!win.TabSplit) {
@@ -24,21 +24,21 @@ TabSplit.utils = {
 
   getLastPinnedTabIndex() {
     // `i` is the 1st not pinned tab.
-    let i = this._gBrowser.visibleTabs.findIndex(tab => {
+    const i = this._gBrowser.visibleTabs.findIndex(tab => {
       return !tab.pinned || tab.hasAttribute("data-tabsplit-tab-group-id");
     });
     return i - 1;
   },
 
   getTabByLinkedPanel(linkedPanel) {
-    return this._gBrowser.visibleTabs.find(tab => tab.linkedPanel == linkedPanel);
+    return this._gBrowser.visibleTabs.find(tab => tab.linkedPanel === linkedPanel);
   },
 
   getTabGroupByLinkedPanel(linkedPanel, state) {
     let id = null;
-    let visibleTabs = this._gBrowser.visibleTabs;
+    const visibleTabs = this._gBrowser.visibleTabs;
     for (let i = visibleTabs.length - 1; i >= 0; i--) {
-      if (visibleTabs[i].linkedPanel == linkedPanel) {
+      if (visibleTabs[i].linkedPanel === linkedPanel) {
         id = visibleTabs[i].getAttribute("data-tabsplit-tab-group-id");
         break;
       }
@@ -54,11 +54,11 @@ TabSplit.utils = {
     if (!this._panelContainer) {
       this._panelContainer = document.getAnonymousElementByAttribute(this._gBrowser, "anonid", "panelcontainer");
     }
-    let length = this._panelContainer.children.length;
-    let boxes = [];
+    const length = this._panelContainer.children.length;
+    const boxes = [];
     for (let i = 0; i < length; i++) {
-      let child = this._panelContainer.children[i];
-      if (child && (child.tagName == "notificationbox" || child.tagName == "xul:notificationbox")) {
+      const child = this._panelContainer.children[i];
+      if (child && (child.tagName === "notificationbox" || child.tagName === "xul:notificationbox")) {
         boxes.push(child);
       }
     }

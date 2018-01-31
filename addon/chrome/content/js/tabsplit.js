@@ -5,7 +5,7 @@
 /**
  * @params win {Object} ChromeWindow
  */
-(function (win) {
+(function(win) {
 "use strict";
 
 if (!win.TabSplit) {
@@ -26,10 +26,10 @@ if (!win.TabSplit) {
 // 7. S notifies V new states
 // 8. V updates the chrome UI
 // 9. Back to (2)
-win.TabSplit.control.init({ 
-  view: TabSplit.view, 
-  store: TabSplit.store, 
-  utils: TabSplit.utils, 
+win.TabSplit.control.init({
+  view: TabSplit.view,
+  store: TabSplit.store,
+  utils: TabSplit.utils,
   gBrowser: win.gBrowser
 });
 
