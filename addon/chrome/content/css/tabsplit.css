@@ -21,7 +21,7 @@
 }
 
 .tabsplit-tab-last > .tab-stack {
-  border-right-style: solid; 
+  border-right-style: solid;
 }
 
 .tabsplit-tab .tab-line {
@@ -129,10 +129,10 @@
 
 .tabsplit-menupanel-split-option:hover,
 #tabsplit-menupanel-unsplit-all-button:hover {
-  background: #e5e5e5; 
+  background: #e5e5e5;
 }
 
 .tabsplit-menupanel-split-option:active,
 #tabsplit-menupanel-unsplit-all-button:active {
-  background: #e0e0e0; 
+  background: #e0e0e0;
 }
