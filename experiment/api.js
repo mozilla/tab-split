@@ -63,15 +63,11 @@ class API extends ExtensionAPI {
       tabsplit: {
         init: async () => {
           await impl.init();
-          return true;
+          return "init";
         },
         tabsplit: async () => {
           await impl.tabsplit();
-          return true
-        },
-        destroy: async () => {
-          await impl.destroy()
-          return true;
+          return "tabsplit";
         }
       }
     }
