@@ -1,3 +1,10 @@
+:root {
+  --focused-tab-outline: #00c8d7dd;
+  --splitter-shadow: #00000044;
+  --grey-20: #ededf0;
+  --grey-30: #d7d7db;
+}
+
 #tabsplit-button {
   list-style-image: url("resource://extension-tabsplit-api/chrome/img/tabsplit-fox.png");
 }
@@ -14,7 +21,7 @@
 }
 
 .tabsplit-tab-last > .tab-stack {
-  border-right-style: solid; 
+  border-right-style: solid;
 }
 
 .tabsplit-tab .tab-line {
@@ -22,8 +29,18 @@
 }
 
 .tabsplit-focus {
-  outline: 4px solid #9ae08d;
+  animation: setOutline forwards 50ms;
   outline-offset: -4px;
+}
+
+@keyframes setOutline {
+  0% {
+    outline: 0 solid transparent;
+  }
+
+  100% {
+    outline: 4px solid var(--focused-tab-outline);
+  }
 }
 
 .tabsplit-spliter-container {
@@ -33,13 +50,16 @@
 .tabsplit-column-splitter {
   /* `width` will be set in the view */
   height: 100%;
-  background: #e7e8e9;
+  background-color: var(--grey-20);
   position: absolute;
   top: 0;
   left: 0;
   z-index: 99;
   cursor: col-resize;
   display: none;
+  border-left: 1px solid var(--grey-30);
+  border-right: 1px solid var(--grey-30);
+  box-shadow: 0 0 3px var(--splitter-shadow);
 }
 
 #tabsplit-iframe-for-resize {
@@ -109,10 +129,10 @@
 
 .tabsplit-menupanel-split-option:hover,
 #tabsplit-menupanel-unsplit-all-button:hover {
-  background: #e5e5e5; 
+  background: #e5e5e5;
 }
 
 .tabsplit-menupanel-split-option:active,
 #tabsplit-menupanel-unsplit-all-button:active {
-  background: #e0e0e0; 
+  background: #e0e0e0;
 }

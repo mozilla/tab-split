@@ -7,7 +7,7 @@
  */
 console.log('tabsplit-store.js');
 
-(function (win) {
+(function(win) {
 "use strict";
 
 if (!win.TabSplit) {
@@ -24,7 +24,7 @@ TabSplit.store = {
 
   // We do incremental id
   _tabGroupIdCount: 0,
-  
+
   // Listeners for the state change.
   // One listener is a object having `onStateChange` function with the signature below:
   //   - store {object} TabSplit.store
@@ -47,14 +47,14 @@ TabSplit.store = {
   // tabGroupIds {Array} The array of tab group ids. The order represents tab groups' order.
   //
   // tabGroups {Object} holds instances of TabGroup, see below for TabGroup. Key is tab group id.
-  // 
+  //
   // TabGroup is one object holding info of one group of tabs being split
   // - id {Number} this tabGroup id (Should never allow any update on the id).
   // - color {String} #xxxxx used for visually grouping tabs
   // - layout {String} see `VALID_LAYOUTS` for the valid values
   // - tabs {Array} instances of Tab, see below for Tab details.
   //                The order represents tabs' order: The smaller col comes first.
-  // 
+  //
   // Tab is one object holding info of one split tab in one tab group
   // - linkedPanel {String} the tab's linkedPanel attribute value
   // - col: {Number} the column index where the tab locate. 0 is the left most column.
@@ -76,7 +76,7 @@ TabSplit.store = {
    *    - utils {Object} TabSplit.utils
    */
   init(params) {
-    let { utils } = params;
+    const { utils } = params;
     this._utils = utils;
     this._resetState();
     this._tabGroupIdCount = 0;
@@ -89,12 +89,12 @@ TabSplit.store = {
 
   /**
    * Should call this to udpate states.
-   * 
+   *
    * @params actions {Object} state update actions. See Action below for details
    *
    * Action is an object describing the state update action, holding:
    *  - type {String} the action type
-   *  - args {Object} holding args for this action. The content depends on the `type` property. 
+   *  - args {Object} holding args for this action. The content depends on the `type` property.
    * The valid actions are:
    *  - type: "set_active"
    *  - args: null, not required
@@ -110,7 +110,7 @@ TabSplit.store = {
    *      - tabbrowserWidth {Number} see `tabbrowserWidth` in `_state`
    *
    *  - type: "update_selected_linkedPanel"
-   *  - args: 
+   *  - args:
    *      - selectedLinkedPanel {String} see `selectedLinkedPanel` in `_state`
    *
    *  - type: "add_tab_group". This will add to the end.
@@ -131,33 +131,33 @@ TabSplit.store = {
    *          the order should correspond to tabs' order in tab group
    */
   update(...actions) {
-    let added = [];
-    let removed = [];
-    let updated = [];
+    const added = [];
+    const removed = [];
+    const updated = [];
     let dirty = false;
-    for (let action of actions) {
+    for (const action of actions) {
       try {
-        if (this._state.status == "status_destroyed") {
-          throw "The current status is destroyed, please init TabSplit.store again before updating any state";
+        if (this._state.status === "status_destroyed") {
+          throw new Error("The current status is destroyed, please init TabSplit.store again before updating any state");
         }
 
-        let args = action.args;
+        const args = action.args;
         switch (action.type) {
           case "set_active":
-            if (this._state.status != "status_active") {
+            if (this._state.status !== "status_active") {
               this._state.status = "status_active";
               dirty = true;
             } else {
-              throw "Set active on the status that is already active";
+              throw new Error("Set active on the status that is already active");
             }
             break;
 
           case "set_inactive":
-            if (this._state.status == "status_active") {
+            if (this._state.status === "status_active") {
               this._state.status = "status_inactive";
               dirty = true;
             } else {
-              throw "Set inactive on the status that is not active";
+              throw new Error("Set inactive on the status that is not active");
             }
             break;
 
@@ -169,7 +169,7 @@ TabSplit.store = {
 
           case "update_tabbrowser_width":
             if (args.tabbrowserWidth <= 0) {
-              throw `Invalid tabbrowser width of ${v}`;
+              throw new Error(`Invalid tabbrowser width of ${v}`);
             }
             if (args.tabbrowserWidth !== this._state.tabbrowserWidth) {
               this._state.tabbrowserWidth = args.tabbrowserWidth;
@@ -179,17 +179,18 @@ TabSplit.store = {
 
           case "update_selected_linkedPanel":
             if (!this._utils.getTabByLinkedPanel(args.selectedLinkedPanel)) {
-              throw `Unknown selected linkedPanel of ${args.selectedLinkedPanel}`;
+              throw new Error(`Unknown selected linkedPanel of ${args.selectedLinkedPanel}`);
             }
             this._state.selectedLinkedPanel = args.selectedLinkedPanel;
             dirty = true;
             break;
 
-          case "add_tab_group":
-            let newId = this._addTabGroup(args.newTabGroup);
+          case "add_tab_group": {
+            const newId = this._addTabGroup(args.newTabGroup);
             added.push(newId);
             dirty = true;
             break;
+          }
 
           case "remove_tab_group":
             this._removeTabGroup(args.id);
@@ -225,9 +226,9 @@ TabSplit.store = {
             break;
 
           default:
-            throw `Unknow action type of ${action.type}`;
+            throw new Error(`Unknow action type of ${action.type}`);
         }
-      } catch(e) {
+      } catch (e) {
         console.error(`Fail at the update action of ${action.type}`);
         console.error(e);
         return;
@@ -235,9 +236,9 @@ TabSplit.store = {
     }
 
     if (dirty) {
-      if (this._state.status == "status_inactive") {
+      if (this._state.status === "status_inactive") {
         this._resetState();
-      } else if (this._state.status == "status_destroyed") {
+      } else if (this._state.status === "status_destroyed") {
         // A simple way to clear all other states except for the status state
         this._state = { status: "status_destroyed" };
       }
@@ -248,7 +249,7 @@ TabSplit.store = {
         listener.onStateChange(this, { added, removed, updated });
       });
 
-      if (this._state.status == "status_destroyed") {
+      if (this._state.status === "status_destroyed") {
         this._listeners.clear();
         this._listeners = null;
       }
@@ -259,47 +260,47 @@ TabSplit.store = {
    * @return the new tabGroup id
    */
   _addTabGroup(newTabGroup) {
-    let { tabs, color, layout } = newTabGroup;
+    const { tabs, color, layout } = newTabGroup;
 
     if (!this.VALID_LAYOUTS.includes(layout)) {
-      throw `Invalid split layout: ${layout}`;
+      throw new Error(`Invalid split layout: ${layout}`);
     }
 
-    if (color == "") {
-      throw "Lack the color property";
+    if (color === "") {
+      throw new Error("Lack the color property");
     }
 
-    if (tabs.length != 2) {
-      throw `Unexpected tabs length of ${tabs.length}`;
+    if (tabs.length !== 2) {
+      throw new Error(`Unexpected tabs length of ${tabs.length}`);
     }
 
-    let seenPanels = [];
+    const seenPanels = [];
     let distributionSum = 0;
     for (let i = 0; i < tabs.length; i++) {
-      let t = tabs[i];
-      if (t.col != i) {
+      const t = tabs[i];
+      if (t.col !== i) {
         // Maybe we should relax this check and do sorting if needed.
-        throw `The tab with linkedPanel of ${t.linkedPanel} has array position ${i} different from column position ${t.col}`;
+        throw new Error(`The tab with linkedPanel of ${t.linkedPanel} has array position ${i} different from column position ${t.col}`);
       }
       if (!this._isValidTab(t)) {
-        throw `The tab with linkedPanel of ${t.linkedPanel} being added is invalid`;
+        throw new Error(`The tab with linkedPanel of ${t.linkedPanel} being added is invalid`);
       }
       if (this._utils.getTabGroupByLinkedPanel(t.linkedPanel, this._state)) {
-        throw `The tab with linkedPanel of ${t.linkedPanel} being added is already split`;
+        throw new Error(`The tab with linkedPanel of ${t.linkedPanel} being added is already split`);
       }
       if (seenPanels.includes(t.linkedPanel)) {
-        throw `Cannot add the tab with linkedPanel of ${t.linkedPanel} twice in one tab group`;
+        throw new Error(`Cannot add the tab with linkedPanel of ${t.linkedPanel} twice in one tab group`);
       }
       seenPanels.push(t.linkedPanel);
       distributionSum += t.distribution;
     }
-    if (distributionSum != 1) {
-      let panels = tabs.map(t => t.linkedPanel);
-      throw `Expect the sum of tabs' distributions to be 1 but get ${distributionSum} from ${panels.join(', ')}`;
+    if (distributionSum !== 1) {
+      const panels = tabs.map(t => t.linkedPanel);
+      throw new Error(`Expect the sum of tabs' distributions to be 1 but get ${distributionSum} from ${panels.join(", ")}`);
     }
 
     // NOTE: What if redundant props passed with newTabGroup
-    let newGroup = this._copy(newTabGroup);
+    const newGroup = this._copy(newTabGroup);
     newGroup.id = this.TAB_GROUP_ID_PREFIX + this._tabGroupIdCount++;
     this._state.tabGroups[newGroup.id] = newGroup;
     this._state.tabGroupIds.push(newGroup.id);
@@ -307,27 +308,27 @@ TabSplit.store = {
   },
 
   _removeTabGroup(id) {
-    let i = this._state.tabGroupIds.indexOf(id);
+    const i = this._state.tabGroupIds.indexOf(id);
     if (i < 0) {
-      throw `Remove unknow tab group with id = ${id}`;
+      throw new Error(`Remove unknow tab group with id = ${id}`);
     }
     this._state.tabGroupIds.splice(i, 1);
     delete this._state.tabGroups[id];
   },
 
   _updateTabDistributions(id, distributions) {
-    let group = this._state.tabGroups[id];
+    const group = this._state.tabGroups[id];
     if (!group) {
-      throw `Update tabs' distributions on unknown tab group with the id = ${id}`;
+      throw new Error(`Update tabs' distributions on unknown tab group with the id = ${id}`);
     }
 
-    if (distributions.length != group.tabs.length) {
-      throw `Expect ${group.tabs.length} tabs' distributions to update but get ${distributions.length}`;
+    if (distributions.length !== group.tabs.length) {
+      throw new Error(`Expect ${group.tabs.length} tabs' distributions to update but get ${distributions.length}`);
     }
 
-    let sum = distributions.reduce((sum, percentage) => sum += percentage, 0);
-    if (sum != 1) {
-      throw `Expect the total tabs' distributions to be 1 but get ${distributions}`;
+    const sum = distributions.reduce((sum, percentage) => sum += percentage, 0);
+    if (sum !== 1) {
+      throw new Error(`Expect the total tabs' distributions to be 1 but get ${distributions}`);
     }
 
     for (let i = group.tabs.length - 1; i >= 0; --i) {
@@ -345,7 +346,7 @@ TabSplit.store = {
   },
 
   _isValidTab(tab) {
-    let { col, distribution, linkedPanel } = tab;
+    const { col, distribution, linkedPanel } = tab;
     if ((col < 0 || col > 1 ) ||
         (distribution <= 0 || distribution >= 1) ||
         !this._utils.getTabByLinkedPanel(linkedPanel)) {
