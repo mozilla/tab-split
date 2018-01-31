@@ -19,6 +19,3 @@ async function init() {
 
 init();
 
-// TODO: Call tabsplit.destroy
-// TODO: Call init on new tab
-

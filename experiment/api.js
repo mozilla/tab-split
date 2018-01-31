@@ -7,7 +7,7 @@ class Impl {
     this._browserCount = 0;
   }
 
-  async init() {
+  async init(context) {
     console.log("TMP > TabSplit - api - onNewBrowserCreated");
 
     let WM = Cc['@mozilla.org/appshell/window-mediator;1'].getService(Ci.nsIWindowMediator);
@@ -15,6 +15,16 @@ class Impl {
     let tabbrowser = chromeWindow.document.getElementById("content");
     if (tabbrowser.getAttribute("data-tabsplit-tabbrowser-id")) {
       return chromeWindow;
+    }
+
+    if (this._browserCount === 0) {
+      console.log("TMP > TabSplit - api - onNewBrowserCreated context.callOnClose");
+      context.callOnClose({
+        close: () => {
+          console.log("TMP > TabSplit - api - close");
+          this.destroy();
+        }
+      });
     }
 
     tabbrowser.setAttribute("data-tabsplit-tabbrowser-id", ++this._browserCount);
@@ -26,8 +36,8 @@ class Impl {
     return chromeWindow;
   }
 
-  async tabsplit() {
-      console.log("TMP > TabSplit - api - tabsplit");
+  async tabsplit(_context) {
+    console.log("TMP > TabSplit - api - tabsplit");
 
     const win = await this.init();
     await win.TabSplit.view.clickCallback();
@@ -62,11 +72,11 @@ class API extends ExtensionAPI {
     return {
       tabsplit: {
         init: async () => {
-          await impl.init();
+          await impl.init(context);
           return "init";
         },
         tabsplit: async () => {
-          await impl.tabsplit();
+          await impl.tabsplit(context);
           return "tabsplit";
         }
       }
