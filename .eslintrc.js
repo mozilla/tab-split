@@ -28,6 +28,6 @@ module.exports = {
     "no-var": "error",
     "no-warning-comments": "warn",
     "prefer-const": "error",
-    "valid-jsdoc": "off", // TODO: warn
+    "valid-jsdoc": "warn",
   }
 };
