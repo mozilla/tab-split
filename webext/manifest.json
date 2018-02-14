@@ -1,15 +1,26 @@
 {
   "manifest_version": 2,
-  "name": "tabsplit",
-  "description": "Tab Split as a webextension",
-  "version": "0.1.7",
+  "name": "Tab Split",
+  "description": "Tab Split allows you to see two tabs side by side in the same window.",
+  "version": "0.1.8",
 
-  "background": { "scripts": ["background.js"] },
+  "applications": {
+    "gecko": {
+      "id": "tabsplit-webextension@donovanpreston.com"
+    }
+  },
 
-  "permissions": [ "experiments.tabsplit" ],
+  "experiment_apis": {
+    "tabsplit": {
+      "schema": "../experiment/schema.json",
+      "parent": {
+        "scopes": ["addon_parent"],
+        "script": "../experiment/api.js",
+        "paths": [["tabsplit"]]
+      }
+    }
+  },
 
-  "browser_action": {
-    "browser_style": true,
-    "default_icon": "tabsplit-fox.png"
-  }
+  "background": { "scripts": ["background.js"] }
+
 }

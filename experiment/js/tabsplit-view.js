@@ -9,15 +9,12 @@
 /**
  * @params win {Object} ChromeWindow
  */
-(function(win) {
-"use strict";
 
-if (!win.TabSplit) {
-  win.TabSplit = {};
-}
-const TabSplit = win.TabSplit;
+var wm = Components.classes["@mozilla.org/appshell/window-mediator;1"]
+               .getService(Components.interfaces.nsIWindowMediator);
+var win = wm.getMostRecentWindow("navigator:browser");
 
-TabSplit.view = {
+export default {
   ID_TABSPLIT_BUTTON: "tabsplit-button",
 
   PX_COLUMN_SPLITTER_WIDTH: 8,
@@ -49,40 +46,7 @@ TabSplit.view = {
     this._state = this._store.getState();
     this._store.subscribe(this);
 
-    /* We don't add our own button here any more, because we now
-       use the webextension browser_action.
-    */
-    // this._addTabSplitButton();
-
-    /* This is a copy of the controller code that is in _addTabSplitButton.
-       It is now called from api.tabsplit which is triggered by the
-       browser_action.
-
-       This shouldn't be in tabsplit-view, but whatever.
-    */
-    this.clickCallback = async () => {
-      let tab = this._utils.getTabByLinkedPanel(this._state.selectedLinkedPanel);
-      // When the status is inactive and the button is clicked,
-      // we notify the outside listener that a user is commanding to split tab
-      // so the outside listener can know time to activate and split tabs.
-      if (this._state.status == "status_inactive" || !tab.getAttribute("data-tabsplit-tab-group-id")) {
-        this._listener.onCommandSplitTab();
-        return;
-      }
-
-      // If the status is active and the current selected tab is being splitted,
-      // let's open menu panel to offer more options to users.
-      if (!this._menuPanel) {
-        await this._addMenuPanel();
-      }
-      if (this._menuPanel.state == "closed") {
-        console.log("click when tab is split");
-        // let anchor = win.document.getAnonymousElementByAttribute(e.target, "class", "toolbarbutton-icon");
-        // this._menuPanel.openPopup(anchor, "bottomcenter topright", 0, 0, false, null);
-      } else if (this._menuPanel.state == "open") {
-        this._menuPanel.hidePopup();
-      }
-    }
+    this._addTabSplitButton();
   },
 
   async _addTabSplitButton() {
@@ -158,7 +122,7 @@ TabSplit.view = {
       return;
     }
     await new Promise(resolve => {
-      win.document.loadOverlay("chrome://tabsplit/content/overlay/tabsplit-menupanel-overlay.xul", resolve);
+      win.document.loadOverlay("./tabsplit-menupanel-overlay.xul", resolve);
     });
     console.log("TMP> tabsplit-view - tabsplit-menupanel-overlay.xul loaded");
 
@@ -523,4 +487,3 @@ TabSplit.view = {
   }
 };
 
-})(this);

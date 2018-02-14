@@ -5,15 +5,8 @@
 /**
  * @params win {Object} ChromeWindow
  */
-(function(win) {
-"use strict";
 
-if (!win.TabSplit) {
-  win.TabSplit = {};
-}
-const TabSplit = win.TabSplit;
-
-TabSplit.store = {
+export default {
 
   // TODO: Maybe could remove this
   TAB_GROUP_ID_PREFIX: "tabsplit-tab-group-id-",
@@ -372,4 +365,3 @@ TabSplit.store = {
   },
 };
 
-})(this);

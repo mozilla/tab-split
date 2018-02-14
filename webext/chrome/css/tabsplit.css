@@ -6,7 +6,7 @@
 }
 
 #tabsplit-button {
-  list-style-image: url("chrome://tabsplit/content/img/tabsplit-fox.png");
+  list-style-image: url("../img/tabsplit-fox.png");
 }
 
 .tabsplit-tab > .tab-stack {

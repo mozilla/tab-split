@@ -5,15 +5,8 @@
 /**
  * @params win {Object} ChromeWindow
  */
-(function(win) {
-"use strict";
 
-if (!win.TabSplit) {
-  win.TabSplit = {};
-}
-const TabSplit = win.TabSplit;
-
-TabSplit.control = {
+export default {
 
   MS_MAX_IDLE_DURATION: 1000 * 60 * 10, // 10 mins
 
@@ -536,4 +529,3 @@ TabSplit.control = {
   /* Override the chrome behaviours end */
 };
 
-})(this);
