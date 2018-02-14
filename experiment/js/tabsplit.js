@@ -5,14 +5,15 @@
 /**
  * @params win {Object} ChromeWindow
  */
-(function(win) {
-"use strict";
 
-if (!win.TabSplit) {
-  console.error("Find no global TabSplit object, unable to init TabSplit feature");
-  return;
-}
+const utils = require('./tabsplit-utils').default;
+const store = require('./tabsplit-store').default;
+const view = require('./tabsplit-view').default;
+const control = require('./tabsplit-control').default;
 
+var wm = Components.classes["@mozilla.org/appshell/window-mediator;1"]
+                   .getService(Components.interfaces.nsIWindowMediator);
+var win = wm.getMostRecentWindow("navigator:browser");
 // The structure overview:
 // C = tabsplit-control
 // V = tabsplit-view
@@ -26,11 +27,10 @@ if (!win.TabSplit) {
 // 7. S notifies V new states
 // 8. V updates the chrome UI
 // 9. Back to (2)
-win.TabSplit.control.init({
-  view: TabSplit.view,
-  store: TabSplit.store,
-  utils: TabSplit.utils,
+control.init({
+  view: view,
+  store: store,
+  utils: utils,
   gBrowser: win.gBrowser
 });
 
-})(this);

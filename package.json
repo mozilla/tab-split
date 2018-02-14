@@ -1,7 +1,7 @@
 {
   "name": "tab-split",
   "description": "A tab-splitting extension for Firefox",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "author": "Mozilla (https://mozilla.org/)",
   "bugs": {
     "url": "https://github.com/mozilla/tab-split/issues"
@@ -13,7 +13,8 @@
     "eslint-plugin-no-unsanitized": "^2.0.2",
     "npm-run-all": "^4.1.2",
     "stylelint": "^8.4.0",
-    "stylelint-config-standard": "^18.0.0"
+    "stylelint-config-standard": "^18.0.0",
+    "webpack": "^3.11.0"
   },
   "homepage": "https://github.com/mozilla/tab-split/",
   "license": "MPL-2.0",
@@ -23,7 +24,7 @@
   },
   "scripts": {
     "start": "npm-run-all lint build run",
-    "build": "mkdir -p ./Profile && web-ext build --source-dir=webext",
+    "build": "webpack && mkdir -p ./Profile && web-ext build --source-dir=webext --overwrite-dest",
     "run": "mkdir -p ./Profile && echo 'Starting the tab split extension automatically from the command line will fail until bug 1434076 is fixed. In the meantime please use about:debugging to load both experiment/schema.json and webext/manifest.json' && echo 'Some day we can run this here: web-ext run --source-dir=webext -p ./Profile'",
     "lint": "npm-run-all lint:*",
     "lint:css": "stylelint 'experiment/**/*.css'",

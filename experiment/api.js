@@ -30,19 +30,10 @@ class Impl {
     tabbrowser.setAttribute("data-tabsplit-tabbrowser-id", ++this._browserCount);
     console.log("TMP > TabSplit - api - onNewBrowserCreated - browserCount", this._browserCount);
     console.log("TMP > TabSplit - api - onNewBrowserCreated - load overlay tabsplit-init-overlay.xul");
-    chromeWindow.document.loadOverlay("resource://extension-tabsplit-api/chrome/overlay/tabsplit-init-overlay.xul",
+    chromeWindow.document.loadOverlay(context.extension.getURL("chrome/overlay/tabsplit-init-overlay.xul"),
       (subj, topic, data) => console.log("TMP > TabSplit - api - onNewBrowserCreated - load overlay topic", topic));
 
     return chromeWindow;
-  }
-
-  async tabsplit(_context) {
-    console.log("TMP > TabSplit - api - tabsplit");
-
-    const win = await this.init();
-    await win.TabSplit.view.clickCallback();
-
-    return true;
   }
 
   async destroy() {
@@ -66,7 +57,7 @@ class Impl {
 }
 
 
-class API extends ExtensionAPI {
+this.tabsplit = class API extends ExtensionAPI {
   getAPI(context) {
     const impl = new Impl();
     return {
@@ -74,12 +65,9 @@ class API extends ExtensionAPI {
         init: async () => {
           await impl.init(context);
           return "init";
-        },
-        tabsplit: async () => {
-          await impl.tabsplit(context);
-          return "tabsplit";
         }
       }
     }
   }
 }
+

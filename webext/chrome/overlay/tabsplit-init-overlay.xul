@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+
+<?xml-stylesheet href="../css/tabsplit.css" type="text/css"?>
+
+<overlay id="tabsplit-navbar-overlay" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+  <script src="../js/bundle.js" type="text/javascript"/>
+</overlay>

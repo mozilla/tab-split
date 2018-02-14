@@ -5,19 +5,7 @@
 /**
  * @params win {Object} ChromeWindow
  */
-(function(win) {
-"use strict";
-
-if (!win.TabSplit) {
-  win.TabSplit = {};
-}
-const TabSplit = win.TabSplit;
-
-  /**
-   * @params params {Object}
-   *    - gBrowser {XULELement} <tabbrowser>
-   */
-TabSplit.utils = {
+ export default {
   init(params) {
     this._gBrowser = params.gBrowser;
   },
@@ -70,4 +58,3 @@ TabSplit.utils = {
   },
 };
 
-})(this);
