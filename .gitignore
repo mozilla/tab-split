@@ -60,4 +60,5 @@ typings/
 Profile
 web-ext-artifacts
 webext/chrome/js/bundle.js
+addon.xpi
 
