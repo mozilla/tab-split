@@ -6,7 +6,8 @@
 
   "applications": {
     "gecko": {
-      "id": "tabsplit-webextension@donovanpreston.com"
+      "id": "tabsplit@mozilla.com",
+      "update_url": "https://testpilot.firefox.com/files/tabsplit@mozilla.com/updates.json"
     }
   },
 

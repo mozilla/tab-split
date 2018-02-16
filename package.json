@@ -24,6 +24,7 @@
   },
   "scripts": {
     "start": "npm-run-all lint build run",
+    "package": "npm run build && cp web-ext-artifacts/`ls -t1 web-ext-artifacts | head -n 1` addon.xpi",
     "build": "npm-run-all build:*",
     "build:webpack": "webpack",
     "build:webext": "mkdir -p ./Profile && web-ext build --source-dir=webext --overwrite-dest",
