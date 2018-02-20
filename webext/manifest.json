@@ -2,7 +2,7 @@
   "manifest_version": 2,
   "name": "Tab Split",
   "description": "Tab Split allows you to see two tabs side by side in the same window.",
-  "version": "0.1.8",
+  "version": "0.1.9",
 
   "applications": {
     "gecko": {

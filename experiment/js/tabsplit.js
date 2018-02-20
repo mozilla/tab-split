@@ -11,9 +11,9 @@ const store = require('./tabsplit-store').default;
 const view = require('./tabsplit-view').default;
 const control = require('./tabsplit-control').default;
 
-var wm = Components.classes["@mozilla.org/appshell/window-mediator;1"]
+const wm = Components.classes["@mozilla.org/appshell/window-mediator;1"]
                    .getService(Components.interfaces.nsIWindowMediator);
-var win = wm.getMostRecentWindow("navigator:browser");
+
 // The structure overview:
 // C = tabsplit-control
 // V = tabsplit-view
@@ -31,6 +31,6 @@ control.init({
   view: view,
   store: store,
   utils: utils,
-  gBrowser: win.gBrowser
+  gBrowser: wm.getMostRecentWindow("navigator:browser").gBrowser
 });
 

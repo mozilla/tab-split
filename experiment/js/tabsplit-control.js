@@ -6,6 +6,13 @@
  * @params win {Object} ChromeWindow
  */
 
+const wm = Components.classes["@mozilla.org/appshell/window-mediator;1"]
+               .getService(Components.interfaces.nsIWindowMediator);
+
+function getWindow() {
+  return wm.getMostRecentWindow("navigator:browser");
+}
+
 export default {
 
   MS_MAX_IDLE_DURATION: 1000 * 60 * 10, // 10 mins
@@ -158,7 +165,7 @@ export default {
     const windowWidth = window.innerWidth;
     this.onDraggingColumnSplitter = e => {
       const mousePosX = e.clientX;
-      win.requestAnimationFrame(() => {
+      getWindow().requestAnimationFrame(() => {
         // Cannot drag the splitter and other place at the same time
         // so safe to assume the widths are unchanged here and
         // don't have to make a sync flow call to get the widths again.
@@ -195,7 +202,7 @@ export default {
         });
       });
     };
-    win.addEventListener("mousemove", this.onDraggingColumnSplitter);
+    getWindow().addEventListener("mousemove", this.onDraggingColumnSplitter);
   },
 
   _stopDraggingColumnSplitter() {
@@ -203,7 +210,7 @@ export default {
       return;
     }
     console.log("TMP> tabsplit-control - _stopDraggingColumnSplitter");
-    win.removeEventListener("mousemove", this.onDraggingColumnSplitter);
+    getWindow().removeEventListener("mousemove", this.onDraggingColumnSplitter);
     this.onDraggingColumnSplitter = null;
   },
 
@@ -450,7 +457,7 @@ export default {
   },
 
   onResize() {
-    win.requestAnimationFrame(() => {
+    getWindow().requestAnimationFrame(() => {
       console.log("TMP> tabsplit-control - onResize");
       this._store.update({
         type: "update_tabbrowser_width",
