@@ -11,3 +11,8 @@ To test, run `npm run build`, then load Firefox Nightly, visit `about:debugging`
 
 To iteratively develop, you can run `npm run watch` and press the `reload` button in `about:debugging` after making any changes.
 
+Acceptance Criteria
+-------------------
+
+The checklist of acceptance criteria for this project is located in the [documentation](docs/acceptance.md).
+
