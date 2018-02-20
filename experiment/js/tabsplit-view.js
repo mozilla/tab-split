@@ -10,9 +10,12 @@
  * @params win {Object} ChromeWindow
  */
 
-var wm = Components.classes["@mozilla.org/appshell/window-mediator;1"]
+const wm = Components.classes["@mozilla.org/appshell/window-mediator;1"]
                .getService(Components.interfaces.nsIWindowMediator);
-var win = wm.getMostRecentWindow("navigator:browser");
+
+function getWindow() {
+  return wm.getMostRecentWindow("navigator:browser");
+}
 
 export default {
   ID_TABSPLIT_BUTTON: "tabsplit-button",
@@ -51,7 +54,7 @@ export default {
 
   async _addTabSplitButton() {
     console.log("TMP> tabsplit-view - _addTabSplitButton");
-    let buttonForThisWindow = win.document.getElementById(this.ID_TABSPLIT_BUTTON);
+    let buttonForThisWindow = getWindow().document.getElementById(this.ID_TABSPLIT_BUTTON);
     if (buttonForThisWindow) {
       return;
     }
@@ -83,7 +86,7 @@ export default {
       CustomizableUI.addWidgetToArea(this.ID_TABSPLIT_BUTTON, "nav-bar");
     });
 
-    buttonForThisWindow = win.document.getElementById(this.ID_TABSPLIT_BUTTON);
+    buttonForThisWindow = getWindow().document.getElementById(this.ID_TABSPLIT_BUTTON);
     buttonForThisWindow.addEventListener("command", async e => {
       const tab = this._utils.getTabByLinkedPanel(this._state.selectedLinkedPanel);
       // When the status is inactive and the button is clicked,
@@ -100,7 +103,7 @@ export default {
         await this._addMenuPanel();
       }
       if (this._menuPanel.state === "closed") {
-        const anchor = win.document.getAnonymousElementByAttribute(e.target, "class", "toolbarbutton-icon");
+        const anchor = getWindow().document.getAnonymousElementByAttribute(e.target, "class", "toolbarbutton-icon");
         this._menuPanel.openPopup(anchor, "bottomcenter topright", 0, 0, false, null);
       } else if (this._menuPanel.state === "open") {
         this._menuPanel.hidePopup();
@@ -122,11 +125,11 @@ export default {
       return;
     }
     await new Promise(resolve => {
-      win.document.loadOverlay("./tabsplit-menupanel-overlay.xul", resolve);
+      getWindow().document.loadOverlay("./tabsplit-menupanel-overlay.xul", resolve);
     });
     console.log("TMP> tabsplit-view - tabsplit-menupanel-overlay.xul loaded");
 
-    this._menuPanel = win.document.getElementById("tabsplit-menupanel");
+    this._menuPanel = getWindow().document.getElementById("tabsplit-menupanel");
     this._menuPanel.addEventListener("click", e => {
       this._menuPanel.hidePopup();
       if (e.target.id === "tabsplit-menupanel-unsplit-all-button") {
@@ -300,7 +303,7 @@ export default {
       appContent.appendChild(this._cSplitter);
       this._cSplitter.addEventListener("mousedown", e => {
         this._listener.onMouseDownOnSplitter(e);
-        win.addEventListener("mouseup", e => this._listener.onMouseUpOnSplitter(e), { once: true });
+        getWindow().addEventListener("mouseup", e => this._listener.onMouseUpOnSplitter(e), { once: true });
       });
     }
 
@@ -466,7 +469,7 @@ export default {
    * the chrome UI's changes affects us on UI but not on the state.
    */
   forceUpdate() {
-    win.requestAnimationFrame(() => {
+    getWindow().requestAnimationFrame(() => {
       const added = [];
       const removed = added;
       const updated = added;
@@ -483,7 +486,7 @@ export default {
       this.update(state, tabGroupsDiff);
       return;
     }
-    win.requestAnimationFrame(() => this.update(state, tabGroupsDiff));
+    getWindow().requestAnimationFrame(() => this.update(state, tabGroupsDiff));
   }
 };
 

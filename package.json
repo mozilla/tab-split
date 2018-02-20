@@ -1,7 +1,7 @@
 {
   "name": "tab-split",
   "description": "A tab-splitting extension for Firefox",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "author": "Mozilla (https://mozilla.org/)",
   "bugs": {
     "url": "https://github.com/mozilla/tab-split/issues"
