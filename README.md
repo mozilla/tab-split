@@ -1,4 +1,6 @@
+# Note on status
 
+The Test Pilot team has opted not to continue with approach to the experiment. Tentatively we are working on another approach in [the tab-split-2 repo](https://github.com/mozilla/tab-split-2)
 
 Tab Split
 =========
